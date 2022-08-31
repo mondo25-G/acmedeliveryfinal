@@ -14,7 +14,7 @@ import java.util.Set;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "STORE")
+@Table(name = "STORES")
 public class Store extends BaseModel {
 
 
