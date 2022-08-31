@@ -13,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "ACCOUNTS")
+@Table(name = "ACCOUNT")
 public class Account extends BaseModel{
 
     @Column(nullable = false, unique = true)

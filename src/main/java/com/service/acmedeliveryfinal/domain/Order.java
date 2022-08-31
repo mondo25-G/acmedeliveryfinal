@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="ORDERS")
+@Table(name="ORDER")
 @ToString(callSuper = true)
 public class Order extends BaseModel {
 

@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Entity
 @Builder
-@Table(name = "ADDRESSES")
+@Table(name = "ADDRESS")
 public class Address extends BaseModel{
 
     @Column
