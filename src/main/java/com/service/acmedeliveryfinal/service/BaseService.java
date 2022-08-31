@@ -1,4 +1,12 @@
 package com.service.acmedeliveryfinal.service;
 
-public interface BaseService {
+import com.service.acmedeliveryfinal.domain.BaseModel;
+
+
+
+
+public interface BaseService<T extends BaseModel> {
+
+
+
 }
