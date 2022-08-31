@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @ToString(callSuper = true)
 @Entity
-@Table(name = "ORDER_ITEM")
+@Table(name = "ORDER_ITEMS")
 public class OrderItem extends BaseModel {
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
