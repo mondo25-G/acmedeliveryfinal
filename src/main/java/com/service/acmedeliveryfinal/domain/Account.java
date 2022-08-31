@@ -13,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "ACCOUNT")
+@Table(name = "ACCOUNTS")
 public class Account extends BaseModel{
 
     @Column(nullable = false, unique = true)
@@ -30,5 +30,8 @@ public class Account extends BaseModel{
 
     @Column(nullable = false)
     private String mobile;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch=FetchType.LAZY, mappedBy="account")
+    private Set<Address> addresses;
 
 }
