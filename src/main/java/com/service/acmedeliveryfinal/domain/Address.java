@@ -2,9 +2,7 @@ package com.service.acmedeliveryfinal.domain;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -13,10 +11,14 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Entity
 @Builder
-@Table(name = "ADDRESS")
+@Table(name = "ADDRESSES")
 public class Address extends BaseModel{
 
-    @Column
+    @Column(nullable = false)
     private String street;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name="fk_account")
+    private Account account;
 
 }
