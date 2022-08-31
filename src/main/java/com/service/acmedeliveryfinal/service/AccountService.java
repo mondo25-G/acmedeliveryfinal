@@ -1,4 +1,7 @@
 package com.service.acmedeliveryfinal.service;
 
-public interface AccountService {
+import com.service.acmedeliveryfinal.domain.Account;
+
+public interface AccountService extends BaseService<Account>{
+
 }
