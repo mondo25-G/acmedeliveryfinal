@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "STOREITEM")
+@Table(name = "STORE_ITEMS")
 public class StoreItem extends BaseModel {
 
     @ManyToOne(fetch = FetchType.LAZY)
