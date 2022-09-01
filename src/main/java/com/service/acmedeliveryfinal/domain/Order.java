@@ -33,7 +33,7 @@ public class Order extends BaseModel {
 
     @ToString.Exclude
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch=FetchType.LAZY, mappedBy="order")
-    private Set<OrderItem> oderItems;
+    private Set<OrderItem> orderItems;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 13, nullable = false)
