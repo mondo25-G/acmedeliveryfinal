@@ -11,7 +11,7 @@ import java.util.List;
 public interface ProductRepository  extends JpaRepository<Product , Long> {
 
     Product findBySerial(String serial);
-//    @Query
-//    List<Product> topProductsByRanking(Integer rankingThreshold);
+    @Query(value = "SELECT * FROM Product ORDER BY NAME ASC FETCH FIRST 10 ROWS ONLY", nativeQuery = true)
+    List<Product> topProductsByRanking(Integer rankingThreshold);
 
 }
