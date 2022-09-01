@@ -1,5 +1,6 @@
 package com.service.acmedeliveryfinal.domain;
 
+import com.service.acmedeliveryfinal.domain.enumeration.StoreCategory;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,12 +32,13 @@ public class Store extends BaseModel {
     @Column
     private Boolean isActive;
 
+//
+//    @ToString.Exclude
+//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="store")
+//    Set<StoreItem> menuItems;
 
-    @ToString.Exclude
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="store")
-    Set<StoreItem> menuItems;
 
-
-
+    @Column
+    private String storeCategory;
 
 }
