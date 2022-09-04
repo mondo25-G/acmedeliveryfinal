@@ -1,6 +1,5 @@
 package com.service.acmedeliveryfinal.domain;
 
-import com.service.acmedeliveryfinal.base.BaseComponent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,7 +11,7 @@ import java.io.Serializable;
 @Setter
 @ToString
 @MappedSuperclass
-public abstract class BaseModel  implements Serializable {
+public abstract class BaseEntity  implements Serializable {
 
     @Serial
     private static final Long serialVersionUID = 1L;
