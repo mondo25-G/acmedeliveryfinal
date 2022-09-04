@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 @Getter
-@Setter
 @ToString
 @MappedSuperclass
 public abstract class BaseEntity  implements Serializable {
