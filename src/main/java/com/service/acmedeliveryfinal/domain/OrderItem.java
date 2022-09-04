@@ -14,8 +14,8 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "ORDERITEMS")
 public class OrderItem extends BaseEntity{
-    @OneToMany(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "fk_storeMenuItem")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "fk_storeItem")
     private StoreItem storeItem;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
