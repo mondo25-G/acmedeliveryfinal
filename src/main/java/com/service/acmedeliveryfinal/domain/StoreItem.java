@@ -8,24 +8,27 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @ToString(callSuper = true)
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "STORE_ITEMS")
-public class StoreItem extends BaseModel {
+@Table(name = "PRODUCTS")
+
+
+public class StoreItem extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @ToString.Exclude
-    private Product product;
-
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @ToString.Exclude
+    @JoinColumn(name = "fk_store")
     private Store store;
 
-    @Column(nullable = false)
-    private Integer stock;
+    @Enumerated(EnumType.STRING)
+    private ProductCategory productCategory;
+
+    @Column(nullable = false, unique = true)
+    String name; //difference in Name
 
     @Column(precision = 10, scale = 2, nullable = false)
-    private BigDecimal price;
+    BigDecimal price; //difference in price, but same name
+
 }
+
