@@ -1,5 +1,6 @@
 package com.service.acmedeliveryfinal.service;
 
+import com.service.acmedeliveryfinal.domain.Store;
 import com.service.acmedeliveryfinal.domain.StoreItem;
 import com.service.acmedeliveryfinal.repository.StoreItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,11 @@ public class StoreItemServiceImpl extends BaseServiceImpl<StoreItem> implements 
     @Override
     public JpaRepository<StoreItem , Long> getRepository(){
         return storeItemRepository;
+    }
+
+    @Override
+    public List<StoreItem> getMenu(Store store) {
+        return storeItemRepository.findByStore(store);
     }
 
     @Override
