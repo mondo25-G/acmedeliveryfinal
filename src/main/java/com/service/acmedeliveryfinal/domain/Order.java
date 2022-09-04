@@ -11,21 +11,21 @@ import java.util.Set;
 
 @Getter
 @Setter
+@ToString(callSuper = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="ORDERS")
-@ToString(callSuper = true)
-public class Order extends BaseModel {
-
-    @ManyToOne(fetch =  FetchType.LAZY, optional = false)
-    @JoinColumn(name="fk_store")
-    private Store store;
+@Table(name = "ORDERS")
+public class Order extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "fk_account")
     private Account account;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "fk_store")
+    private Store store;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
