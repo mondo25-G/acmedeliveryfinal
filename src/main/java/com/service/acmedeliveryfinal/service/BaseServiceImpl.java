@@ -1,7 +1,7 @@
 package com.service.acmedeliveryfinal.service;
 
 import com.service.acmedeliveryfinal.base.BaseComponent;
-import com.service.acmedeliveryfinal.domain.BaseModel;
+import com.service.acmedeliveryfinal.domain.BaseEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
-public abstract class BaseServiceImpl<T extends BaseModel> extends BaseComponent implements BaseService<T> {
+public abstract class BaseServiceImpl<T extends BaseEntity> extends BaseComponent implements BaseService<T> {
     public abstract JpaRepository<T, Long> getRepository();
 
     @Override

@@ -1,11 +1,12 @@
 package com.service.acmedeliveryfinal.service;
 
+import com.service.acmedeliveryfinal.domain.BaseEntity;
 import com.service.acmedeliveryfinal.domain.BaseModel;
 
 import java.util.List;
 
 
-public interface BaseService<T extends BaseModel> {
+public interface BaseService<T extends BaseEntity> {
 
     T create(final T entity);
 
