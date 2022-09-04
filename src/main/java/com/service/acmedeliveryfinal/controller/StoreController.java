@@ -1,10 +1,9 @@
 package com.service.acmedeliveryfinal.controller;
 
-import com.service.acmedeliveryfinal.domain.Product;
+
 import com.service.acmedeliveryfinal.domain.Store;
 import com.service.acmedeliveryfinal.domain.enumeration.StoreCategory;
-import com.service.acmedeliveryfinal.service.ProductServiceImpl;
-import com.service.acmedeliveryfinal.service.StoreServiceImpl;
+import com.service.acmedeliveryfinal.service.StoreService;
 import com.service.acmedeliveryfinal.transfer.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,7 @@ import java.util.List;
 @RequestMapping("stores")
 public class StoreController {
 
-    private final StoreServiceImpl storeService;
+    private final StoreService storeService;
 
     //CRUD
 
@@ -34,8 +33,8 @@ public class StoreController {
 
     @GetMapping("/getByCategory")
     public ResponseEntity<ApiResponse<List<Store>>> getStoresByCategory(@RequestParam String category) {
-        StoreCategory StoreCategoryEnum = StoreCategory.valueOf(category);
-        final List<Store> storesByCategory = storeService.getStoresByCategory(StoreCategoryEnum);
+        StoreCategory storeCategoryEnum = StoreCategory.valueOf(category);
+        final List<Store> storesByCategory = storeService.getStoresByCategory(storeCategoryEnum);
         return ResponseEntity.ok(ApiResponse.<List<Store>>builder().data(storesByCategory).build());
 
     }
