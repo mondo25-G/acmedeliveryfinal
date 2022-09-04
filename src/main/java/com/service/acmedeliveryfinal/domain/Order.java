@@ -19,13 +19,13 @@ import java.util.Set;
 @ToString(callSuper = true)
 public class Order extends BaseModel {
 
-   /* @ManyToOne(fetch =  FetchType.LAZY, optional = false)
+    @ManyToOne(fetch =  FetchType.LAZY, optional = false)
     @JoinColumn(name="fk_store")
     private Store store;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "fk_account")
-    private Account account; */ //Implementation of Store, Account
+    private Account account;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
