@@ -1,7 +1,6 @@
 package com.service.acmedeliveryfinal.service;
 
 import com.service.acmedeliveryfinal.domain.BaseEntity;
-import com.service.acmedeliveryfinal.domain.BaseModel;
 
 import java.util.List;
 
