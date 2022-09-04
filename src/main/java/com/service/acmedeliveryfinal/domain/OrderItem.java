@@ -7,21 +7,25 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
+@ToString(callSuper = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true)
 @Entity
-@Table(name = "ORDER_ITEMS")
-public class OrderItem extends BaseModel {
+@Table(name = "ORDERITEMS")
+public class OrderItem extends BaseEntity{
+    @OneToMany(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "fk_storeMenuItem")
+    private StoreItem storeItem;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "fk_order")
-	private Order order;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "fk_order")
+    private Order order;
 
-	@Column(nullable = false)
-	private Integer quantity;
+    @Column(nullable = false)
+    private Integer quantity;
 
-	@Column(precision = 10, scale = 2,nullable = false)
-	private BigDecimal price;
+    @Column(precision = 10, scale = 2,nullable = false)
+    private BigDecimal price;
+
 }
