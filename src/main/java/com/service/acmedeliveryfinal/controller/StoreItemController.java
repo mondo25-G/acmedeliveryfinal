@@ -1,7 +1,8 @@
 package com.service.acmedeliveryfinal.controller;
 
-import com.service.acmedeliveryfinal.domain.Product;
-import com.service.acmedeliveryfinal.service.ProductServiceImpl;
+
+import com.service.acmedeliveryfinal.domain.StoreItem;
+import com.service.acmedeliveryfinal.service.StoreItemService;
 import com.service.acmedeliveryfinal.transfer.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,17 +16,17 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("products")
-public class ProductController {
+public class StoreItemController {
 
-    private final ProductServiceImpl productService;
+    private final StoreItemService storeItemService;
 
     //CRUD
 
     @GetMapping("/getTopProductsByRanking")
-    public ResponseEntity<ApiResponse<List<Product>>> getTopProductsByRanking(@RequestParam Integer rankingThreshold) {
+    public ResponseEntity<ApiResponse<List<StoreItem>>> getTopProductsByRanking(@RequestParam Integer rankingThreshold) {
 
-        final List<Product> topProductsByRanking = productService.topProductsByRanking(rankingThreshold);
-        return ResponseEntity.ok(ApiResponse.<List<Product>>builder().data(topProductsByRanking).build());
+        final List<StoreItem> topProductsByRanking = storeItemService.topProductsByRanking(rankingThreshold);
+        return ResponseEntity.ok(ApiResponse.<List<StoreItem>>builder().data(topProductsByRanking).build());
 
     }
 }
