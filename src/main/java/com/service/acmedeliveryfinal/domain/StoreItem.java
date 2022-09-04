@@ -1,5 +1,6 @@
 package com.service.acmedeliveryfinal.domain;
 
+import com.service.acmedeliveryfinal.domain.enumeration.ProductCategory;
 import lombok.*;
 
 import javax.persistence.*;
