@@ -14,7 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name = "ACCOUNTS")
-public class Account extends BaseModel{
+public class Account extends BaseEntity{
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -31,7 +31,6 @@ public class Account extends BaseModel{
     @Column(nullable = false)
     private String mobile;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch=FetchType.LAZY, mappedBy="account")
-    private Set<Address> addresses;
+    private String address; //until requirements are met.
 
 }
