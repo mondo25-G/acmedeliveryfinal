@@ -29,20 +29,5 @@ public class AccountServiceImpl extends BaseServiceImpl<Account> implements Acco
         return accountRepository;
     }
 
-    //Deal here with aggregates. The same logic applies for PaymentCard aggregate if
-    //we choose to implement it.
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
-    public void addAddress(Account account, Address deliveryAddress) {
-        if (account.getAddresses()==null){
-            account.setAddresses(new LinkedHashSet<>());
-        }
-        account.getAddresses().add(deliveryAddress);
-        deliveryAddress.setAccount(account);
-        update(account);
-    }
 
-
-
-    //end of aggregates
 }
