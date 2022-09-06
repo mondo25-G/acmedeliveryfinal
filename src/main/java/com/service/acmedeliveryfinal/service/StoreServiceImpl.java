@@ -15,15 +15,23 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreService{
 
+    private Store loggedStore;
     private final StoreRepository storeRepository;
     @Override
     public JpaRepository<Store, Long> getRepository() {return storeRepository;}
 
+    @Override
+    public Store getStore( final Long id){
+        loggedStore = storeRepository.findById(id).get();
+        return loggedStore;
+    }
 
+    @Override
     public List<Store> getStoresByName(String name){
         return storeRepository.getStoresByName(name);
     }
 
+    @Override
     public List<Store> getStoresByCategory(StoreCategory category){
         return storeRepository.getStoresByCategory(category.toString());
     }
