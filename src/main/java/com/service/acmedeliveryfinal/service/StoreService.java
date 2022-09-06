@@ -9,4 +9,6 @@ public interface StoreService extends BaseService<Store>{
     List<Store> getStoresByName(String name);
 
     List<Store> getStoresByCategory(StoreCategory storeCategoryEnum);
+
+    Store getStore(Long id);
 }
