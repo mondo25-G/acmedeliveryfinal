@@ -1,7 +1,6 @@
 package com.service.acmedeliveryfinal.repository;
 
 import com.service.acmedeliveryfinal.domain.Store;
-import com.service.acmedeliveryfinal.domain.enumeration.StoreCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
