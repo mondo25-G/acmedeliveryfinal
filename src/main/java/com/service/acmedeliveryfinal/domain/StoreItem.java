@@ -1,9 +1,10 @@
 package com.service.acmedeliveryfinal.domain;
 
-import com.service.acmedeliveryfinal.domain.enumeration.ProductCategory;
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Getter
@@ -13,23 +14,27 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "PRODUCTS")
+@Table(name = "STOREITEMS")
 
 
 public class StoreItem extends BaseEntity {
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_store")
+    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "store_id")
+    @JsonIgnore
     private Store store;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "productCategory_id")
     private ProductCategory productCategory;
 
-    @Column(nullable = false, unique = true)
-    String name; //difference in Name
+    @NotNull
+    @Column
+    private String itemName;
 
-    @Column(precision = 10, scale = 2, nullable = false)
-    BigDecimal price; //difference in price, but same name
+    @NotNull
+    @Column(precision = 10, scale = 2)
+    private BigDecimal price;
 
 }
-
