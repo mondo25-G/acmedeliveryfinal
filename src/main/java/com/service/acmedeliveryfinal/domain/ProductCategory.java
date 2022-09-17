@@ -6,7 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 @Entity
-@Table(name = "PRODUCT_CATEGORY")
+@Table(name = "PRODUCT_CATEGORIES")
 @Getter
 @Setter
 @Builder
