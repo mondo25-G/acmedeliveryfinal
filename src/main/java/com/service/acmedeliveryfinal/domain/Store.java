@@ -38,11 +38,11 @@ public class Store extends BaseEntity {
     @Column
     private String phoneNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false,cascade = CascadeType.MERGE)
     @JoinColumn(name = "storecategory_id")
     private StoreCategory category;
 
-    @OneToMany(cascade=CascadeType.ALL, orphanRemoval = true, mappedBy="store", fetch = FetchType.LAZY)
+    @OneToMany(cascade=CascadeType.ALL, orphanRemoval = true, mappedBy="store", fetch = FetchType.EAGER)
     private Set<@NotNull StoreItem> storeItems;
 
 }
