@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,19 +22,18 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     @Override
     public JpaRepository<Store, Long> getRepository() {return storeRepository;}
 
+
     @Override
-    public Store getStore( final Long id){
-        loggedStore = storeRepository.findById(id).get();
-        return loggedStore;
+    public Store getLazy(Long id) {
+            Optional<Store> store = storeRepository.getLazy(id);
+            if (store.isPresent()) {
+                return store.get();
+            }
+            throw new NoSuchElementException(String.format("There was no store found matching id %d.", id));
     }
 
     @Override
-    public List<Store> getStoresByName(String name){
-        return storeRepository.getStoresByName(name);
-    }
-
-    @Override
-    public List<Store> getStoresByCategory(StoreCategory category){
-        return storeRepository.getStoresByCategory(category.toString());
+    public List<Store> getLazyAll() {
+        return storeRepository.getLazyAll();
     }
 }
