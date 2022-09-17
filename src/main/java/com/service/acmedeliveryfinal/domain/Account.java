@@ -1,10 +1,10 @@
 package com.service.acmedeliveryfinal.domain;
 
+import javax.validation.constraints.NotNull;
 import lombok.*;
-
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Getter
 @Setter
@@ -13,24 +13,32 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "ACCOUNTS")
+@Table(name = "ACCOUNTS", indexes = {@Index(name = "ACCOUNT_IDX_01", columnList = "email")})
 public class Account extends BaseEntity{
 
-    @Column(nullable = false, unique = true)
+    @NotNull
+    @Column(unique = true)
     private String email;
 
-    @Column(nullable = false)
+    @NotNull
+    @Column
+    @JsonIgnore
     private String password;
 
-    @Column(nullable = false)
+    @NotNull
+    @Column
     private String firstName;
 
-    @Column(nullable = false)
+    @NotNull
+    @Column
     private String lastName;
 
-    @Column(nullable = false)
-    private String mobile;
+    @NotNull
+    @Column
+    private String phoneNumber;
 
-    private String address; //until requirements are met.
+    @NotNull
+    @Column
+    private String address;
 
 }
