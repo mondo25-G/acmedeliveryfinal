@@ -2,7 +2,6 @@ package com.service.acmedeliveryfinal.service;
 
 
 import com.service.acmedeliveryfinal.domain.Store;
-import com.service.acmedeliveryfinal.domain.enumeration.StoreCategory;
 import com.service.acmedeliveryfinal.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
