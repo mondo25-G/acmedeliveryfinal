@@ -18,7 +18,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreService{
 
-    private Store loggedStore;
     private final StoreRepository storeRepository;
     @Override
     public JpaRepository<Store, Long> getRepository() {return storeRepository;}
