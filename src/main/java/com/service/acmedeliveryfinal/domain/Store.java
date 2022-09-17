@@ -1,11 +1,12 @@
 package com.service.acmedeliveryfinal.domain;
 
-import com.service.acmedeliveryfinal.domain.enumeration.StoreCategory;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Set;
+import javax.validation.constraints.NotNull;
 
+
+import java.util.Set;
 
 @Entity
 @Getter
@@ -14,20 +15,34 @@ import java.util.Set;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "STORES")
+@Table(name = "STORES", indexes = {@Index(name = "STORE_IDX_01", columnList = "storename")})
 public class Store extends BaseEntity {
 
+    @NotNull
+    @Column(unique = true)
+    private String storeName;
 
-    @Column(nullable = false)
-    String storeName;
+    @NotNull
+    @Column
+    private String emailAddress;
 
+    @NotNull
+    @Column
+    private String address;
 
-    @ToString.Exclude
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="store")
-    Set<StoreItem> menuItems;
+    @NotNull
+    @Column
+    private String city;
 
+    @NotNull
+    @Column
+    private String phoneNumber;
 
-    @Enumerated(EnumType.STRING)
-    StoreCategory storeCategory;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "storecategory_id")
+    private StoreCategory category;
+
+    @OneToMany(cascade=CascadeType.ALL, orphanRemoval = true, mappedBy="store", fetch = FetchType.LAZY)
+    private Set<@NotNull StoreItem> storeItems;
 
 }
