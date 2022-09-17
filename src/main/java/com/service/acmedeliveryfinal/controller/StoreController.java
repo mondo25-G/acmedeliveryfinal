@@ -2,7 +2,7 @@ package com.service.acmedeliveryfinal.controller;
 
 
 import com.service.acmedeliveryfinal.domain.Store;
-import com.service.acmedeliveryfinal.domain.enumeration.StoreCategory;
+import com.service.acmedeliveryfinal.domain.StoreCategory;
 import com.service.acmedeliveryfinal.service.StoreService;
 import com.service.acmedeliveryfinal.transfer.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("stores")
@@ -23,19 +24,19 @@ public class StoreController {
 
     //CRUD
 
-    @GetMapping("/getByName")
-    public ResponseEntity<ApiResponse<List<Store>>> getStoresByName(@RequestParam String name) {
 
-        final List<Store> storesByName = storeService.getStoresByName(name);
-        return ResponseEntity.ok(ApiResponse.<List<Store>>builder().data(storesByName).build());
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<Store>>getStore( Long id ) {
+
+        return ResponseEntity.ok(ApiResponse.<Store>builder().data(storeService.getLazy(id)).build());
+
+    }
+
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<Store>>>getStores( ) {
+
+        return ResponseEntity.ok(ApiResponse.<List<Store>>builder().data(storeService.getLazyAll()).build());
 
     }
 
-    @GetMapping("/getByCategory")
-    public ResponseEntity<ApiResponse<List<Store>>> getStoresByCategory(@RequestParam String category) {
-        StoreCategory storeCategoryEnum = StoreCategory.valueOf(category);
-        final List<Store> storesByCategory = storeService.getStoresByCategory(storeCategoryEnum);
-        return ResponseEntity.ok(ApiResponse.<List<Store>>builder().data(storesByCategory).build());
-
-    }
 }
