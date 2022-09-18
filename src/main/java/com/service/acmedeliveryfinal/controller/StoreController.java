@@ -2,15 +2,11 @@ package com.service.acmedeliveryfinal.controller;
 
 
 import com.service.acmedeliveryfinal.domain.Store;
-import com.service.acmedeliveryfinal.domain.StoreCategory;
 import com.service.acmedeliveryfinal.service.StoreService;
 import com.service.acmedeliveryfinal.transfer.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,14 +22,14 @@ public class StoreController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<Store>>getStore( Long id ) {
+    public ResponseEntity<ApiResponse<Store>>getStore(@PathVariable("id") final Long id ) {
 
         return ResponseEntity.ok(ApiResponse.<Store>builder().data(storeService.getLazy(id)).build());
 
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<Store>>>getStores( ) {
+    public ResponseEntity<ApiResponse<List<Store>>>getStores() {
 
         return ResponseEntity.ok(ApiResponse.<List<Store>>builder().data(storeService.getLazyAll()).build());
 
