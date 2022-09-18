@@ -1,8 +1,8 @@
 package com.service.acmedeliveryfinal.domain;
 
 import lombok.*;
-import net.minidev.json.annotate.JsonIgnore;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -15,8 +15,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Entity
 @Table(name = "STOREITEMS")
-
-
 public class StoreItem extends BaseEntity {
 
     @ToString.Exclude
