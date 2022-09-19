@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 
 @Component
@@ -93,7 +94,7 @@ public class StoreContentCreator extends BaseComponent implements CommandLineRun
 
         Store sogno = storeService.create(Store.builder().storeName("SOGNO").city("ΚΗΦΙΣΙΑ").address("ΦΡΑΓΚΟΠΟΥΛΟΥ 30,14561").phoneNumber("2100000001").emailAddress("sogno@gmail.com").category(storeCategoryService.get(1L)).build());
 
-        List<StoreItem> sognoMenu = List.of(
+        Set<StoreItem> sognoMenu = Set.of(
                 StoreItem.builder().itemName("MARGHERITA").price(BigDecimal.valueOf(7.60)).productCategory(productCategoryService.get(5L)).build(),
                 StoreItem.builder().itemName("SPECIAL").price(BigDecimal.valueOf(11.50)).productCategory(productCategoryService.get(5L)).build(),
                 StoreItem.builder().itemName("AMERICANA").price(BigDecimal.valueOf(12.50)).productCategory(productCategoryService.get(5L)).build(),
@@ -109,7 +110,7 @@ public class StoreContentCreator extends BaseComponent implements CommandLineRun
 
         Store burgeria = storeService.create(Store.builder().storeName("BURGERIA").city("Ν.ΗΡΑΚΛΕΙΟ").address("ΗΛΕΚΤΡΑΣ ΑΠΟΣΤΟΛΟΥ 62, 14122").phoneNumber("2100000002").emailAddress("burgheria@gmail.com").category(storeCategoryService.get(2L)).build());
 
-        List<StoreItem> burgeriaMenu = List.of(
+        Set<StoreItem> burgeriaMenu = Set.of(
                 StoreItem.builder().itemName("CLASSIC BURGER").price(BigDecimal.valueOf(6.90)).productCategory(productCategoryService.get(7L)).build(),
                 StoreItem.builder().itemName("CHEESE AND BACON BURGER").price(BigDecimal.valueOf(7.50)).productCategory(productCategoryService.get(7L)).build(),
                 StoreItem.builder().itemName("THE OLD SCHOOL BURGER").price(BigDecimal.valueOf(10.90)).productCategory(productCategoryService.get(7L)).build(),
@@ -121,9 +122,9 @@ public class StoreContentCreator extends BaseComponent implements CommandLineRun
 
         storeService.addItems(storeService.get(3L), burgeriaMenu);
 
-        Store burgery = storeService.create(Store.builder().storeName("BURGERY").city("ΠΕΥΚΗ").address("ΔΗΜΟΚΡΑΤΙΑΣ 3, 151212").phoneNumber("2100000003").emailAddress("burgery@gmail.com").category(storeCategoryService.get(2L)).build());
+        Store burgery = storeService.create(Store.builder().storeName("FATTO A MANO").city("ΠΕΥΚΗ").address("ΔΗΜΟΚΡΑΤΙΑΣ 3, 151212").phoneNumber("2100000003").emailAddress("burgery@gmail.com").category(storeCategoryService.get(2L)).build());
 
-        List<StoreItem> burgeryMenu = List.of(
+        Set<StoreItem> burgeryMenu = Set.of(
                 StoreItem.builder().itemName("CLASSIC CHEESEBURGER").price(BigDecimal.valueOf(7.90)).productCategory(productCategoryService.get(7L)).build(),
                 StoreItem.builder().itemName("BLUE BACON BURGER").price(BigDecimal.valueOf(8.90)).productCategory(productCategoryService.get(7L)).build(),
                 StoreItem.builder().itemName("JUST MUST BURGER").price(BigDecimal.valueOf(8.90)).productCategory(productCategoryService.get(7L)).build(),
@@ -150,7 +151,7 @@ public class StoreContentCreator extends BaseComponent implements CommandLineRun
 
         Store streetSouvlaki = storeService.create(Store.builder().storeName("STREET SOUVLAKI").city("ΑΘΗΝΑ").address("ΚΟΛΟΚΟΤΡΩΝΗ 30, 10561").phoneNumber("2100000004").emailAddress("streetsouvlaki@gmail.com").category(storeCategoryService.get(4L)).build());
 
-        List<StoreItem> streetSouvlakiMenu = List.of(
+        Set<StoreItem> streetSouvlakiMenu = Set.of(
                 StoreItem.builder().itemName("ΚΑΛΑΜΑΚΙ ΧΟΙΡΙΝΟ").price(BigDecimal.valueOf(2.00)).productCategory(productCategoryService.get(11L)).build(),
                 StoreItem.builder().itemName("ΚΑΛΑΜΑΚΙ ΚΟΤΟΠΟΥΛΟ").price(BigDecimal.valueOf(2.00)).productCategory(productCategoryService.get(11L)).build(),
                 StoreItem.builder().itemName("ΚΟΤΟΜΠΕΙΚΟΝ").price(BigDecimal.valueOf(2.20)).productCategory(productCategoryService.get(11L)).build(),
@@ -170,7 +171,7 @@ public class StoreContentCreator extends BaseComponent implements CommandLineRun
 
         Store pitaPan = storeService.create(Store.builder().storeName("PITA PAN").city("ΑΘΗΝΑ").address("ΛΕΩΦΟΡΟΣ ΒΟΥΛΙΑΓΜΕΝΗΣ 276, 17343").phoneNumber("2100000005").emailAddress("pitapan@gmail.com").category(storeCategoryService.get(4L)).build());
 
-        List<StoreItem> pitaPanMenu = List.of(
+        Set<StoreItem> pitaPanMenu = Set.of(
                 StoreItem.builder().itemName("ΓΥΡΟΣ ΧΟΙΡΙΝΟΣ ΣΕ ΠΙΤΑ").price(BigDecimal.valueOf(3.20)).productCategory(productCategoryService.get(14L)).build(),
                 StoreItem.builder().itemName("ΦΡΕΣΚΟ ΚΑΛΑΜΑΚΙ ΧΟΙΡΙΝΟ").price(BigDecimal.valueOf(1.90)).productCategory(productCategoryService.get(14L)).build(),
                 StoreItem.builder().itemName("ΚΕΜΠΑΠ ΣΕ ΠΙΤΑ").price(BigDecimal.valueOf(2.20)).productCategory(productCategoryService.get(14L)).build(),
@@ -188,7 +189,7 @@ public class StoreContentCreator extends BaseComponent implements CommandLineRun
 
         Store malePlus = storeService.create(Store.builder().storeName("MALE PLUS-ΔΑΦΝΗ").city("ΑΘΗΝΑ").address("ΕΛΛΗΣ 15, 17235").phoneNumber("2100000006").emailAddress("maleplus@gmail.com").category(storeCategoryService.get(3L)).build());
 
-        List<StoreItem> malePlusMenu = List.of(
+        Set<StoreItem> malePlusMenu = Set.of(
                 StoreItem.builder().itemName("FREDDO ESPRESSO").price(BigDecimal.valueOf(2.00)).productCategory(productCategoryService.get(19L)).build(),
                 StoreItem.builder().itemName("ESPRESSO RISTRETTO").price(BigDecimal.valueOf(1.40)).productCategory(productCategoryService.get(19L)).build(),
                 StoreItem.builder().itemName("FRAPPE").price(BigDecimal.valueOf(1.70)).productCategory(productCategoryService.get(19L)).build(),
@@ -203,7 +204,7 @@ public class StoreContentCreator extends BaseComponent implements CommandLineRun
         storeService.addItems(storeService.get(7L), malePlusMenu);
 
         Store kobra = storeService.create(Store.builder().storeName("KOBRA-ΑΚΑΔΗΜΙΑ").city("ΑΘΗΝΑ").address("ΝΑΥΑΡΙΝΟΥ 11,10679").phoneNumber("2100000007").emailAddress("kobra@gmail.com").category(storeCategoryService.get(3L)).build());
-        List<StoreItem>  kobraMenu= List.of(
+        Set<StoreItem>  kobraMenu= Set.of(
                 StoreItem.builder().itemName("ICED TEA").price(BigDecimal.valueOf(3.00)).productCategory(productCategoryService.get(21L)).build(),
                 StoreItem.builder().itemName("ICED TEA ΦΑΣΚΟΜΗΛΟ").price(BigDecimal.valueOf(4.70)).productCategory(productCategoryService.get(21L)).build(),
                 StoreItem.builder().itemName("ΙCED TEA FLORIDA").price(BigDecimal.valueOf(5.50)).productCategory(productCategoryService.get(21L)).build(),
