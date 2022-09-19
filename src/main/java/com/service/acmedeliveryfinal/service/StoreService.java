@@ -5,6 +5,7 @@ import com.service.acmedeliveryfinal.domain.StoreCategory;
 import com.service.acmedeliveryfinal.domain.StoreItem;
 
 import java.util.List;
+import java.util.Set;
 
 
 public interface StoreService extends BaseService<Store>{
@@ -12,7 +13,7 @@ public interface StoreService extends BaseService<Store>{
 
     List<Store> getLazyAll();
 
-    void addItems(Store store, List<StoreItem> items);
+    void addItems(Store store, Set<StoreItem> items);
 
     void addItem(Long id, StoreItem item);
 
