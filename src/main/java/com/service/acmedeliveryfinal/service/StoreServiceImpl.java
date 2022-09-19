@@ -2,7 +2,9 @@ package com.service.acmedeliveryfinal.service;
 
 
 import com.service.acmedeliveryfinal.domain.Store;
+import com.service.acmedeliveryfinal.domain.StoreCategory;
 import com.service.acmedeliveryfinal.domain.StoreItem;
+import com.service.acmedeliveryfinal.repository.StoreCategoryRepository;
 import com.service.acmedeliveryfinal.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,6 +21,8 @@ import java.util.Optional;
 public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreService{
 
     private final StoreRepository storeRepository;
+
+    private final StoreCategoryRepository storeCategoryRepository;
     @Override
     public JpaRepository<Store, Long> getRepository() {return storeRepository;}
 
@@ -76,5 +80,10 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         store.getStoreItems().add(item);
 
         storeRepository.save(store);
+    }
+
+    @Override
+    public List<StoreCategory> getAllStoreCategories() {
+        return storeCategoryRepository.findAll();
     }
 }
