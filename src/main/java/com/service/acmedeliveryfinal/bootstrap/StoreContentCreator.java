@@ -44,7 +44,9 @@ public class StoreContentCreator extends BaseComponent implements CommandLineRun
 
         List<StoreCategory> storeCategories = List.of(
                 StoreCategory.builder().name("Pizzeria").build(),
-                StoreCategory.builder().name("Burgers").build()
+                StoreCategory.builder().name("Burgers").build(),
+                StoreCategory.builder().name("CoffeeShop").build(),
+                StoreCategory.builder().name("Souvlakia").build()
         );
         logger.info("Create Store Categories:{}", storeCategoryService.createAll(storeCategories));
 
@@ -132,7 +134,7 @@ public class StoreContentCreator extends BaseComponent implements CommandLineRun
         //storeService.updateItem(1L,StoreItem.builder().itemName("BBQ").price(BigDecimal.valueOf(14.00)).productCategory(productCategoryService.get(1L)).build() );
 
         //ok cascades only to storeItems.
-        storeService.delete(storeService.get(1L));
+        //storeService.delete(storeService.get(1L));
 
     }
 }
