@@ -19,7 +19,7 @@ import java.util.Set;
 public class Store extends BaseEntity {
 
     @NotNull
-    @Column(unique = true)
+    @Column
     private String storeName;
 
     @NotNull
@@ -35,7 +35,7 @@ public class Store extends BaseEntity {
     private String city;
 
     @NotNull
-    @Column
+    @Column(unique = true)
     private String phoneNumber;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false,cascade = CascadeType.MERGE)
