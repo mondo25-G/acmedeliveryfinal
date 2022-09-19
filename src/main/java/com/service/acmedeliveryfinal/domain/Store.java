@@ -42,7 +42,7 @@ public class Store extends BaseEntity {
     @JoinColumn(name = "storecategory_id")
     private StoreCategory category;
 
-    @OneToMany(cascade=CascadeType.ALL, orphanRemoval = true, mappedBy="store", fetch = FetchType.EAGER)
+    @OneToMany(cascade=CascadeType.ALL, orphanRemoval = true, mappedBy="store", fetch = FetchType.LAZY)
     private Set<@NotNull StoreItem> storeItems;
 
 }
