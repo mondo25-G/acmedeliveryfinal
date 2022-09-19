@@ -11,10 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -42,12 +39,9 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     }
 
     @Override
-    public void addItems(Store store, List<StoreItem> items) {
-        for (StoreItem item : items)
-        {
-            store.getStoreItems().add(item);
-            item.setStore(store);
-        }
+    public void addItems(Store store, Set<StoreItem> items) {
+        store.setStoreItems(items);
+        items.forEach(item -> item.setStore(store));
         storeRepository.save(store);
     }
 
