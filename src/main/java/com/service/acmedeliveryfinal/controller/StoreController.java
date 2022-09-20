@@ -50,5 +50,9 @@ public class StoreController {
     }
 
     //getStoresByCategory
+    @GetMapping("/categories/{id}")
+    public ResponseEntity<ApiResponse<List<Store>>> byCategory(@PathVariable("id") final Long id){
+        return ResponseEntity.ok(ApiResponse.<List<Store>>builder().data(storeService.getStoresByCategoryId(id)).build());
+    }
 
 }
