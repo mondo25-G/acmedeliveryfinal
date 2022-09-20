@@ -4,6 +4,8 @@ import com.service.acmedeliveryfinal.domain.Account;
 import com.service.acmedeliveryfinal.domain.Order;
 import com.service.acmedeliveryfinal.domain.Store;
 import com.service.acmedeliveryfinal.domain.StoreItem;
+import com.service.acmedeliveryfinal.domain.enumeration.PaymentMethod;
+
 
 public interface OrderService extends BaseService<Order> {
     Order initiateOrder(Store store, Account account);
@@ -16,4 +18,7 @@ public interface OrderService extends BaseService<Order> {
 
     //Remove Item from Order
     Order removeItem(Order order, StoreItem item);
+
+    //Completion of Order and Creation
+    Order checkout(Order order, PaymentMethod paymentMethod);
 }
