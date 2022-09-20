@@ -1,5 +1,6 @@
 package com.service.acmedeliveryfinal.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,8 +19,10 @@ public class OrderItem extends BaseEntity{
     @JoinColumn(name = "fk_storeItem")
     private StoreItem storeItem;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ToString.Exclude
+    @ManyToOne( fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "fk_order")
+    @JsonIgnore
     private Order order;
 
     @Column(nullable = false)
