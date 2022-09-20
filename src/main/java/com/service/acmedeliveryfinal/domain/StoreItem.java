@@ -23,6 +23,8 @@ public class StoreItem extends BaseEntity {
     @JsonIgnore
     private Store store;
 
+    @ToString.Exclude
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "productCategory_id")
     private ProductCategory productCategory;
