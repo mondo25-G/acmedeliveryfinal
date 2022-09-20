@@ -1,5 +1,6 @@
 package com.service.acmedeliveryfinal.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -38,6 +39,8 @@ public class Store extends BaseEntity {
     @Column(unique = true)
     private String phoneNumber;
 
+    @ToString.Exclude
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false,cascade = CascadeType.MERGE)
     @JoinColumn(name = "storecategory_id")
     private StoreCategory category;
