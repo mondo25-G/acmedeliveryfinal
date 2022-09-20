@@ -25,13 +25,13 @@ public class Order extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "fk_store")
+    @ToString.Exclude
     private Store store;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date submittedDate;
 
-    @ToString.Exclude
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch=FetchType.LAZY, mappedBy="order")
     private Set<OrderItem> orderItems;
 
