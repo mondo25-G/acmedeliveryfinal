@@ -18,4 +18,9 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
     @Query("select distinct s from Store s join fetch s.storeItems si join fetch s.category join fetch si.productCategory")
     @QueryHints(@QueryHint(name = org.hibernate.jpa.QueryHints.HINT_PASS_DISTINCT_THROUGH, value = "false"))
     List<Store> getLazyAll();
+
+    @Query("select distinct s from Store s join fetch s.category c join fetch s.storeItems si join fetch si.productCategory where s.storeName like %:name% or c.name like %:name%")
+    @QueryHints(@QueryHint(name = org.hibernate.jpa.QueryHints.HINT_PASS_DISTINCT_THROUGH, value = "false"))
+    List<Store> findStoresByNameOrCategory(String name);
+
 }

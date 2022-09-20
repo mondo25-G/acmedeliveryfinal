@@ -5,6 +5,7 @@ import com.service.acmedeliveryfinal.domain.Store;
 import com.service.acmedeliveryfinal.domain.StoreCategory;
 import com.service.acmedeliveryfinal.service.StoreService;
 import com.service.acmedeliveryfinal.transfer.ApiResponse;
+import com.service.acmedeliveryfinal.transfer.KeyValue;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,5 +43,12 @@ public class StoreController {
 
         return ResponseEntity.ok(ApiResponse.<List<StoreCategory>>builder().data(storeService.getAllStoreCategories()).build());
     }
+
+    @GetMapping("search")
+    public ResponseEntity<ApiResponse<List<KeyValue<Long, String>>>> search(@RequestParam String searchString){
+        return ResponseEntity.ok(ApiResponse.<List<KeyValue<Long, String>>>builder().data(storeService.getStoresDropdownList(searchString)).build());
+    }
+
+    //getStoresByCategory
 
 }
