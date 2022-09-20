@@ -21,19 +21,21 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
 
     private final OrderRepository orderRepository;
 
+    private final StoreItemService storeItemService;
+
     @Override
     public JpaRepository<Order, Long> getRepository() {
         return orderRepository;
     }
 
 
-    //Methods for the Initiation, Update , and Creation of Order
+    //Methods for the Initiation, Update, and Creation of Order
 
     @Override
     public Order initiateOrder(Store store, Account account) {
 
         if (account == null){throw new IllegalStateException("Customer cannot be null");}
-        logger.info("Initiating Order: {} {} " , account,store);
+        logger.info("Initiating Order for {}  " , account);
         return Order.builder().account(account).store(store).orderItems(new HashSet<>()).build();
 
     }
@@ -41,14 +43,15 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
     //Add new Item to Order
     @Override
     public Order addItem(Order order, StoreItem item, int quantity) {
+        logger.info("Item: {} ", item.getId());
 
         if (checkNullability(order, item)) {return order;}
 
-        if(checkStore(order, item)) {return order;}
+        if (checkStore(order, item)) {return order;}
 
         boolean increasedQuantity = false;
 
-        // If product is already contained in the order, don't add it again, just increase the quantity accordingly
+        // If product is already in order, increase quantity
         for (OrderItem oi : order.getOrderItems()) {
             if (oi.getStoreItem().getId().equals(item.getId())) {
                 oi.setQuantity(oi.getQuantity() + quantity);
@@ -61,22 +64,19 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
             order.getOrderItems().add(newOrderItem(order, item, quantity));
         }
 
-        logger.debug("Product[{}] added to Order[{}]", item, order);
+        logger.debug("StoreItem[{}] added to Order[{}]", item, order);
         return order;
     }
 
 
 
-    //Update the Item in the Order
+    //Update the Item in the Order , Nullability, Store and Quantity validation
     @Override
     public Order updateItem(Order order, StoreItem item, int quantity) {
-        if (checkNullability(order, item)) {return order;}
-        if(checkStore(order, item)) {return order;}
 
-        if (quantity<1){
-            removeItem(order, item);
-            return order;
-        }
+        if (checkNullability(order, item)) {return order;}
+        if (checkStore(order, item)) {return order;}
+        if (quantity<1){removeItem(order, item); return order;}
 
         order.getOrderItems().removeIf(oi -> oi.getStoreItem().getId().equals(item.getId()));
         order.getOrderItems().add(newOrderItem(order, item, quantity));
@@ -85,56 +85,70 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
         return order;
     }
 
-    //Remove Item from Order
+
+
+    //Remove Item from Order, Nullability and Store validation
     @Override
     public Order removeItem(Order order, StoreItem item) {
         if (checkNullability(order, item)) {return order;}
-        if(checkStore(order, item)) {return order;}
+        if (checkStore(order, item)) {return order;}
 
         order.getOrderItems().removeIf(oi -> oi.getStoreItem().getId().equals(item.getId()));
         logger.debug("Product[{}] removed from Order[{}]", item, order);
         return order;
     }
 
-    //Completion of Order and Creation
+
+    // Order Validation, Set proper values to fields and finalize order by create (save in database)
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
     public Order checkout(Order order, PaymentMethod paymentMethod) {
+
+        // Validate order with validate method
         if (!validate(order)) {
             logger.warn("Order should have customer, order items, and payment type defined before being able to " +
                     "checkout the order.");
             return null;
         }
 
-        // Set all order fields with proper values
+        // Set  order fields with proper values
         order.setPaymentMethod(paymentMethod);
         order.setSubmittedDate(new Date());
         order.setCost(cost(order));
 
-
-
+        // Create Order
         return create(order);
     }
 
 
     //Add New Order Item in Order
-    private OrderItem newOrderItem(Order order, StoreItem item, int quantity) {
+    private OrderItem newOrderItem(Order order, StoreItem storeItem, int quantity) {
 
-        return OrderItem.builder().storeItem(item).order(order).quantity(quantity).build();
+        StoreItem item = storeItemService.get(storeItem.getId());
+
+        // Build Order Item with store item, quantity, order and price (price acquired from StoreItem)
+        return OrderItem.builder().storeItem(item).order(order).quantity(quantity).price(item.getPrice()).build();
     }
 
-//Validation , Nullability and Store Validation Methods
-//-----------------------------------------------------\\
+     //Validation , Nullability and Store Validation Methods\\
+    //-------------------------------------------------------\\
 
     //Validate the order Based on Orders Requirements
     private boolean validate(Order order) {
+
+        // Validation of Order Requirements
         return order != null && !order.getOrderItems().isEmpty() && order.getAccount() != null && order.getStore()!=null;
     }
 
     //Check if the Items store id corresponds to the order store id
-    private boolean checkStore(Order order, StoreItem item) {
+    private boolean checkStore(Order order, StoreItem storeItem) {
+        StoreItem item = storeItemService.get(storeItem.getId());
+
+        // Get Order's Store id and Store Item store's id
         long orderStoreId =order.getStore().getId();
         long itemStoreId= item.getStore().getId();
         logger.info("Order_Store : {} Item store id: {}", orderStoreId,itemStoreId );
+
+        // Validation if id's are equal
         if(orderStoreId!=itemStoreId) {
             logger.warn("Item not in store");
             return true;
@@ -146,10 +160,14 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
 
     // Check if the order has items in and check if Item has anything inside
     private boolean checkNullability(Order order, StoreItem item ) {
+
+        //Check if Order is not null
         if (order == null) {
             logger.warn("Order Not Initiated.");
             return true;
         }
+
+        // Check if Item is not null
         if (item == null) {
             logger.warn("Item Not Found.");
             return true;
@@ -157,14 +175,12 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
         return false;
     }
 
-    // Stream through OrderItems and then through Items and get each Price multiply by quantity add to cost
+    // Stream through OrderItems and then through Items and get each item's Price and multiply by quantity add to cost
     private BigDecimal cost(Order order){
-
 
         return order.getOrderItems().stream()
                 .map(oi -> oi.getStoreItem().getPrice().multiply(BigDecimal.valueOf(oi.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-
     }
 
 }
