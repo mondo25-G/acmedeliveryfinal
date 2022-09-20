@@ -20,7 +20,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-@Order(2)
+@Order(4)
 public class StoreQueriesCreator extends BaseComponent implements CommandLineRunner {
 
     private final ProductCategoryService productCategoryService;
