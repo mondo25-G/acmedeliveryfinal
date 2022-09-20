@@ -19,7 +19,7 @@ import java.util.Set;
 public class Store extends BaseEntity {
 
     @NotNull
-    @Column(unique = true)
+    @Column
     private String storeName;
 
     @NotNull
@@ -35,14 +35,14 @@ public class Store extends BaseEntity {
     private String city;
 
     @NotNull
-    @Column
+    @Column(unique = true)
     private String phoneNumber;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false,cascade = CascadeType.MERGE)
     @JoinColumn(name = "storecategory_id")
     private StoreCategory category;
 
-    @OneToMany(cascade=CascadeType.ALL, orphanRemoval = true, mappedBy="store", fetch = FetchType.EAGER)
+    @OneToMany(cascade=CascadeType.ALL, orphanRemoval = true, mappedBy="store", fetch = FetchType.LAZY)
     private Set<@NotNull StoreItem> storeItems;
 
 }

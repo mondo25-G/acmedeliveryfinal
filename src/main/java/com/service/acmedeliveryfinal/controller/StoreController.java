@@ -2,6 +2,7 @@ package com.service.acmedeliveryfinal.controller;
 
 
 import com.service.acmedeliveryfinal.domain.Store;
+import com.service.acmedeliveryfinal.domain.StoreCategory;
 import com.service.acmedeliveryfinal.service.StoreService;
 import com.service.acmedeliveryfinal.transfer.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,12 @@ public class StoreController {
 
         return ResponseEntity.ok(ApiResponse.<List<Store>>builder().data(storeService.getLazyAll()).build());
 
+    }
+
+    @GetMapping("/storeCategories")
+    public ResponseEntity<ApiResponse<List<StoreCategory>>> getStoreCategories(){
+
+        return ResponseEntity.ok(ApiResponse.<List<StoreCategory>>builder().data(storeService.getAllStoreCategories()).build());
     }
 
 }
