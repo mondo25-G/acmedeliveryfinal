@@ -1,5 +1,6 @@
 package com.service.acmedeliveryfinal.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.service.acmedeliveryfinal.domain.enumeration.PaymentMethod;
 import lombok.*;
 
@@ -26,6 +27,7 @@ public class Order extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "fk_store")
     @ToString.Exclude
+    @JsonIgnore
     private Store store;
 
     @Temporal(TemporalType.TIMESTAMP)
