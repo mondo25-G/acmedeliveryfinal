@@ -6,6 +6,7 @@ import com.service.acmedeliveryfinal.domain.StoreCategory;
 import com.service.acmedeliveryfinal.domain.StoreItem;
 import com.service.acmedeliveryfinal.repository.StoreCategoryRepository;
 import com.service.acmedeliveryfinal.repository.StoreRepository;
+import com.service.acmedeliveryfinal.transfer.KeyValue;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -79,5 +80,13 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     @Override
     public List<StoreCategory> getAllStoreCategories() {
         return storeCategoryRepository.findAll();
+    }
+
+    @Override
+    public List<KeyValue<Long, String>> getStoresDropdownList(String searchString) {
+        List<KeyValue<Long,String>> dropdownList = new ArrayList<>();
+        List<Store> searchResults=storeRepository.findStoresByNameOrCategory(searchString);
+        searchResults.forEach(store->dropdownList.add(new KeyValue<>(store.getId(),store.getStoreName())));
+        return dropdownList;
     }
 }
