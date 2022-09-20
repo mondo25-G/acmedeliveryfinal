@@ -89,4 +89,10 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         searchResults.forEach(store->dropdownList.add(new KeyValue<>(store.getId(),store.getStoreName())));
         return dropdownList;
     }
+
+    @Override
+    public List<Store> getStoresByCategoryId(Long id) {
+        return storeRepository.findStoresByCategoryId(id);
+    }
+
 }
