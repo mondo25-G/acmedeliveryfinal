@@ -16,12 +16,12 @@ import java.math.BigDecimal;
 @Table(name = "ORDERITEMS")
 public class OrderItem extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "fk_storeItem")
+    @JoinColumn(name = "storeItem_id")
     private StoreItem storeItem;
 
     @ToString.Exclude
     @ManyToOne( fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "fk_order")
+    @JoinColumn(name = "order_id")
     @JsonIgnore
     private Order order;
 
