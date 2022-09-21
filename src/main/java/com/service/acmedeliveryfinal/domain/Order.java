@@ -21,11 +21,11 @@ import java.util.Set;
 public class Order extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "fk_account")
+    @JoinColumn(name = "account_id")
     private Account account;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "fk_store")
+    @JoinColumn(name = "store_id")
     @ToString.Exclude
     @JsonIgnore
     private Store store;
