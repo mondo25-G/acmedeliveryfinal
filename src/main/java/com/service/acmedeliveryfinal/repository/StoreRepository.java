@@ -19,7 +19,7 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
     @QueryHints(@QueryHint(name = org.hibernate.jpa.QueryHints.HINT_PASS_DISTINCT_THROUGH, value = "false"))
     List<Store> getLazyAll();
 
-    @Query("select distinct s from Store s join fetch s.category c join fetch s.storeItems si join fetch si.productCategory where s.storeName like %:name% or c.name like %:name% order by s.storeName,s.id")
+    @Query("select distinct s from Store s join fetch s.category c join fetch s.storeItems si join fetch si.productCategory where s.storeName like :name% or c.name like :name% order by s.storeName,s.id")
     @QueryHints(@QueryHint(name = org.hibernate.jpa.QueryHints.HINT_PASS_DISTINCT_THROUGH, value = "false"))
     List<Store> findStoresByNameOrCategory(String name);
 
@@ -27,5 +27,14 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
     @QueryHints(@QueryHint(name = org.hibernate.jpa.QueryHints.HINT_PASS_DISTINCT_THROUGH, value = "false"))
     List<Store> findStoresByCategoryId(Long id);
 
+    @Query(value = "with storeOrders as (select count(s.id) as ordersPlaced, s.id from stores s inner join orders o on s.id=o.store_id group by s.id order by count(s.id),s.id) select s.* from stores s inner join storeOrders c on s.id=c.id  order by c.ordersPlaced desc,c.id fetch first 10 rows only",nativeQuery = true)
+    List<Store>findTop10Stores();
 
+    //find popular stores per category based on category Id (Long)
+    @Query(value = "with storeOrders as (select count(s.id) as ordersPlaced, s.id from stores s inner join orders o on s.id=o.store_id group by s.id order by count(s.id),s.id) select s.* from stores s inner join storeOrders c on s.id=c.id inner join store_categories sc on sc.id=s.storecategory_id where sc.id=?1 order by c.ordersPlaced desc,c.id fetch first 10 rows only",nativeQuery = true)
+    List<Store>findTopStoresByCategory(Long categoryId);
+
+    //find popular stores per category based on category id (Long)
+    @Query(value = "with storeOrders as (select count(s.id) as ordersPlaced, s.id from stores s inner join orders o on s.id=o.store_id group by s.id order by count(s.id),s.id) select s.* from stores s inner join storeOrders c on s.id=c.id inner join store_categories sc on sc.id=s.storecategory_id where sc.name=?1 order by c.ordersPlaced desc,c.id fetch first 10 rows only",nativeQuery = true)
+    List<Store>findTopStoresByCategory(String category);
 }
