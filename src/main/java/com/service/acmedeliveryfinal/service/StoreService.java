@@ -27,4 +27,10 @@ public interface StoreService extends BaseService<Store>{
     List<KeyValue<Long,String>> getStoresDropdownList(String searchString);
 
     List<Store> getStoresByCategoryId(Long id);
+
+    List<Store> findPopularStores();
+
+    List<Store> findPopularStoresByCategory(String categoryName);
+
+    List<Store> findPopularStoresByCategory(Long categoryId);
 }
