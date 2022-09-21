@@ -95,4 +95,20 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         return storeRepository.findStoresByCategoryId(id);
     }
 
+    @Override
+    public List<Store> findPopularStores(){
+        return storeRepository.findTop10Stores();
+    }
+
+    @Override
+    public List<Store> findPopularStoresByCategory(String categoryName) {
+        return storeRepository.findTopStoresByCategory(categoryName);
+    }
+
+    @Override
+    public List<Store> findPopularStoresByCategory(Long categoryId) {
+        return storeRepository.findTopStoresByCategory(categoryId);
+    }
+
+
 }
