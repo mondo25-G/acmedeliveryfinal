@@ -5,6 +5,7 @@ import com.service.acmedeliveryfinal.domain.Store;
 import com.service.acmedeliveryfinal.domain.StoreCategory;
 import com.service.acmedeliveryfinal.domain.StoreItem;
 import com.service.acmedeliveryfinal.repository.StoreCategoryRepository;
+import com.service.acmedeliveryfinal.repository.StoreItemRepository;
 import com.service.acmedeliveryfinal.repository.StoreRepository;
 import com.service.acmedeliveryfinal.transfer.KeyValue;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,8 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     private final StoreRepository storeRepository;
 
     private final StoreCategoryRepository storeCategoryRepository;
+
+    private final StoreItemRepository storeItemRepository;
     @Override
     public JpaRepository<Store, Long> getRepository() {return storeRepository;}
 
@@ -108,6 +111,11 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     @Override
     public List<KeyValue<Long,String>> findPopularStoresByCategory(Long categoryId) {
         return storeRepository.findTopStoresByCategory(categoryId);
+    }
+
+    @Override
+    public List<KeyValue<Long, String>> findPopularProducts() {
+        return storeItemRepository.top10StoreItemsBasedOnOrderLines();
     }
 
 
