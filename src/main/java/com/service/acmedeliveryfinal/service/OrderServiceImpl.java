@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 
 @Service
@@ -181,6 +183,24 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
         return order.getOrderItems().stream()
                 .map(oi -> oi.getStoreItem().getPrice().multiply(BigDecimal.valueOf(oi.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+
+    @Override
+    public Order getLazy(Long id) {
+
+        Order order= orderRepository.getLazy(id);
+        if (!orderRepository.existsById(id)) {
+            throw new NoSuchElementException(String.format("There was no order found matching id %d.", id));
+        }
+        return order;
+    }
+
+
+    @Override
+    public List<Order> getAllByAccount(Long id) {
+
+        return orderRepository.findByCustomer(id);
     }
 
 }
