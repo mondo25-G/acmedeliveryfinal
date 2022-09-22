@@ -1,5 +1,6 @@
 package com.service.acmedeliveryfinal.domain;
 
+import com.service.acmedeliveryfinal.transfer.KeyValue;
 import lombok.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,6 +8,23 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
+@NamedNativeQuery(name = "StoreItem.findTop10Products",
+        query ="""
+		with popularItems as (select oi.storeItem_id as storeItemId, count(oi.storeItem_id) as purchases
+		from orderItems oi group by oi.storeItem_id) select si.id as storeItemId,si.itemName as storeItemName from storeitems si 
+		inner join popularItems p on p.storeItemId=si.id
+		order by p.purchases desc,p.storeItemId fetch first 10 rows only
+			""",
+        resultSetMapping = "findTop10Products")
+@SqlResultSetMapping(name = "findTop10Products",
+        classes = @ConstructorResult(
+                targetClass = KeyValue.class,
+                columns = {
+                        @ColumnResult(name = "storeItemId", type = Long.class),
+                        @ColumnResult(name = "storeItemName", type = String.class)
+                }
+        )
+)
 @Getter
 @Setter
 @ToString(callSuper = true)
