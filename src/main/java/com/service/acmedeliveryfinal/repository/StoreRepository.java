@@ -1,6 +1,7 @@
 package com.service.acmedeliveryfinal.repository;
 
 import com.service.acmedeliveryfinal.domain.Store;
+import com.service.acmedeliveryfinal.transfer.KeyValue;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
@@ -27,14 +28,16 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
     @QueryHints(@QueryHint(name = org.hibernate.jpa.QueryHints.HINT_PASS_DISTINCT_THROUGH, value = "false"))
     List<Store> findStoresByCategoryId(Long id);
 
-    @Query(value = "with storeOrders as (select count(s.id) as ordersPlaced, s.id from stores s inner join orders o on s.id=o.store_id group by s.id order by count(s.id),s.id) select s.* from stores s inner join storeOrders c on s.id=c.id  order by c.ordersPlaced desc,c.id fetch first 10 rows only",nativeQuery = true)
-    List<Store>findTop10Stores();
+   @Query(name="Store.findTop10Stores",nativeQuery = true)
+    List<KeyValue<Long,String>> findTop10Stores();
 
     //find popular stores per category based on category Id (Long)
-    @Query(value = "with storeOrders as (select count(s.id) as ordersPlaced, s.id from stores s inner join orders o on s.id=o.store_id group by s.id order by count(s.id),s.id) select s.* from stores s inner join storeOrders c on s.id=c.id inner join store_categories sc on sc.id=s.storecategory_id where sc.id=?1 order by c.ordersPlaced desc,c.id fetch first 10 rows only",nativeQuery = true)
-    List<Store>findTopStoresByCategory(Long categoryId);
 
-    //find popular stores per category based on category id (Long)
-    @Query(value = "with storeOrders as (select count(s.id) as ordersPlaced, s.id from stores s inner join orders o on s.id=o.store_id group by s.id order by count(s.id),s.id) select s.* from stores s inner join storeOrders c on s.id=c.id inner join store_categories sc on sc.id=s.storecategory_id where sc.name=?1 order by c.ordersPlaced desc,c.id fetch first 10 rows only",nativeQuery = true)
-    List<Store>findTopStoresByCategory(String category);
+    @Query(name="Store.findTop10StoresByCategoryId",nativeQuery = true)
+    List<KeyValue<Long,String>> findTopStoresByCategory(Long categoryId);
+
+    //find popular stores per category based on category Name (Long)
+
+    @Query(name="Store.findTop10StoresByCategoryName", nativeQuery = true)
+    List<KeyValue<Long,String>> findTopStoresByCategory(String category);
 }
