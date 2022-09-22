@@ -33,4 +33,6 @@ public interface StoreService extends BaseService<Store>{
     List<KeyValue<Long,String>> findPopularStoresByCategory(String categoryName);
 
     List<KeyValue<Long,String>> findPopularStoresByCategory(Long categoryId);
+
+    List<KeyValue<Long,String>> findPopularProducts();
 }
