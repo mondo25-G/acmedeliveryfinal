@@ -96,17 +96,17 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     }
 
     @Override
-    public List<Store> findPopularStores(){
+    public List<KeyValue<Long,String>> findPopularStores(){
         return storeRepository.findTop10Stores();
     }
 
     @Override
-    public List<Store> findPopularStoresByCategory(String categoryName) {
+    public List<KeyValue<Long,String>> findPopularStoresByCategory(String categoryName) {
         return storeRepository.findTopStoresByCategory(categoryName);
     }
 
     @Override
-    public List<Store> findPopularStoresByCategory(Long categoryId) {
+    public List<KeyValue<Long,String>> findPopularStoresByCategory(Long categoryId) {
         return storeRepository.findTopStoresByCategory(categoryId);
     }
 
