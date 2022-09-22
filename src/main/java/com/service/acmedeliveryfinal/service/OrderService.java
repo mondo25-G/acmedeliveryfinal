@@ -6,6 +6,8 @@ import com.service.acmedeliveryfinal.domain.Store;
 import com.service.acmedeliveryfinal.domain.StoreItem;
 import com.service.acmedeliveryfinal.domain.enumeration.PaymentMethod;
 
+import java.util.List;
+
 
 public interface OrderService extends BaseService<Order> {
     Order initiateOrder(Store store, Account account);
@@ -21,4 +23,8 @@ public interface OrderService extends BaseService<Order> {
 
     //Completion of Order and Creation
     Order checkout(Order order, PaymentMethod paymentMethod);
+
+    Order getLazy(Long id);
+
+    List<Order> getAllByAccount(Long id);
 }
