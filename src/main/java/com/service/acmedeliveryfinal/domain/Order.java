@@ -22,6 +22,7 @@ public class Order extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "account_id")
+    @JsonIgnore
     private Account account;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
