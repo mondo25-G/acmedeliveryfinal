@@ -68,6 +68,10 @@ public class StoreQueriesCreator extends BaseComponent implements CommandLineRun
         List<KeyValue<Long,String>> topStoresCatName = storeService.findPopularStoresByCategory("BURGERS");
         topStoresCatName.forEach(s->logger.info("Popular (categoryName=BURGERS): {}",s));
 
+        //GET MOST POPULAR PRODUCTS (BASED ON ORDERS)
+        logger.info("Most popular products based on orders, store id ascending");
+        List<KeyValue<Long,String>> topProds = storeService.findPopularProducts();
+        topProds.forEach(s->logger.info("Popular prod:{}",s));
 
     }
 }

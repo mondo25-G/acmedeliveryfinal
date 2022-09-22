@@ -117,7 +117,7 @@ public class StoreContentCreator extends BaseComponent implements CommandLineRun
                 StoreItem.builder().itemName("ITALIAN JOB BURGER").price(BigDecimal.valueOf(1.70)).productCategory(productCategoryService.get(8L)).build(),
                 StoreItem.builder().itemName("LUSSO BLUE BURGER").price(BigDecimal.valueOf(1.70)).productCategory(productCategoryService.get(8L)).build(),
                 StoreItem.builder().itemName("PURE CHICKEN BURGER").price(BigDecimal.valueOf(6.90)).productCategory(productCategoryService.get(9L)).build(),
-                StoreItem.builder().itemName("AVOCADO JUICY CHICKEN BURGERr").price(BigDecimal.valueOf(7.50)).productCategory(productCategoryService.get(9L)).build())
+                StoreItem.builder().itemName("AVOCADO JUICY CHICKEN BURGER").price(BigDecimal.valueOf(7.50)).productCategory(productCategoryService.get(9L)).build())
                 ;
 
         storeService.addItems(storeService.get(3L), burgeriaMenu);
