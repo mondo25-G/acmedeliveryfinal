@@ -56,21 +56,21 @@ public class StoreController {
     }
 
     @GetMapping("/popular")
-    public ResponseEntity<ApiResponse<List<Store>>> findTop(){
-        return ResponseEntity.ok(ApiResponse.<List<Store>>builder().data(storeService.findPopularStores()).build());
+    public ResponseEntity<ApiResponse<List<KeyValue<Long,String>>>> findTop(){
+        return ResponseEntity.ok(ApiResponse.<List<KeyValue<Long,String>>>builder().data(storeService.findPopularStores()).build());
     }
 
     //endpoint to get top stores by Category id (Long)
     @GetMapping("/popular/categories/{id}")
-    public ResponseEntity<ApiResponse<List<Store>>> findTopByCategoryId(@PathVariable("id") final Long id){
-        return ResponseEntity.ok(ApiResponse.<List<Store>>builder().data(storeService.findPopularStoresByCategory(id)).build());
+    public ResponseEntity<ApiResponse<List<KeyValue<Long,String>>>> findTopByCategoryId(@PathVariable("id") final Long id){
+        return ResponseEntity.ok(ApiResponse.<List<KeyValue<Long,String>>>builder().data(storeService.findPopularStoresByCategory(id)).build());
     }
 
 
     //enpoint to get top stores by Category name (string)
     @GetMapping("/popular/categories")
-    public ResponseEntity<ApiResponse<List<Store>>> findTopByCategoryName(@RequestParam("name") String categoryName){
-        return ResponseEntity.ok(ApiResponse.<List<Store>>builder().data(storeService.findPopularStoresByCategory(categoryName)).build());
+    public ResponseEntity<ApiResponse<List<KeyValue<Long,String>>>> findTopByCategoryName(@RequestParam("name") String categoryName){
+        return ResponseEntity.ok(ApiResponse.<List<KeyValue<Long,String>>>builder().data(storeService.findPopularStoresByCategory(categoryName)).build());
     }
 
 }
