@@ -51,25 +51,23 @@ public class StoreQueriesCreator extends BaseComponent implements CommandLineRun
         logger.info("Stores by category id=1, {}",byCat);
 
         //GET MOST POPULAR STORES (BASED ON ORDERS)
-        List<Store> topStores = storeService.findPopularStores();
+        List<KeyValue<Long,String>> topStores = storeService.findPopularStores();
 
         logger.info("Most popular stores based on total store orders descending, store id ascending");
-        topStores.forEach(s->logger.info("Store Name: {}", s.getStoreName()));
-
+        topStores.forEach(s->logger.info("Popular Store: {}", s));
 
         //GET MOST POPULAR STORES (BASED ON ORDERS) BY CATEGORY ID
-        List<Store> topStoresCatId = storeService.findPopularStoresByCategory(1L);
+        List<KeyValue<Long,String>> topStoresCatId = storeService.findPopularStoresByCategory(1L);
 
         logger.info("Most popular stores based on total store orders descending, store id ascending for specific category Id");
 
-        topStoresCatId.forEach(s->logger.info("Popular (categoryId=1-PIZZA): {}",s.getStoreName()));
+        topStoresCatId.forEach(s->logger.info("Popular (categoryId=1-PIZZA): {}",s));
 
         //GET MOST POPULAR STORES (BASED ON ORDERS) BY CATEGORY NAME
-        List<Store> topStoresCatName = storeService.findPopularStoresByCategory("BURGERS");
+        logger.info("Most popular stores based on total store orders descending, store id ascending for specific category name");
+        List<KeyValue<Long,String>> topStoresCatName = storeService.findPopularStoresByCategory("BURGERS");
+        topStoresCatName.forEach(s->logger.info("Popular (categoryName=BURGERS): {}",s));
 
-        logger.info("Most popular stores based on total store orders descending, store id ascending for specific category Id");
-
-        topStoresCatName.forEach(s->logger.info("Popular (categoryName=BURGERS): {}",s.getStoreName()));
 
     }
 }
