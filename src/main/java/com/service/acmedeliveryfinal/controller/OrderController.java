@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("orders")
@@ -61,4 +63,15 @@ public class OrderController extends BaseController<Order> {
     public ResponseEntity<ApiResponse<Order>> checkout(PaymentMethod paymentMethod){
         return ResponseEntity.ok(ApiResponse.<Order>builder().data(orderService.checkout(newOrder, paymentMethod)).build());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<Order>> getOrder(@PathVariable Long id){
+        return ResponseEntity.ok(ApiResponse.<Order>builder().data(orderService.getLazy(id)).build());
+    }
+
+    @GetMapping("/account/{id}")
+    public ResponseEntity<ApiResponse<List<Order>>> getOrderList(@PathVariable Long id){
+        return ResponseEntity.ok(ApiResponse.<List<Order>>builder().data(orderService.getAllByAccount(id)).build());
+    }
+
 }
