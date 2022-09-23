@@ -5,6 +5,7 @@ import com.service.acmedeliveryfinal.domain.ProductCategory;
 import com.service.acmedeliveryfinal.domain.Store;
 import com.service.acmedeliveryfinal.domain.StoreCategory;
 import com.service.acmedeliveryfinal.domain.StoreItem;
+import com.service.acmedeliveryfinal.repository.StoreRepository;
 import com.service.acmedeliveryfinal.service.ProductCategoryService;
 import com.service.acmedeliveryfinal.service.StoreCategoryService;
 import com.service.acmedeliveryfinal.service.StoreService;
@@ -72,6 +73,19 @@ public class StoreQueriesCreator extends BaseComponent implements CommandLineRun
         logger.info("Most popular products based on orders, store id ascending");
         List<KeyValue<Long,String>> topProds = storeService.findPopularProducts();
         topProds.forEach(s->logger.info("Popular prod:{}",s));
+
+        //GET MOST POPULAR PRODUCTS (BASED ON ORDERS) OF A SPECIFIC STORE
+        logger.info("Most popular products based on orders, store id ascending of a cpecific store");
+        List<KeyValue<Long,String>> topProdsByStore = storeService.findPopularProducts();
+        topProds.forEach(s->logger.info("Popular prod:{}",s));
+
+        //GET ALL STORE ITEMS OF A SPECIFIC STORE ID.
+        List<KeyValue<Long,String>> si=storeService.findPopularProductsByStore(3L);
+
+        si.forEach(s->logger.info("Popular Store items of Store 3: {}", s));
+
+
+
 
     }
 }
