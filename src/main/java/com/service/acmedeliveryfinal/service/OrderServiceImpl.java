@@ -4,6 +4,7 @@ import com.service.acmedeliveryfinal.domain.*;
 import com.service.acmedeliveryfinal.domain.enumeration.PaymentMethod;
 import com.service.acmedeliveryfinal.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.asm.Advice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -49,7 +50,14 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
 
         if (checkNullability(order, item)) {return order;}
 
-        if (checkStore(order, item)) {return order;}
+        //clear cart on store change before adding new item
+        if (checkStoreChange(order, item)) {
+            if (!order.getOrderItems().isEmpty()){
+                order.getOrderItems().removeAll(order.getOrderItems());
+            }
+            order.setStore(item.getStore());
+            return addItem(order,item,quantity);
+        }
 
         boolean increasedQuantity = false;
 
@@ -77,7 +85,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
     public Order updateItem(Order order, StoreItem item, int quantity) {
 
         if (checkNullability(order, item)) {return order;}
-        if (checkStore(order, item)) {return order;}
+        //if (checkStoreChange(order, item)) {return order;} //unnecessary?
         if (quantity<1){removeItem(order, item); return order;}
 
         order.getOrderItems().removeIf(oi -> oi.getStoreItem().getId().equals(item.getId()));
@@ -93,7 +101,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
     @Override
     public Order removeItem(Order order, StoreItem item) {
         if (checkNullability(order, item)) {return order;}
-        if (checkStore(order, item)) {return order;}
+        //if (checkStoreChange(order, item)) {return order;} //unnecessary?
 
         order.getOrderItems().removeIf(oi -> oi.getStoreItem().getId().equals(item.getId()));
         logger.debug("Product[{}] removed from Order[{}]", item, order);
@@ -121,7 +129,6 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
         return create(order);
     }
 
-
     //Add New Order Item in Order
     private OrderItem newOrderItem(Order order, StoreItem storeItem, int quantity) {
 
@@ -142,7 +149,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
     }
 
     //Check if the Items store id corresponds to the order store id
-    private boolean checkStore(Order order, StoreItem storeItem) {
+    private boolean checkStoreChange(Order order, StoreItem storeItem) {
         StoreItem item = storeService.getProduct(storeItem.getId());
 
         // Get Order's Store id and Store Item store's id
