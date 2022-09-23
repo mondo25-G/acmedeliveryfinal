@@ -52,12 +52,14 @@ import java.math.BigDecimal;
 @Table(name = "STOREITEMS")
 public class StoreItem extends BaseEntity {
 
+    @NotNull
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "store_id")
     @JsonIgnore
     private Store store;
 
+    @NotNull
     @ToString.Exclude
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
