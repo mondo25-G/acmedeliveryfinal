@@ -10,13 +10,12 @@ import com.service.acmedeliveryfinal.service.StoreCategoryService;
 import com.service.acmedeliveryfinal.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Set;
+
 
 
 @Component
@@ -94,127 +93,179 @@ public class StoreContentCreator extends BaseComponent implements CommandLineRun
 
         Store sogno = storeService.create(Store.builder().storeName("SOGNO").city("ΚΗΦΙΣΙΑ").address("ΦΡΑΓΚΟΠΟΥΛΟΥ 30,14561").phoneNumber("2100000001").emailAddress("sogno@gmail.com").category(storeCategoryService.get(1L)).build());
 
-        Set<StoreItem> sognoMenu = Set.of(
-                StoreItem.builder().itemName("MARGHERITA").price(BigDecimal.valueOf(7.60)).productCategory(productCategoryService.get(5L)).build(),
-                StoreItem.builder().itemName("SPECIAL").price(BigDecimal.valueOf(11.50)).productCategory(productCategoryService.get(5L)).build(),
-                StoreItem.builder().itemName("AMERICANA").price(BigDecimal.valueOf(12.50)).productCategory(productCategoryService.get(5L)).build(),
-                StoreItem.builder().itemName("COCA-COLA 330 ML").price(BigDecimal.valueOf(1.70)).productCategory(productCategoryService.get(3L)).build(),
-                StoreItem.builder().itemName("COCA-COLA LIGHT 330 ML").price(BigDecimal.valueOf(1.70)).productCategory(productCategoryService.get(3L)).build(),
-                StoreItem.builder().itemName("TIRAMISSU").price(BigDecimal.valueOf(7.90)).productCategory(productCategoryService.get(6L)).build(),
-                StoreItem.builder().itemName("DUO MUSSE").price(BigDecimal.valueOf(9.00)).productCategory(productCategoryService.get(6L)).build())
-                ;
 
-        storeService.addItems(storeService.get(2L), sognoMenu);
+        StoreItem sognoItem1=StoreItem.builder().itemName("MARGHERITA").price(BigDecimal.valueOf(7.60)).productCategory(productCategoryService.get(5L)).build();
+        StoreItem sognoItem2=StoreItem.builder().itemName("SPECIAL").price(BigDecimal.valueOf(11.50)).productCategory(productCategoryService.get(5L)).build();
+        StoreItem sognoItem3=StoreItem.builder().itemName("AMERICANA").price(BigDecimal.valueOf(12.50)).productCategory(productCategoryService.get(5L)).build();
+        StoreItem sognoItem4=StoreItem.builder().itemName("COCA-COLA 330 ML").price(BigDecimal.valueOf(1.70)).productCategory(productCategoryService.get(3L)).build();
+        StoreItem sognoItem5=StoreItem.builder().itemName("COCA-COLA LIGHT 330 ML").price(BigDecimal.valueOf(1.70)).productCategory(productCategoryService.get(3L)).build();
+        StoreItem sognoItem6=StoreItem.builder().itemName("TIRAMISSU").price(BigDecimal.valueOf(7.90)).productCategory(productCategoryService.get(6L)).build();
+        StoreItem sognoItem7=StoreItem.builder().itemName("DUO MUSSE").price(BigDecimal.valueOf(9.00)).productCategory(productCategoryService.get(6L)).build();
+
+        storeService.addItem(sogno.getId(),sognoItem1);
+        storeService.addItem(sogno.getId(),sognoItem2);
+        storeService.addItem(sogno.getId(),sognoItem3);
+        storeService.addItem(sogno.getId(),sognoItem4);
+        storeService.addItem(sogno.getId(),sognoItem5);
+        storeService.addItem(sogno.getId(),sognoItem6);
+        storeService.addItem(sogno.getId(),sognoItem7);
 
         logger.info("Added sogno menu items");
 
         Store burgeria = storeService.create(Store.builder().storeName("BURGERIA").city("Ν.ΗΡΑΚΛΕΙΟ").address("ΗΛΕΚΤΡΑΣ ΑΠΟΣΤΟΛΟΥ 62, 14122").phoneNumber("2100000002").emailAddress("burgheria@gmail.com").category(storeCategoryService.get(2L)).build());
 
-        Set<StoreItem> burgeriaMenu = Set.of(
-                StoreItem.builder().itemName("CLASSIC BURGER").price(BigDecimal.valueOf(6.90)).productCategory(productCategoryService.get(7L)).build(),
-                StoreItem.builder().itemName("CHEESE AND BACON BURGER").price(BigDecimal.valueOf(7.50)).productCategory(productCategoryService.get(7L)).build(),
-                StoreItem.builder().itemName("THE OLD SCHOOL BURGER").price(BigDecimal.valueOf(10.90)).productCategory(productCategoryService.get(7L)).build(),
-                StoreItem.builder().itemName("ITALIAN JOB BURGER").price(BigDecimal.valueOf(1.70)).productCategory(productCategoryService.get(8L)).build(),
-                StoreItem.builder().itemName("LUSSO BLUE BURGER").price(BigDecimal.valueOf(1.70)).productCategory(productCategoryService.get(8L)).build(),
-                StoreItem.builder().itemName("PURE CHICKEN BURGER").price(BigDecimal.valueOf(6.90)).productCategory(productCategoryService.get(9L)).build(),
-                StoreItem.builder().itemName("AVOCADO JUICY CHICKEN BURGER").price(BigDecimal.valueOf(7.50)).productCategory(productCategoryService.get(9L)).build())
-                ;
+        StoreItem burgeria1=StoreItem.builder().itemName("CLASSIC BURGER").price(BigDecimal.valueOf(6.90)).productCategory(productCategoryService.get(7L)).build();
+        StoreItem burgeria2=StoreItem.builder().itemName("CHEESE AND BACON BURGER").price(BigDecimal.valueOf(7.50)).productCategory(productCategoryService.get(7L)).build();
+        StoreItem burgeria3=StoreItem.builder().itemName("THE OLD SCHOOL BURGER").price(BigDecimal.valueOf(10.90)).productCategory(productCategoryService.get(7L)).build();
+        StoreItem burgeria4=StoreItem.builder().itemName("ITALIAN JOB BURGER").price(BigDecimal.valueOf(1.70)).productCategory(productCategoryService.get(8L)).build();
+        StoreItem burgeria5=StoreItem.builder().itemName("LUSSO BLUE BURGER").price(BigDecimal.valueOf(1.70)).productCategory(productCategoryService.get(8L)).build();
+        StoreItem burgeria6=StoreItem.builder().itemName("PURE CHICKEN BURGER").price(BigDecimal.valueOf(6.90)).productCategory(productCategoryService.get(9L)).build();
+        StoreItem burgeria7=StoreItem.builder().itemName("AVOCADO JUICY CHICKEN BURGER").price(BigDecimal.valueOf(7.50)).productCategory(productCategoryService.get(9L)).build();
 
-        storeService.addItems(storeService.get(3L), burgeriaMenu);
+        storeService.addItem(burgeria.getId(),burgeria1);
+        storeService.addItem(burgeria.getId(),burgeria2);
+        storeService.addItem(burgeria.getId(),burgeria3);
+        storeService.addItem(burgeria.getId(),burgeria4);
+        storeService.addItem(burgeria.getId(),burgeria5);
+        storeService.addItem(burgeria.getId(),burgeria6);
+        storeService.addItem(burgeria.getId(),burgeria7);
 
-        Store burgery = storeService.create(Store.builder().storeName("FATTO A MANO").city("ΠΕΥΚΗ").address("ΔΗΜΟΚΡΑΤΙΑΣ 3, 151212").phoneNumber("2100000003").emailAddress("burgery@gmail.com").category(storeCategoryService.get(2L)).build());
+        logger.info("Added burgeria menu items");
 
-        Set<StoreItem> burgeryMenu = Set.of(
-                StoreItem.builder().itemName("CLASSIC CHEESEBURGER").price(BigDecimal.valueOf(7.90)).productCategory(productCategoryService.get(7L)).build(),
-                StoreItem.builder().itemName("BLUE BACON BURGER").price(BigDecimal.valueOf(8.90)).productCategory(productCategoryService.get(7L)).build(),
-                StoreItem.builder().itemName("JUST MUST BURGER").price(BigDecimal.valueOf(8.90)).productCategory(productCategoryService.get(7L)).build(),
-                StoreItem.builder().itemName("GREEK BURGER ΓΥΡΟΣ ΧΟΙΡΙΝΟΣ").price(BigDecimal.valueOf(8.90)).productCategory(productCategoryService.get(10L)).build(),
-                StoreItem.builder().itemName("GREEK BURGER ΓΥΡΟΣ ΚΟΤΟΠΟΥΛΟΣ").price(BigDecimal.valueOf(8.90)).productCategory(productCategoryService.get(10L)).build(),
-                StoreItem.builder().itemName("BILLY THE KID BURGER").price(BigDecimal.valueOf(8.90)).productCategory(productCategoryService.get(9L)).build(),
-                StoreItem.builder().itemName("AL CAPONE BURGER").price(BigDecimal.valueOf(9.60)).productCategory(productCategoryService.get(9L)).build())
-                ;
+        Store fatto = storeService.create(Store.builder().storeName("FATTO A MANO").city("ΠΕΥΚΗ").address("ΔΗΜΟΚΡΑΤΙΑΣ 3, 151212").phoneNumber("2100000003").emailAddress("burgery@gmail.com").category(storeCategoryService.get(2L)).build());
 
-        storeService.addItems(storeService.get(4L), burgeriaMenu);
+        StoreItem fatto1=StoreItem.builder().itemName("CLASSIC CHEESEBURGER").price(BigDecimal.valueOf(7.90)).productCategory(productCategoryService.get(7L)).build();
+        StoreItem fatto2=StoreItem.builder().itemName("BLUE BACON BURGER").price(BigDecimal.valueOf(8.90)).productCategory(productCategoryService.get(7L)).build();
+        StoreItem fatto3=StoreItem.builder().itemName("JUST MUST BURGER").price(BigDecimal.valueOf(8.90)).productCategory(productCategoryService.get(7L)).build();
+        StoreItem fatto4=StoreItem.builder().itemName("GREEK BURGER ΓΥΡΟΣ ΧΟΙΡΙΝΟΣ").price(BigDecimal.valueOf(8.90)).productCategory(productCategoryService.get(10L)).build();
+        StoreItem fatto5=StoreItem.builder().itemName("GREEK BURGER ΓΥΡΟΣ ΚΟΤΟΠΟΥΛΟΣ").price(BigDecimal.valueOf(8.90)).productCategory(productCategoryService.get(10L)).build();
+        StoreItem fatto6=StoreItem.builder().itemName("BILLY THE KID BURGER").price(BigDecimal.valueOf(8.90)).productCategory(productCategoryService.get(9L)).build();
+        StoreItem fatto7=StoreItem.builder().itemName("AL CAPONE BURGER").price(BigDecimal.valueOf(9.60)).productCategory(productCategoryService.get(9L)).build();
 
+        storeService.addItem(fatto.getId(),fatto1);
+        storeService.addItem(fatto.getId(),fatto2);
+        storeService.addItem(fatto.getId(),fatto3);
+        storeService.addItem(fatto.getId(),fatto4);
+        storeService.addItem(fatto.getId(),fatto5);
+        storeService.addItem(fatto.getId(),fatto6);
+        storeService.addItem(fatto.getId(),fatto7);
 
         storeService.addItem(1L, StoreItem.builder().itemName("BBQ").price(BigDecimal.valueOf(11.50)).productCategory(productCategoryService.get(1L)).build());
         logger.info("Added BBQ pizza to Portofino");
 
+        //works ok.
         //storeService.removeItem(1L, 5L); //ok no cascade.
         //logger.info("Removed Coca-Cola 330 ml from Portofino");
 
-        //needs storeItem repository
         //storeService.updateItem(1L,StoreItem.builder().itemName("BBQ").price(BigDecimal.valueOf(14.00)).productCategory(productCategoryService.get(1L)).build() );
 
         //ok cascades only to storeItems.
         //storeService.delete(storeService.get(1L));
 
+        //Not allowed child records found-ok.
+        //storeCategoryService.deleteById(1L);
+
         Store streetSouvlaki = storeService.create(Store.builder().storeName("STREET SOUVLAKI").city("ΑΘΗΝΑ").address("ΚΟΛΟΚΟΤΡΩΝΗ 30, 10561").phoneNumber("2100000004").emailAddress("streetsouvlaki@gmail.com").category(storeCategoryService.get(4L)).build());
 
-        Set<StoreItem> streetSouvlakiMenu = Set.of(
-                StoreItem.builder().itemName("ΚΑΛΑΜΑΚΙ ΧΟΙΡΙΝΟ").price(BigDecimal.valueOf(2.00)).productCategory(productCategoryService.get(11L)).build(),
-                StoreItem.builder().itemName("ΚΑΛΑΜΑΚΙ ΚΟΤΟΠΟΥΛΟ").price(BigDecimal.valueOf(2.00)).productCategory(productCategoryService.get(11L)).build(),
-                StoreItem.builder().itemName("ΚΟΤΟΜΠΕΙΚΟΝ").price(BigDecimal.valueOf(2.20)).productCategory(productCategoryService.get(11L)).build(),
-                StoreItem.builder().itemName("ΚΕΜΠΑΠ").price(BigDecimal.valueOf(2.20)).productCategory(productCategoryService.get(11L)).build(),
-                StoreItem.builder().itemName("ΚΑΛΑΜΑΚΙ ΧΟΙΡΙΝΟ ΣΕ ΠΙΤΑ").price(BigDecimal.valueOf(3.00)).productCategory(productCategoryService.get(12L)).build(),
-                StoreItem.builder().itemName("ΚΑΛΑΜΑΚΙ ΚΟΤΟΠΟΥΛΟ ΣΕ ΠΙΤΑ").price(BigDecimal.valueOf(3.00)).productCategory(productCategoryService.get(12L)).build(),
-                StoreItem.builder().itemName("ΚΕΜΠΑΠ ΣΕ ΠΙΤΑ").price(BigDecimal.valueOf(3.00)).productCategory(productCategoryService.get(12L)).build(),
-                StoreItem.builder().itemName("ΜΠΙΦΤΕΚΙ ΛΑΧΑΝΙΚΩΝ ΣΕ ΑΡΑΒΙΚΟ ΑΡΤΟ").price(BigDecimal.valueOf(3.20)).productCategory(productCategoryService.get(12L)).build(),
-                StoreItem.builder().itemName("CAESARS ΚΟΤΟΠΟΥΛΟ ΣΕ ΑΡΑΒΙΚΟ ΑΡΤΟ").price(BigDecimal.valueOf(3.20)).productCategory(productCategoryService.get(12L)).build(),
-                StoreItem.builder().itemName("ΠΑΤΑΤΕΣ ΤΗΓΑΝΗΤΕΣ").price(BigDecimal.valueOf(3.50)).productCategory(productCategoryService.get(13L)).build(),
-                StoreItem.builder().itemName("ΠΑΤΑΤΕΣ ΤΗΓΑΝΗΤΕΣ ΤΥΡΑΤΕΣ").price(BigDecimal.valueOf(4.50)).productCategory(productCategoryService.get(13L)).build(),
-                StoreItem.builder().itemName("COCA-COLA 330 ML").price(BigDecimal.valueOf(1.50)).productCategory(productCategoryService.get(3L)).build(),
-                StoreItem.builder().itemName("COCA-COLA LIGHT 330 ML").price(BigDecimal.valueOf(1.50)).productCategory(productCategoryService.get(3L)).build()
+        //31
+        StoreItem streetSouvlaki1=StoreItem.builder().itemName("ΚΑΛΑΜΑΚΙ ΧΟΙΡΙΝΟ").price(BigDecimal.valueOf(2.00)).productCategory(productCategoryService.get(11L)).build();
+        StoreItem streetSouvlaki2= StoreItem.builder().itemName("ΚΑΛΑΜΑΚΙ ΚΟΤΟΠΟΥΛΟ").price(BigDecimal.valueOf(2.00)).productCategory(productCategoryService.get(11L)).build();
+        StoreItem streetSouvlaki3=StoreItem.builder().itemName("ΚΟΤΟΜΠΕΙΚΟΝ").price(BigDecimal.valueOf(2.20)).productCategory(productCategoryService.get(11L)).build();
+        StoreItem streetSouvlaki4=StoreItem.builder().itemName("ΚΕΜΠΑΠ").price(BigDecimal.valueOf(2.20)).productCategory(productCategoryService.get(11L)).build();
+        StoreItem streetSouvlaki5=StoreItem.builder().itemName("ΚΑΛΑΜΑΚΙ ΧΟΙΡΙΝΟ ΣΕ ΠΙΤΑ").price(BigDecimal.valueOf(3.00)).productCategory(productCategoryService.get(12L)).build();
+        StoreItem streetSouvlaki6=StoreItem.builder().itemName("ΚΑΛΑΜΑΚΙ ΚΟΤΟΠΟΥΛΟ ΣΕ ΠΙΤΑ").price(BigDecimal.valueOf(3.00)).productCategory(productCategoryService.get(12L)).build();
+        StoreItem streetSouvlaki7=StoreItem.builder().itemName("ΚΕΜΠΑΠ ΣΕ ΠΙΤΑ").price(BigDecimal.valueOf(3.00)).productCategory(productCategoryService.get(12L)).build();
+        StoreItem streetSouvlaki8=StoreItem.builder().itemName("ΜΠΙΦΤΕΚΙ ΛΑΧΑΝΙΚΩΝ ΣΕ ΑΡΑΒΙΚΟ ΑΡΤΟ").price(BigDecimal.valueOf(3.20)).productCategory(productCategoryService.get(12L)).build();
+        StoreItem streetSouvlaki9=StoreItem.builder().itemName("CAESARS ΚΟΤΟΠΟΥΛΟ ΣΕ ΑΡΑΒΙΚΟ ΑΡΤΟ").price(BigDecimal.valueOf(3.20)).productCategory(productCategoryService.get(12L)).build();
+        StoreItem streetSouvlaki10=StoreItem.builder().itemName("ΠΑΤΑΤΕΣ ΤΗΓΑΝΗΤΕΣ").price(BigDecimal.valueOf(3.50)).productCategory(productCategoryService.get(13L)).build();
+        StoreItem streetSouvlaki11=StoreItem.builder().itemName("ΠΑΤΑΤΕΣ ΤΗΓΑΝΗΤΕΣ ΤΥΡΑΤΕΣ").price(BigDecimal.valueOf(4.50)).productCategory(productCategoryService.get(13L)).build();
+        StoreItem streetSouvlaki12=StoreItem.builder().itemName("COCA-COLA 330 ML").price(BigDecimal.valueOf(1.50)).productCategory(productCategoryService.get(3L)).build();
+        StoreItem streetSouvlaki13=StoreItem.builder().itemName("COCA-COLA LIGHT 330 ML").price(BigDecimal.valueOf(1.50)).productCategory(productCategoryService.get(3L)).build();
 
-        );
-        storeService.addItems(storeService.get(5L), streetSouvlakiMenu);
+        storeService.addItem(streetSouvlaki.getId(),streetSouvlaki1);
+        storeService.addItem(streetSouvlaki.getId(),streetSouvlaki2);
+        storeService.addItem(streetSouvlaki.getId(),streetSouvlaki3);
+        storeService.addItem(streetSouvlaki.getId(),streetSouvlaki4);
+        storeService.addItem(streetSouvlaki.getId(),streetSouvlaki5);
+        storeService.addItem(streetSouvlaki.getId(),streetSouvlaki6);
+        storeService.addItem(streetSouvlaki.getId(),streetSouvlaki7);
+        storeService.addItem(streetSouvlaki.getId(),streetSouvlaki8);
+        storeService.addItem(streetSouvlaki.getId(),streetSouvlaki9);
+        storeService.addItem(streetSouvlaki.getId(),streetSouvlaki10);
+        storeService.addItem(streetSouvlaki.getId(),streetSouvlaki11);
+        storeService.addItem(streetSouvlaki.getId(),streetSouvlaki12);
+        storeService.addItem(streetSouvlaki.getId(),streetSouvlaki13);
 
         Store pitaPan = storeService.create(Store.builder().storeName("PITA PAN").city("ΑΘΗΝΑ").address("ΛΕΩΦΟΡΟΣ ΒΟΥΛΙΑΓΜΕΝΗΣ 276, 17343").phoneNumber("2100000005").emailAddress("pitapan@gmail.com").category(storeCategoryService.get(4L)).build());
 
-        Set<StoreItem> pitaPanMenu = Set.of(
-                StoreItem.builder().itemName("ΓΥΡΟΣ ΧΟΙΡΙΝΟΣ ΣΕ ΠΙΤΑ").price(BigDecimal.valueOf(3.20)).productCategory(productCategoryService.get(14L)).build(),
-                StoreItem.builder().itemName("ΦΡΕΣΚΟ ΚΑΛΑΜΑΚΙ ΧΟΙΡΙΝΟ").price(BigDecimal.valueOf(1.90)).productCategory(productCategoryService.get(14L)).build(),
-                StoreItem.builder().itemName("ΚΕΜΠΑΠ ΣΕ ΠΙΤΑ").price(BigDecimal.valueOf(2.20)).productCategory(productCategoryService.get(14L)).build(),
-                StoreItem.builder().itemName("ΧΑΛΟΥΜΙ ΣΤΗ ΣΧΑΡΑ").price(BigDecimal.valueOf(5.40)).productCategory(productCategoryService.get(16L)).build(),
-                StoreItem.builder().itemName("ΤΖΑΤΖΙΚΙ ΠΑΡΑΔΟΣΙΑΚΟ").price(BigDecimal.valueOf(3.00)).productCategory(productCategoryService.get(16L)).build(),
-                StoreItem.builder().itemName("ΠΑΤΑΤΕΣ ΧΩΡΙΑΤΙΚΕΣ").price(BigDecimal.valueOf(3.50)).productCategory(productCategoryService.get(16L)).build(),
-                StoreItem.builder().itemName("ΠΟΛΥΧΡΩΜΗ").price(BigDecimal.valueOf(4.50)).productCategory(productCategoryService.get(17L)).build(),
-                StoreItem.builder().itemName("ΠΡΑΣΙΝΗ").price(BigDecimal.valueOf(4.50)).productCategory(productCategoryService.get(17L)).build(),
-                StoreItem.builder().itemName("ΧΑΛΟΥΜΙ").price(BigDecimal.valueOf(4.60)).productCategory(productCategoryService.get(17L)).build(),
-                StoreItem.builder().itemName("ALPHA ΚΟΥΤΙ 330 ML").price(BigDecimal.valueOf(2.00)).productCategory(productCategoryService.get(18L)).build(),
-                StoreItem.builder().itemName("HEINEKEN ΚΟΥΤΙ 330 ML").price(BigDecimal.valueOf(2.50)).productCategory(productCategoryService.get(18L)).build(),
-                StoreItem.builder().itemName("AMSTEL ΚΟΥΤΙ 330 ML").price(BigDecimal.valueOf(2.40)).productCategory(productCategoryService.get(18L)).build()
-        );
-        storeService.addItems(storeService.get(6L), pitaPanMenu);
+        StoreItem pitaPan1=StoreItem.builder().itemName("ΓΥΡΟΣ ΧΟΙΡΙΝΟΣ ΣΕ ΠΙΤΑ").price(BigDecimal.valueOf(3.20)).productCategory(productCategoryService.get(14L)).build();
+        StoreItem pitaPan2=StoreItem.builder().itemName("ΦΡΕΣΚΟ ΚΑΛΑΜΑΚΙ ΧΟΙΡΙΝΟ").price(BigDecimal.valueOf(1.90)).productCategory(productCategoryService.get(14L)).build();
+        StoreItem pitaPan3=StoreItem.builder().itemName("ΚΕΜΠΑΠ ΣΕ ΠΙΤΑ").price(BigDecimal.valueOf(2.20)).productCategory(productCategoryService.get(14L)).build();
+        StoreItem pitaPan4=StoreItem.builder().itemName("ΧΑΛΟΥΜΙ ΣΤΗ ΣΧΑΡΑ").price(BigDecimal.valueOf(5.40)).productCategory(productCategoryService.get(16L)).build();
+        StoreItem pitaPan5=StoreItem.builder().itemName("ΤΖΑΤΖΙΚΙ ΠΑΡΑΔΟΣΙΑΚΟ").price(BigDecimal.valueOf(3.00)).productCategory(productCategoryService.get(16L)).build();
+        StoreItem pitaPan6=StoreItem.builder().itemName("ΠΑΤΑΤΕΣ ΧΩΡΙΑΤΙΚΕΣ").price(BigDecimal.valueOf(3.50)).productCategory(productCategoryService.get(16L)).build();
+        StoreItem pitaPan7=StoreItem.builder().itemName("ΠΟΛΥΧΡΩΜΗ").price(BigDecimal.valueOf(4.50)).productCategory(productCategoryService.get(17L)).build();
+        StoreItem pitaPan8=StoreItem.builder().itemName("ΠΡΑΣΙΝΗ").price(BigDecimal.valueOf(4.50)).productCategory(productCategoryService.get(17L)).build();
+        StoreItem pitaPan9=StoreItem.builder().itemName("ΧΑΛΟΥΜΙ").price(BigDecimal.valueOf(4.60)).productCategory(productCategoryService.get(17L)).build();
+        StoreItem pitaPan10=StoreItem.builder().itemName("ALPHA ΚΟΥΤΙ 330 ML").price(BigDecimal.valueOf(2.00)).productCategory(productCategoryService.get(18L)).build();
+        StoreItem pitaPan11=StoreItem.builder().itemName("HEINEKEN ΚΟΥΤΙ 330 ML").price(BigDecimal.valueOf(2.50)).productCategory(productCategoryService.get(18L)).build();
+        StoreItem pitaPan12=StoreItem.builder().itemName("AMSTEL ΚΟΥΤΙ 330 ML").price(BigDecimal.valueOf(2.40)).productCategory(productCategoryService.get(18L)).build();
+
+        storeService.addItem(pitaPan.getId(),pitaPan1);
+        storeService.addItem(pitaPan.getId(),pitaPan2);
+        storeService.addItem(pitaPan.getId(),pitaPan3);
+        storeService.addItem(pitaPan.getId(),pitaPan4);
+        storeService.addItem(pitaPan.getId(),pitaPan5);
+        storeService.addItem(pitaPan.getId(),pitaPan6);
+        storeService.addItem(pitaPan.getId(),pitaPan7);
+        storeService.addItem(pitaPan.getId(),pitaPan8);
+        storeService.addItem(pitaPan.getId(),pitaPan9);
+        storeService.addItem(pitaPan.getId(),pitaPan10);
+        storeService.addItem(pitaPan.getId(),pitaPan11);
+        storeService.addItem(pitaPan.getId(),pitaPan12);
 
         Store malePlus = storeService.create(Store.builder().storeName("MALE PLUS-ΔΑΦΝΗ").city("ΑΘΗΝΑ").address("ΕΛΛΗΣ 15, 17235").phoneNumber("2100000006").emailAddress("maleplus@gmail.com").category(storeCategoryService.get(3L)).build());
 
-        Set<StoreItem> malePlusMenu = Set.of(
-                StoreItem.builder().itemName("FREDDO ESPRESSO").price(BigDecimal.valueOf(2.00)).productCategory(productCategoryService.get(19L)).build(),
-                StoreItem.builder().itemName("ESPRESSO RISTRETTO").price(BigDecimal.valueOf(1.40)).productCategory(productCategoryService.get(19L)).build(),
-                StoreItem.builder().itemName("FRAPPE").price(BigDecimal.valueOf(1.70)).productCategory(productCategoryService.get(19L)).build(),
-                StoreItem.builder().itemName("ΦΙΛΤΡΟΥ").price(BigDecimal.valueOf(1.80)).productCategory(productCategoryService.get(19L)).build(),
-                StoreItem.builder().itemName("ΣΟΚΟΛΑΤΑ").price(BigDecimal.valueOf(2.20)).productCategory(productCategoryService.get(20L)).build(),
-                StoreItem.builder().itemName("ΣΟΚΟΛΑΤΑ BUENO").price(BigDecimal.valueOf(2.60)).productCategory(productCategoryService.get(20L)).build(),
-                StoreItem.builder().itemName("MOCACCHINO").price(BigDecimal.valueOf(2.90)).productCategory(productCategoryService.get(20L)).build(),
-                StoreItem.builder().itemName("FREDDOCHINO").price(BigDecimal.valueOf(2.50)).productCategory(productCategoryService.get(20L)).build(),
-                StoreItem.builder().itemName("COCA-COLA 330 ML").price(BigDecimal.valueOf(1.30)).productCategory(productCategoryService.get(3L)).build(),
-                StoreItem.builder().itemName("COCA-COLA LIGHT 330 ML").price(BigDecimal.valueOf(1.30)).productCategory(productCategoryService.get(3L)).build()
-        );
-        storeService.addItems(storeService.get(7L), malePlusMenu);
+        StoreItem malePlus1=StoreItem.builder().itemName("FREDDO ESPRESSO").price(BigDecimal.valueOf(2.00)).productCategory(productCategoryService.get(19L)).build();
+        StoreItem malePlus2=StoreItem.builder().itemName("ESPRESSO RISTRETTO").price(BigDecimal.valueOf(1.40)).productCategory(productCategoryService.get(19L)).build();
+        StoreItem malePlus3=StoreItem.builder().itemName("FRAPPE").price(BigDecimal.valueOf(1.70)).productCategory(productCategoryService.get(19L)).build();
+        StoreItem malePlus4=StoreItem.builder().itemName("ΦΙΛΤΡΟΥ").price(BigDecimal.valueOf(1.80)).productCategory(productCategoryService.get(19L)).build();
+        StoreItem malePlus5=StoreItem.builder().itemName("ΣΟΚΟΛΑΤΑ").price(BigDecimal.valueOf(2.20)).productCategory(productCategoryService.get(20L)).build();
+        StoreItem malePlus6=StoreItem.builder().itemName("ΣΟΚΟΛΑΤΑ BUENO").price(BigDecimal.valueOf(2.60)).productCategory(productCategoryService.get(20L)).build();
+        StoreItem malePlus7=StoreItem.builder().itemName("MOCACCHINO").price(BigDecimal.valueOf(2.90)).productCategory(productCategoryService.get(20L)).build();
+        StoreItem malePlus8=StoreItem.builder().itemName("FREDDOCHINO").price(BigDecimal.valueOf(2.50)).productCategory(productCategoryService.get(20L)).build();
+        StoreItem malePlus9=StoreItem.builder().itemName("COCA-COLA 330 ML").price(BigDecimal.valueOf(1.30)).productCategory(productCategoryService.get(3L)).build();
+        StoreItem malePlus10=StoreItem.builder().itemName("COCA-COLA LIGHT 330 ML").price(BigDecimal.valueOf(1.30)).productCategory(productCategoryService.get(3L)).build();
+
+        storeService.addItem(malePlus.getId(),malePlus1);
+        storeService.addItem(malePlus.getId(),malePlus2);
+        storeService.addItem(malePlus.getId(),malePlus3);
+        storeService.addItem(malePlus.getId(),malePlus4);
+        storeService.addItem(malePlus.getId(),malePlus5);
+        storeService.addItem(malePlus.getId(),malePlus6);
+        storeService.addItem(malePlus.getId(),malePlus7);
+        storeService.addItem(malePlus.getId(),malePlus8);
+        storeService.addItem(malePlus.getId(),malePlus9);
+        storeService.addItem(malePlus.getId(),malePlus10);
 
         Store kobra = storeService.create(Store.builder().storeName("KOBRA-ΑΚΑΔΗΜΙΑ").city("ΑΘΗΝΑ").address("ΝΑΥΑΡΙΝΟΥ 11,10679").phoneNumber("2100000007").emailAddress("kobra@gmail.com").category(storeCategoryService.get(3L)).build());
-        Set<StoreItem>  kobraMenu= Set.of(
-                StoreItem.builder().itemName("ICED TEA").price(BigDecimal.valueOf(3.00)).productCategory(productCategoryService.get(21L)).build(),
-                StoreItem.builder().itemName("ICED TEA ΦΑΣΚΟΜΗΛΟ").price(BigDecimal.valueOf(4.70)).productCategory(productCategoryService.get(21L)).build(),
-                StoreItem.builder().itemName("ΙCED TEA FLORIDA").price(BigDecimal.valueOf(5.50)).productCategory(productCategoryService.get(21L)).build(),
-                StoreItem.builder().itemName("ΣΟΚΟΛΑΤΑ").price(BigDecimal.valueOf(3.50)).productCategory(productCategoryService.get(20L)).build(),
-                StoreItem.builder().itemName("ΣΟΚΟΛΑΤΑ ΦΟΥΝΤΟΥΚΙ").price(BigDecimal.valueOf(4.00)).productCategory(productCategoryService.get(20L)).build(),
-                StoreItem.builder().itemName("SMOOTHIE COFFEE HEAD").price(BigDecimal.valueOf(4.60)).productCategory(productCategoryService.get(22L)).build(),
-                StoreItem.builder().itemName("SMOOTHIE MORNING GLORY").price(BigDecimal.valueOf(6.20)).productCategory(productCategoryService.get(22L)).build(),
-                StoreItem.builder().itemName("SMOOTHIE GOT RUM").price(BigDecimal.valueOf(5.80)).productCategory(productCategoryService.get(22L)).build()
-        );
-        storeService.addItems(storeService.get(8L), kobraMenu);
+        StoreItem kobra1=StoreItem.builder().itemName("ICED TEA").price(BigDecimal.valueOf(3.00)).productCategory(productCategoryService.get(21L)).build();
+        StoreItem kobra2=StoreItem.builder().itemName("ICED TEA ΦΑΣΚΟΜΗΛΟ").price(BigDecimal.valueOf(4.70)).productCategory(productCategoryService.get(21L)).build();
+        StoreItem kobra3=StoreItem.builder().itemName("ΙCED TEA FLORIDA").price(BigDecimal.valueOf(5.50)).productCategory(productCategoryService.get(21L)).build();
+        StoreItem kobra4=StoreItem.builder().itemName("ΣΟΚΟΛΑΤΑ").price(BigDecimal.valueOf(3.50)).productCategory(productCategoryService.get(20L)).build();
+        StoreItem kobra5=StoreItem.builder().itemName("ΣΟΚΟΛΑΤΑ ΦΟΥΝΤΟΥΚΙ").price(BigDecimal.valueOf(4.00)).productCategory(productCategoryService.get(20L)).build();
+        StoreItem kobra6=StoreItem.builder().itemName("SMOOTHIE COFFEE HEAD").price(BigDecimal.valueOf(4.60)).productCategory(productCategoryService.get(22L)).build();
+        StoreItem kobra7=StoreItem.builder().itemName("SMOOTHIE MORNING GLORY").price(BigDecimal.valueOf(6.20)).productCategory(productCategoryService.get(22L)).build();
+        StoreItem kobra8=StoreItem.builder().itemName("SMOOTHIE GOT RUM").price(BigDecimal.valueOf(5.80)).productCategory(productCategoryService.get(22L)).build();
+
+        storeService.addItem(kobra.getId(),kobra1);
+        storeService.addItem(kobra.getId(),kobra2);
+        storeService.addItem(kobra.getId(),kobra3);
+        storeService.addItem(kobra.getId(),kobra4);
+        storeService.addItem(kobra.getId(),kobra5);
+        storeService.addItem(kobra.getId(),kobra6);
+        storeService.addItem(kobra.getId(),kobra7);
+        storeService.addItem(kobra.getId(),kobra8);
 
     }
 }
