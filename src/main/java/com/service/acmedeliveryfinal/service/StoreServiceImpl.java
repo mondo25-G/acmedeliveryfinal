@@ -5,7 +5,6 @@ import com.service.acmedeliveryfinal.domain.Store;
 import com.service.acmedeliveryfinal.domain.StoreCategory;
 import com.service.acmedeliveryfinal.domain.StoreItem;
 import com.service.acmedeliveryfinal.repository.StoreCategoryRepository;
-import com.service.acmedeliveryfinal.repository.StoreItemRepository;
 import com.service.acmedeliveryfinal.repository.StoreRepository;
 import com.service.acmedeliveryfinal.transfer.KeyValue;
 import lombok.RequiredArgsConstructor;
@@ -23,11 +22,11 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
 
     private final StoreCategoryRepository storeCategoryRepository;
 
-    private final StoreItemRepository storeItemRepository;
     @Override
     public JpaRepository<Store, Long> getRepository() {return storeRepository;}
 
 
+    //Lazy loading methods for Store
     @Override
     public Store getLazy(Long id) {
             Optional<Store> store = storeRepository.getLazy(id);
@@ -42,6 +41,22 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         return storeRepository.getLazyAll();
     }
 
+
+    //This can be retrieved through StoreCategoryService too, placed here for front end convenience / existing endpoint.
+    @Override
+    public List<StoreCategory> getAllStoreCategories() {
+        return storeCategoryRepository.findAll();
+    }
+
+    //Service Get methods for store categories, stores by category, can be refactored to StoreService too.
+    @Override
+    public List<Store> getStoresByCategoryId(Long id) {
+        return storeRepository.findStoresByCategoryId(id);
+    }
+
+
+
+    //StoreItem crud methods.
     @Override
     public void addItems(Store store, Set<StoreItem> items) {
         store.setStoreItems(items);
@@ -80,11 +95,26 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         storeRepository.save(store);
     }
 
+    //Aggregate (StoreItem) get methods, helpers for seeding.
     @Override
-    public List<StoreCategory> getAllStoreCategories() {
-        return storeCategoryRepository.findAll();
+    public List<StoreItem> getProductsByStore(Long id) {
+        return storeRepository.findStoreItemsByStoreId(id);
     }
 
+    @Override
+    public StoreItem getProduct(Long storeId, Long id) {
+        return storeRepository.findStoreItem(storeId,id);
+    }
+
+    @Override
+    public StoreItem getProduct(Long id) {
+        return storeRepository.findStoreItem(id);
+    }
+
+
+    //DTOs
+
+    //Dropdownlist for searching stores by name or category
     @Override
     public List<KeyValue<Long, String>> getStoresDropdownList(String searchString) {
         List<KeyValue<Long,String>> dropdownList = new ArrayList<>();
@@ -93,11 +123,7 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         return dropdownList;
     }
 
-    @Override
-    public List<Store> getStoresByCategoryId(Long id) {
-        return storeRepository.findStoresByCategoryId(id);
-    }
-
+    //Business methods for popular stores
     @Override
     public List<KeyValue<Long,String>> findPopularStores(){
         return storeRepository.findTop10Stores();
@@ -113,9 +139,15 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         return storeRepository.findTopStoresByCategory(categoryId);
     }
 
+    //Business methods for popular store items
     @Override
     public List<KeyValue<Long, String>> findPopularProducts() {
-        return storeItemRepository.top10StoreItemsBasedOnOrderLines();
+        return storeRepository.findTop10StoreItems();
+    }
+
+    @Override
+    public List<KeyValue<Long, String>> findPopularProductsByStore(Long id) {
+        return storeRepository.findTop10StoreItemsByStore(id);
     }
 
 
