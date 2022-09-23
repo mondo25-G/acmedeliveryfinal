@@ -5,6 +5,8 @@ import lombok.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 @Entity
 @Table(name = "PRODUCT_CATEGORIES")
 @Getter
@@ -15,7 +17,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 public class ProductCategory extends BaseEntity {
 
-
+    @NotNull
     @Column(unique = true)
     private String name;
 
