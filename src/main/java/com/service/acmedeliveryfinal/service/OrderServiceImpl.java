@@ -23,7 +23,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
 
     private final OrderRepository orderRepository;
 
-    private final StoreItemService storeItemService;
+    private final StoreService storeService;
 
     @Override
     public JpaRepository<Order, Long> getRepository() {
@@ -125,7 +125,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
     //Add New Order Item in Order
     private OrderItem newOrderItem(Order order, StoreItem storeItem, int quantity) {
 
-        StoreItem item = storeItemService.get(storeItem.getId());
+        StoreItem item = storeService.getProduct(storeItem.getId());
 
         // Build Order Item with store item, quantity, order and price (price acquired from StoreItem)
         return OrderItem.builder().storeItem(item).order(order).quantity(quantity).price(item.getPrice()).build();
@@ -143,7 +143,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
 
     //Check if the Items store id corresponds to the order store id
     private boolean checkStore(Order order, StoreItem storeItem) {
-        StoreItem item = storeItemService.get(storeItem.getId());
+        StoreItem item = storeService.getProduct(storeItem.getId());
 
         // Get Order's Store id and Store Item store's id
         long orderStoreId =order.getStore().getId();
