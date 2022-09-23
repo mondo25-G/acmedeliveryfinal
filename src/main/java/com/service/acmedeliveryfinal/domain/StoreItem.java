@@ -25,6 +25,23 @@ import java.math.BigDecimal;
                 }
         )
 )
+@NamedNativeQuery(name = "StoreItem.findTop10ProductsByStoreId",
+        query ="""
+		with popularItems as (select oi.storeItem_id as storeItemId, count(oi.storeItem_id) as purchases
+		from orderItems oi group by oi.storeItem_id) select si.id as storeItemId,si.itemName as storeItemName from storeitems si 
+		inner join popularItems p on p.storeItemId=si.id where si.store_id=?1
+		order by p.purchases desc,p.storeItemId fetch first 10 rows only
+			""",
+        resultSetMapping = "findTop10ProductsByStoreId")
+@SqlResultSetMapping(name = "findTop10ProductsByStoreId",
+        classes = @ConstructorResult(
+                targetClass = KeyValue.class,
+                columns = {
+                        @ColumnResult(name = "storeItemId", type = Long.class),
+                        @ColumnResult(name = "storeItemName", type = String.class)
+                }
+        )
+)
 @Getter
 @Setter
 @ToString(callSuper = true)
