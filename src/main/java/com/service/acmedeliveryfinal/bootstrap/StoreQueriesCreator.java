@@ -1,13 +1,7 @@
 package com.service.acmedeliveryfinal.bootstrap;
 
 import com.service.acmedeliveryfinal.base.BaseComponent;
-import com.service.acmedeliveryfinal.domain.ProductCategory;
 import com.service.acmedeliveryfinal.domain.Store;
-import com.service.acmedeliveryfinal.domain.StoreCategory;
-import com.service.acmedeliveryfinal.domain.StoreItem;
-import com.service.acmedeliveryfinal.repository.StoreRepository;
-import com.service.acmedeliveryfinal.service.ProductCategoryService;
-import com.service.acmedeliveryfinal.service.StoreCategoryService;
 import com.service.acmedeliveryfinal.service.StoreService;
 import com.service.acmedeliveryfinal.transfer.KeyValue;
 import lombok.RequiredArgsConstructor;
@@ -23,10 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Order(4)
 public class StoreQueriesCreator extends BaseComponent implements CommandLineRunner {
-
-    private final ProductCategoryService productCategoryService;
     private final StoreService storeService;
-    private final StoreCategoryService storeCategoryService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -75,16 +66,15 @@ public class StoreQueriesCreator extends BaseComponent implements CommandLineRun
         topProds.forEach(s->logger.info("Popular prod:{}",s));
 
         //GET MOST POPULAR PRODUCTS (BASED ON ORDERS) OF A SPECIFIC STORE
-        logger.info("Most popular products based on orders, store id ascending of a cpecific store");
-        List<KeyValue<Long,String>> topProdsByStore = storeService.findPopularProducts();
-        topProds.forEach(s->logger.info("Popular prod:{}",s));
+        logger.info("Most popular products based on orders, store id ascending of a specific store");
+        List<KeyValue<Long,String>> topProdsByStore;
 
-        //GET ALL STORE ITEMS OF A SPECIFIC STORE ID.
-        List<KeyValue<Long,String>> si=storeService.findPopularProductsByStore(3L);
-
-        si.forEach(s->logger.info("Popular Store items of Store 3: {}", s));
-
-
+        Long count=1L;
+        for(int i=1;i<6;i++){
+            topProdsByStore= storeService.findPopularProductsByStore(count++);
+            topProdsByStore.forEach(s->logger.info("Popular prod:{}",s));
+            logger.info("done\n");
+        }
 
 
     }
