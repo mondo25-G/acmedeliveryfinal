@@ -7,7 +7,7 @@ import com.service.acmedeliveryfinal.domain.StoreItem;
 import com.service.acmedeliveryfinal.domain.enumeration.PaymentMethod;
 import com.service.acmedeliveryfinal.service.BaseService;
 import com.service.acmedeliveryfinal.service.OrderService;
-import com.service.acmedeliveryfinal.service.StoreItemService;
+import com.service.acmedeliveryfinal.service.StoreService;
 import com.service.acmedeliveryfinal.transfer.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ public class OrderController extends BaseController<Order> {
 
     private final OrderService orderService;
 
-    private final StoreItemService storeItemService;
+    private final StoreService storeService;
 
     private Order newOrder;
 
@@ -40,21 +40,21 @@ public class OrderController extends BaseController<Order> {
 
     @GetMapping("/addItem")
     public ResponseEntity<ApiResponse<Order>> addItem(@RequestParam Long id , int quantity){
-        StoreItem item = storeItemService.get(id);
+        StoreItem item = storeService.getProduct(id);
         newOrder= orderService.addItem(newOrder, item, quantity);
         return ResponseEntity.ok(ApiResponse.<Order>builder().data(newOrder).build());
     }
 
     @PatchMapping("/updateItem")
     public ResponseEntity<ApiResponse<Order>> updateItem(@RequestParam Long id , int quantity){
-        StoreItem item = storeItemService.get(id);
+        StoreItem item = storeService.getProduct(id);
         newOrder= orderService.updateItem(newOrder, item, quantity);
         return ResponseEntity.ok(ApiResponse.<Order>builder().data(newOrder).build());
     }
 
     @DeleteMapping("/deleteItem")
     public ResponseEntity<ApiResponse<Order>> deleteItem(@RequestParam Long id ){
-        StoreItem item = storeItemService.get(id);
+        StoreItem item = storeService.getProduct(id);
         newOrder= orderService.removeItem(newOrder, item);
         return ResponseEntity.ok(ApiResponse.<Order>builder().data(newOrder).build());
     }
@@ -73,5 +73,6 @@ public class OrderController extends BaseController<Order> {
     public ResponseEntity<ApiResponse<List<Order>>> getOrderList(@PathVariable Long id){
         return ResponseEntity.ok(ApiResponse.<List<Order>>builder().data(orderService.getAllByAccount(id)).build());
     }
+
 
 }
