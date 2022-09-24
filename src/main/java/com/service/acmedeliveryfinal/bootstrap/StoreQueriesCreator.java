@@ -76,6 +76,5 @@ public class StoreQueriesCreator extends BaseComponent implements CommandLineRun
             logger.info("done\n");
         }
 
-
     }
 }
