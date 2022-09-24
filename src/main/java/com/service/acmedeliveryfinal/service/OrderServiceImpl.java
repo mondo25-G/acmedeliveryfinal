@@ -3,6 +3,9 @@ package com.service.acmedeliveryfinal.service;
 import com.service.acmedeliveryfinal.domain.*;
 import com.service.acmedeliveryfinal.domain.enumeration.PaymentMethod;
 import com.service.acmedeliveryfinal.repository.OrderRepository;
+import com.service.acmedeliveryfinal.transfer.AccountOrderHeaderDto;
+import com.service.acmedeliveryfinal.transfer.KeyValue;
+import com.service.acmedeliveryfinal.transfer.OrderDetailsDto;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.asm.Advice;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,10 +15,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 
 @Service
@@ -208,6 +208,17 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
     public List<Order> getAllByAccount(Long id) {
 
         return orderRepository.findByCustomer(id);
+    }
+
+    @Override
+    public List<KeyValue<AccountOrderHeaderDto, List<OrderDetailsDto>>> findOrdersByAccount(Long accountId) {
+        List<KeyValue<AccountOrderHeaderDto, List<OrderDetailsDto>>> ordersByAccount = new ArrayList<>();
+        List<AccountOrderHeaderDto> orderHeadersPerAccount=orderRepository.getOrdersByAccount(accountId);
+        for(var orderHeaderPerAccount:orderHeadersPerAccount){
+            List<OrderDetailsDto> orderDetails = orderRepository.getOrderItemsByOrder(orderHeaderPerAccount.getOrderId());
+            ordersByAccount.add(new KeyValue<>(orderHeaderPerAccount,orderDetails));
+        }
+        return ordersByAccount;
     }
 
 }
