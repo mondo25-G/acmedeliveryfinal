@@ -31,7 +31,6 @@ public class Order extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "store_id")
     @ToString.Exclude
-    @JsonIgnore
     private Store store;
 
     @NotNull
