@@ -43,7 +43,7 @@ public class OrderController extends BaseController<Order> {
         return ResponseEntity.ok(ApiResponse.<Order>builder().data(newOrder).build());
     }
 
-    @GetMapping("/addItem")
+    @PatchMapping("/addItem")
     public ResponseEntity<ApiResponse<Order>> addItem(@RequestParam Long id , int quantity){
         StoreItem item = storeService.getProduct(id);
         newOrder= orderService.addItem(newOrder, item, quantity);
@@ -64,7 +64,7 @@ public class OrderController extends BaseController<Order> {
         return ResponseEntity.ok(ApiResponse.<Order>builder().data(newOrder).build());
     }
 
-    @GetMapping("/checkout")
+    @PostMapping("/checkout")
     public ResponseEntity<ApiResponse<Order>> checkout(PaymentMethod paymentMethod){
         return ResponseEntity.ok(ApiResponse.<Order>builder().data(orderService.checkout(newOrder, paymentMethod)).build());
     }
