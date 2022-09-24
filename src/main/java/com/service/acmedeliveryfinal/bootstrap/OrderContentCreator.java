@@ -124,7 +124,6 @@ public class OrderContentCreator extends BaseComponent implements CommandLineRun
         orderService.checkout(newOrder6, PaymentMethod.CARD);
         logger.info(orderComplete,newOrder6);
 
-
     }
 
 }

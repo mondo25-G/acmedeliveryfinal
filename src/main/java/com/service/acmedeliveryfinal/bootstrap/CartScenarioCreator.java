@@ -70,5 +70,6 @@ public class CartScenarioCreator extends BaseComponent implements CommandLineRun
         // ORDER 3 - CHECKOUT OF ORDER
         orderService.checkout(newOrder2, PaymentMethod.CASH);
         logger.info(orderComplete, newOrder2);
+
     }
 }
