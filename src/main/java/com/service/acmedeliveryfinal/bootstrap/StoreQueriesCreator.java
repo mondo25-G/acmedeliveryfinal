@@ -12,10 +12,11 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
-@Order(4)
+@Order(10)
 public class StoreQueriesCreator extends BaseComponent implements CommandLineRunner {
     private final StoreService storeService;
 
@@ -42,11 +43,10 @@ public class StoreQueriesCreator extends BaseComponent implements CommandLineRun
 
         logger.info("Stores by category id=1, {}",byCat);
 
-        //GET MOST POPULAR STORES (BASED ON ORDERS)
+        //GET MOST POPULAR STORES (BASED ON ORDERS) with List approach
         List<KeyValue<Long,String>> topStores = storeService.findPopularStores();
 
-        logger.info("Most popular stores based on total store orders descending, store id ascending");
-        topStores.forEach(s->logger.info("Popular Store: {}", s));
+        topStores.forEach(s->logger.info("Popular store: {}",s));
 
         //GET MOST POPULAR STORES (BASED ON ORDERS) BY CATEGORY ID
         List<KeyValue<Long,String>> topStoresCatId = storeService.findPopularStoresByCategory(1L);
@@ -75,6 +75,15 @@ public class StoreQueriesCreator extends BaseComponent implements CommandLineRun
             topProdsByStore.forEach(s->logger.info("Popular prod:{}",s));
             logger.info("done\n");
         }
+
+/*
+        //GET MOST POPULAR STORES (BASED ON ORDERS) with map approach
+        Map<Long,String> topStores = storeService.findPopularStoresMap();
+
+        logger.info("Most popular stores based on total store orders descending, store id ascending");
+        logger.info("TopStores:{}",topStores);
+
+ */
 
     }
 }
