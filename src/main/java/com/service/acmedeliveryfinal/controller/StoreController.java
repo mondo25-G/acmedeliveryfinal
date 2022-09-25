@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 @CrossOrigin
@@ -59,6 +60,13 @@ public class StoreController {
     public ResponseEntity<ApiResponse<List<KeyValue<Long,String>>>> findTop(){
         return ResponseEntity.ok(ApiResponse.<List<KeyValue<Long,String>>>builder().data(storeService.findPopularStores()).build());
     }
+
+    //Test endpoint that returns map of popularStores, to be used in conjuction with map
+    @GetMapping("/popularMap")
+    public ResponseEntity<ApiResponse<Map<Long,String>>> findTopMap(){
+        return ResponseEntity.ok(ApiResponse.<Map<Long,String>>builder().data(storeService.findPopularStoresMap()).build());
+    }
+
 
     //endpoint to get top stores by Category id (Long)
     @GetMapping("/popular/categories/{id}")
