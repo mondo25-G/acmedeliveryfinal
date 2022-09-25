@@ -8,6 +8,7 @@ import com.service.acmedeliveryfinal.transfer.KeyValue;
 import com.service.acmedeliveryfinal.transfer.OrderDetailsDto;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.asm.Advice;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -23,8 +24,6 @@ import java.util.*;
 public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderService {
 
     private final OrderRepository orderRepository;
-
-    private final StoreService storeService;
 
     @Override
     public JpaRepository<Order, Long> getRepository() {
@@ -132,10 +131,8 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
     //Add New Order Item in Order
     private OrderItem newOrderItem(Order order, StoreItem storeItem, int quantity) {
 
-        StoreItem item = storeService.getProduct(storeItem.getId());
-
         // Build Order Item with store item, quantity, order and price (price acquired from StoreItem)
-        return OrderItem.builder().storeItem(item).order(order).quantity(quantity).price(item.getPrice()).build();
+        return OrderItem.builder().storeItem(storeItem).order(order).quantity(quantity).price(storeItem.getPrice()).build();
     }
 
      //Validation , Nullability and Store Validation Methods\\
@@ -150,11 +147,10 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
 
     //Check if the Items store id corresponds to the order store id
     private boolean checkStoreChange(Order order, StoreItem storeItem) {
-        StoreItem item = storeService.getProduct(storeItem.getId());
 
         // Get Order's Store id and Store Item store's id
         long orderStoreId =order.getStore().getId();
-        long itemStoreId= item.getStore().getId();
+        long itemStoreId= storeItem.getStore().getId();
         logger.info("Order_Store : {} Item store id: {}", orderStoreId,itemStoreId );
 
         // Validation if id's are equal
