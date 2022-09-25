@@ -87,8 +87,8 @@ public class StoreController {
         return ResponseEntity.ok(ApiResponse.<List<KeyValue<Long, String>>>builder().data(storeService.findPopularProducts()).build());
     }
 
-    @GetMapping("/popular/products/{storeId}")
-    public ResponseEntity<ApiResponse<List<KeyValue<Long,String>>>> findTopProducts(@RequestParam("storeId") Long id){
+    @GetMapping("/popular/productsByStore")
+    public ResponseEntity<ApiResponse<List<KeyValue<Long,String>>>> findTopProductsByStore(@RequestParam("storeId") Long id){
         return ResponseEntity.ok(ApiResponse.<List<KeyValue<Long, String>>>builder().data(storeService.findPopularProductsByStore(id)).build());
     }
 
