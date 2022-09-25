@@ -125,8 +125,19 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
 
     //Business methods for popular stores
     @Override
-    public List<KeyValue<Long,String>> findPopularStores(){
+    public List<KeyValue<Long, String>> findPopularStores(){
         return storeRepository.findTop10Stores();
+    }
+
+    // Gets popular stores with a Map approach
+    @Override
+    public Map<Long,String> findPopularStoresMap(){
+        List<KeyValue<Long,String>> top10Stores= storeRepository.findTop10Stores();
+        Map<Long,String> topToStoresMap = new LinkedHashMap<>();
+        for (KeyValue<Long,String> kvp: top10Stores){
+            topToStoresMap.put(kvp.getKey(), kvp.getValue());
+        }
+        return topToStoresMap;
     }
 
     @Override
