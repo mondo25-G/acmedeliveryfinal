@@ -8,6 +8,8 @@ import com.service.acmedeliveryfinal.repository.StoreCategoryRepository;
 import com.service.acmedeliveryfinal.repository.StoreRepository;
 import com.service.acmedeliveryfinal.transfer.KeyValue;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
+@CacheConfig(cacheNames = "stores")
 public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreService{
 
     private final StoreRepository storeRepository;
@@ -123,14 +126,20 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         return dropdownList;
     }
 
+    //Cacheable methods for popularity ratings. These methods will execute the trip to the server just once
+    //when they are called for the first time from the contoller layer. Each call after that will fetch from cache.
+    //Proper implementations for flushing/updating the cache are omitted.
+
     //Business methods for popular stores
     @Override
+    @Cacheable
     public List<KeyValue<Long, String>> findPopularStores(){
         return storeRepository.findTop10Stores();
     }
 
     // Gets popular stores with a Map approach
     @Override
+    @Cacheable
     public Map<Long,String> findPopularStoresMap(){
         List<KeyValue<Long,String>> top10Stores= storeRepository.findTop10Stores();
         Map<Long,String> topToStoresMap = new LinkedHashMap<>();
@@ -141,22 +150,26 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     }
 
     @Override
+    @Cacheable
     public List<KeyValue<Long,String>> findPopularStoresByCategory(String categoryName) {
         return storeRepository.findTopStoresByCategory(categoryName);
     }
 
     @Override
+    @Cacheable
     public List<KeyValue<Long,String>> findPopularStoresByCategory(Long categoryId) {
         return storeRepository.findTopStoresByCategory(categoryId);
     }
 
     //Business methods for popular store items
     @Override
+    @Cacheable(cacheNames = "products")
     public List<KeyValue<Long, String>> findPopularProducts() {
         return storeRepository.findTop10StoreItems();
     }
 
     @Override
+    @Cacheable(cacheNames = "products")
     public List<KeyValue<Long, String>> findPopularProductsByStore(Long id) {
         return storeRepository.findTop10StoreItemsByStore(id);
     }
