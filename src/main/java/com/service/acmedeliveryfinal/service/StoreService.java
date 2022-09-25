@@ -6,6 +6,7 @@ import com.service.acmedeliveryfinal.domain.StoreItem;
 import com.service.acmedeliveryfinal.transfer.KeyValue;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -36,6 +37,9 @@ public interface StoreService extends BaseService<Store>{
 
     List<KeyValue<Long,String>> findPopularStores();
 
+    //alternative approach returns a map
+    Map<Long,String> findPopularStoresMap();
+
     List<KeyValue<Long,String>> findPopularStoresByCategory(String categoryName);
 
     List<KeyValue<Long,String>> findPopularStoresByCategory(Long categoryId);
@@ -43,5 +47,6 @@ public interface StoreService extends BaseService<Store>{
     List<KeyValue<Long,String>> findPopularProducts();
 
     List<KeyValue<Long,String>> findPopularProductsByStore(Long id);
+
 
 }
