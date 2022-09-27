@@ -199,15 +199,6 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         return createStoreDto(store);
     }
 
-    @Override
-    public List<StoreItemDto> getStoreMenuDto(Long id){
-        Store store = getLazy(id);
-        List<StoreItemDto> menu = new ArrayList<>();
-        for (StoreItem storeItem: store.getStoreItems()){
-            menu.add(createStoreItemDto(storeItem));
-        }
-        return menu;
-    }
 
     //DTO creation
     private StoreDto createStoreDto(Store store) {
