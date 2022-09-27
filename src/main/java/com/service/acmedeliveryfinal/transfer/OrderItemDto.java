@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.math.BigDecimal;
 
-public interface OrderDetailsDto {
+public interface OrderItemDto {
     @JsonIgnore
     Long getOrderId();
     String getItemName();
