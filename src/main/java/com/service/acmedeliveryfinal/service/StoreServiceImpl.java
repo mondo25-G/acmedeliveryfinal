@@ -12,7 +12,10 @@ import com.service.acmedeliveryfinal.transfer.StoreDto;
 import com.service.acmedeliveryfinal.transfer.StoreItemDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 
@@ -21,7 +24,7 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-@CacheConfig(cacheNames = "stores")
+@CacheConfig(cacheManager = "cacheManager", cacheNames = {"stores","products","popular"}, keyGenerator = "CustomCacheKeyGenerator")
 public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreService {
 
     private final StoreRepository storeRepository;
@@ -50,12 +53,14 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
 
     //This can be retrieved through StoreCategoryService too, placed here for front end convenience / existing endpoint.
     @Override
+    @Cacheable(cacheNames = "stores")
     public List<StoreCategory> getAllStoreCategories() {
         return storeCategoryRepository.findAll();
     }
 
     //Service Get methods for store categories, stores by category, can be refactored to StoreService too.
     @Override
+    @Cacheable(cacheNames = "stores")
     public List<Store> getStoresByCategoryId(Long id) {
         return storeRepository.findStoresByCategoryId(id);
     }
@@ -102,16 +107,19 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
 
     //Aggregate (StoreItem) get methods, helpers for seeding.
     @Override
+    @Cacheable(cacheNames = "products")
     public List<StoreItem> getProductsByStore(Long id) {
         return storeRepository.findStoreItemsByStoreId(id);
     }
 
     @Override
+    @Cacheable(cacheNames = "products")
     public StoreItem getProduct(Long storeId, Long id) {
         return storeRepository.findStoreItem(storeId, id);
     }
 
     @Override
+    @Cacheable(cacheNames = "products")
     public StoreItem getProduct(Long id) {
         return storeRepository.findStoreItem(id);
     }
@@ -121,6 +129,7 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
 
     //Dropdownlist for searching stores by name or category
     @Override
+    @Cacheable(cacheNames = "stores")
     public List<KeyValue<Long, String>> getStoresDropdownList(String searchString) {
         List<KeyValue<Long, String>> dropdownList = new ArrayList<>();
         List<Store> searchResults = storeRepository.findStoresByNameOrCategory(searchString);
@@ -131,14 +140,14 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
 
     //Business methods for popular stores
     @Override
-    //@Cacheable
+    @Cacheable(cacheNames = "popular")
     public List<KeyValue<Long, String>> findPopularStores() {
         return storeRepository.findTop10Stores();
     }
 
     // Gets popular stores with a Map approach
     @Override
-    //@Cacheable
+    @Cacheable(cacheNames = "popular")
     public Map<Long, String> findPopularStoresMap() {
         List<KeyValue<Long, String>> top10Stores = storeRepository.findTop10Stores();
         Map<Long, String> topToStoresMap = new LinkedHashMap<>();
@@ -149,31 +158,32 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     }
 
     @Override
-    //@Cacheable
+    @Cacheable(cacheNames = "popular")
     public List<KeyValue<Long, String>> findPopularStoresByCategory(String categoryName) {
         return storeRepository.findTopStoresByCategory(categoryName);
     }
 
     @Override
-    //@Cacheable
+    @Cacheable(cacheNames = "popular")
     public List<KeyValue<Long, String>> findPopularStoresByCategory(Long categoryId) {
         return storeRepository.findTopStoresByCategory(categoryId);
     }
 
     //Business methods for popular store items
     @Override
-    //@Cacheable(cacheNames = "products")
+    @Cacheable(cacheNames = "popular")
     public List<KeyValue<Long, String>> findPopularProducts() {
         return storeRepository.findTop10StoreItems();
     }
 
     @Override
-    //@Cacheable(cacheNames = "products")
+    @Cacheable(cacheNames = "popular")
     public List<KeyValue<Long, String>> findPopularProductsByStore(Long id) {
         return storeRepository.findTop10StoreItemsByStore(id);
     }
 
     @Override
+    @Cacheable(cacheNames = "stores")
     public List<StoreDetailsDto> getStoreDetailsDtos() {
         List<Store> storesList = storeRepository.getLazyAll();
         List<StoreDetailsDto> storeDtoList = new ArrayList<>();
@@ -184,13 +194,15 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     }
 
 
-  //  @Override
+    @Override
+    @Cacheable(cacheNames = "stores")
     public StoreDetailsDto getStoreDetailsDto(Long id) {
         Store store = getLazy(id);
         return createStoreDetailsDto(store);
     }
 
-   // @Override
+    @Override
+    @Cacheable(cacheNames = "stores")
     public StoreDto getStoreDto(Long id) {
         Store store = getLazy(id);
         return createStoreDto(store);
@@ -293,5 +305,11 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
                 return storeItem.getPrice();
             }
         };
+    }
+
+    @CacheEvict(cacheNames = {"products","stores","popular"}, allEntries = true)
+    @Scheduled(cron = "0 0/2 22 * * ?") //start at 22:00 until 22.58
+    public void evictCache() {
+        logger.info("Evicting store/products/popular cache contents.");
     }
 }
