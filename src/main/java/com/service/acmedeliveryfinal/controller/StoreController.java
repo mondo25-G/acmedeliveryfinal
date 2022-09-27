@@ -32,9 +32,9 @@ public class StoreController {
 
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<Store>>>getStores() {
+    public ResponseEntity<ApiResponse<List<StoreDetailsDto>>>getStores() {
 
-        return ResponseEntity.ok(ApiResponse.<List<Store>>builder().data(storeService.getLazyAll()).build());
+        return ResponseEntity.ok(ApiResponse.<List<StoreDetailsDto>>builder().data(storeService.getStoreDetailsDtos()).build());
 
     }
 
