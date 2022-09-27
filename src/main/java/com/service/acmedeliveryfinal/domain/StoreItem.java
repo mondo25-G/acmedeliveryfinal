@@ -1,9 +1,9 @@
 package com.service.acmedeliveryfinal.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.service.acmedeliveryfinal.transfer.KeyValue;
 import lombok.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -56,13 +56,12 @@ public class StoreItem extends BaseEntity {
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "store_id")
-    @JsonIgnore
+    @JsonBackReference("storeItems")
     private Store store;
 
     @NotNull
     @ToString.Exclude
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false,cascade = CascadeType.MERGE)
     @JoinColumn(name = "productCategory_id")
     private ProductCategory productCategory;
 
