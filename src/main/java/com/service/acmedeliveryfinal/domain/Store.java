@@ -1,6 +1,7 @@
 package com.service.acmedeliveryfinal.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.service.acmedeliveryfinal.transfer.KeyValue;
 import lombok.*;
 
@@ -92,12 +93,13 @@ public class Store extends BaseEntity {
     @Column(unique = true)
     private String phoneNumber;
 
+    @NotNull
     @ToString.Exclude
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false,cascade = CascadeType.MERGE)
     @JoinColumn(name = "storecategory_id")
     private StoreCategory category;
 
+    @JsonManagedReference("storeItems")
     @OneToMany(cascade=CascadeType.ALL, orphanRemoval = true, mappedBy="store", fetch = FetchType.LAZY)
     private Set<@NotNull StoreItem> storeItems;
 
