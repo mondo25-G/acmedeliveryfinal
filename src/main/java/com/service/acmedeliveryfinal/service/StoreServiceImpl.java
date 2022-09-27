@@ -173,19 +173,16 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         return storeRepository.findTop10StoreItemsByStore(id);
     }
 
-
-    /*
     @Override
-    public List<StoreDetailsDto> getStoreDetailDtos() {
+    public List<StoreDetailsDto> getStoreDetailsDtos() {
         List<Store> storesList = storeRepository.getLazyAll();
         List<StoreDetailsDto> storeDtoList = new ArrayList<>();
         for (Store store : storesList) {
-            storeDtoList.add(createStoreDto(store));
+            storeDtoList.add(createStoreDetailsDto(store));
         }
         return storeDtoList;
     }
 
-     */
 
   //  @Override
     public StoreDetailsDto getStoreDetailsDto(Long id) {
