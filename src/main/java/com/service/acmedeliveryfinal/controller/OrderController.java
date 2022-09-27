@@ -5,14 +5,13 @@ import com.service.acmedeliveryfinal.domain.Order;
 import com.service.acmedeliveryfinal.domain.Store;
 import com.service.acmedeliveryfinal.domain.StoreItem;
 import com.service.acmedeliveryfinal.domain.enumeration.PaymentMethod;
-import com.service.acmedeliveryfinal.service.AccountService;
 import com.service.acmedeliveryfinal.service.BaseService;
 import com.service.acmedeliveryfinal.service.OrderService;
 import com.service.acmedeliveryfinal.service.StoreService;
-import com.service.acmedeliveryfinal.transfer.AccountOrderHeaderDto;
 import com.service.acmedeliveryfinal.transfer.ApiResponse;
 import com.service.acmedeliveryfinal.transfer.KeyValue;
-import com.service.acmedeliveryfinal.transfer.OrderDetailsDto;
+import com.service.acmedeliveryfinal.transfer.OrderDto;
+import com.service.acmedeliveryfinal.transfer.OrderItemDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -80,8 +79,8 @@ public class OrderController extends BaseController<Order> {
     }
 
     @GetMapping("/accountDto/{id}")
-    public ResponseEntity<ApiResponse<List<KeyValue<AccountOrderHeaderDto, List<OrderDetailsDto>>>>> getOrdersByAccount(@PathVariable Long id){
-        return ResponseEntity.ok(ApiResponse.<List<KeyValue<AccountOrderHeaderDto, List<OrderDetailsDto>>>>builder().data(orderService.findOrdersByAccount(id)).build());
+    public ResponseEntity<ApiResponse<List<KeyValue<OrderDto, List<OrderItemDto>>>>> getOrdersByAccount(@PathVariable Long id){
+        return ResponseEntity.ok(ApiResponse.<List<KeyValue<OrderDto, List<OrderItemDto>>>>builder().data(orderService.findOrdersByAccount(id)).build());
     }
 
 }

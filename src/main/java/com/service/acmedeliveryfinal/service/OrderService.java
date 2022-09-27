@@ -5,9 +5,9 @@ import com.service.acmedeliveryfinal.domain.Order;
 import com.service.acmedeliveryfinal.domain.Store;
 import com.service.acmedeliveryfinal.domain.StoreItem;
 import com.service.acmedeliveryfinal.domain.enumeration.PaymentMethod;
-import com.service.acmedeliveryfinal.transfer.AccountOrderHeaderDto;
 import com.service.acmedeliveryfinal.transfer.KeyValue;
-import com.service.acmedeliveryfinal.transfer.OrderDetailsDto;
+import com.service.acmedeliveryfinal.transfer.OrderDto;
+import com.service.acmedeliveryfinal.transfer.OrderItemDto;
 
 import java.util.List;
 
@@ -30,5 +30,5 @@ public interface OrderService extends BaseService<Order> {
     Order getLazy(Long id);
 
     List<Order> getAllByAccount(Long id);
-    List<KeyValue<AccountOrderHeaderDto, List<OrderDetailsDto>>> findOrdersByAccount(Long accountId);
+    List<KeyValue<OrderDto, List<OrderItemDto>>> findOrdersByAccount(Long accountId);
 }
