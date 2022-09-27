@@ -4,6 +4,8 @@ import com.service.acmedeliveryfinal.domain.Store;
 import com.service.acmedeliveryfinal.domain.StoreCategory;
 import com.service.acmedeliveryfinal.domain.StoreItem;
 import com.service.acmedeliveryfinal.transfer.KeyValue;
+import com.service.acmedeliveryfinal.transfer.StoreDetailsDto;
+import com.service.acmedeliveryfinal.transfer.StoreItemDto;
 
 import java.util.List;
 import java.util.Map;
@@ -47,6 +49,12 @@ public interface StoreService extends BaseService<Store>{
     List<KeyValue<Long,String>> findPopularProducts();
 
     List<KeyValue<Long,String>> findPopularProductsByStore(Long id);
+
+   // List<StoreDetailsDto> getStoreDtos();
+
+   // StoreDetailsDto getStoreDto(Long id);
+
+    List<StoreItemDto> getStoreMenuDto(Long id);
 
 
 }

@@ -6,6 +6,8 @@ import com.service.acmedeliveryfinal.domain.StoreCategory;
 import com.service.acmedeliveryfinal.service.StoreService;
 import com.service.acmedeliveryfinal.transfer.ApiResponse;
 import com.service.acmedeliveryfinal.transfer.KeyValue;
+import com.service.acmedeliveryfinal.transfer.StoreDetailsDto;
+import com.service.acmedeliveryfinal.transfer.StoreItemDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +26,6 @@ public class StoreController {
 
     //CRUD
 
-
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<Store>>getStore(@PathVariable("id") final Long id ) {
 
@@ -32,12 +33,15 @@ public class StoreController {
 
     }
 
+
     @GetMapping
     public ResponseEntity<ApiResponse<List<Store>>>getStores() {
 
         return ResponseEntity.ok(ApiResponse.<List<Store>>builder().data(storeService.getLazyAll()).build());
 
     }
+
+
 
     @GetMapping("/storeCategories")
     public ResponseEntity<ApiResponse<List<StoreCategory>>> getStoreCategories(){
@@ -90,6 +94,11 @@ public class StoreController {
     @GetMapping("/popular/productsByStore")
     public ResponseEntity<ApiResponse<List<KeyValue<Long,String>>>> findTopProductsByStore(@RequestParam("storeId") Long id){
         return ResponseEntity.ok(ApiResponse.<List<KeyValue<Long, String>>>builder().data(storeService.findPopularProductsByStore(id)).build());
+    }
+
+    @GetMapping("/{id}/products")
+    public ResponseEntity<ApiResponse<List<StoreItemDto>>> findProductsByStore(@PathVariable Long id){
+        return ResponseEntity.ok(ApiResponse.<List<StoreItemDto>>builder().data(storeService.getStoreMenuDto(id)).build());
     }
 
 }
