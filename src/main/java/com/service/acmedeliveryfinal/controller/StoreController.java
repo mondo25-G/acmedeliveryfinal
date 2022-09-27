@@ -4,10 +4,7 @@ package com.service.acmedeliveryfinal.controller;
 import com.service.acmedeliveryfinal.domain.Store;
 import com.service.acmedeliveryfinal.domain.StoreCategory;
 import com.service.acmedeliveryfinal.service.StoreService;
-import com.service.acmedeliveryfinal.transfer.ApiResponse;
-import com.service.acmedeliveryfinal.transfer.KeyValue;
-import com.service.acmedeliveryfinal.transfer.StoreDetailsDto;
-import com.service.acmedeliveryfinal.transfer.StoreItemDto;
+import com.service.acmedeliveryfinal.transfer.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -97,8 +94,8 @@ public class StoreController {
     }
 
     @GetMapping("/{id}/products")
-    public ResponseEntity<ApiResponse<List<StoreItemDto>>> findProductsByStore(@PathVariable Long id){
-        return ResponseEntity.ok(ApiResponse.<List<StoreItemDto>>builder().data(storeService.getStoreMenuDto(id)).build());
+    public ResponseEntity<ApiResponse<StoreDto>> findProductsByStore(@PathVariable Long id){
+        return ResponseEntity.ok(ApiResponse.<StoreDto>builder().data(storeService.getStoreDto(id)).build());
     }
 
 }
