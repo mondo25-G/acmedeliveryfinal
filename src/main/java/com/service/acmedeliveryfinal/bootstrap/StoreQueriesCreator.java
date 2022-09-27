@@ -6,17 +6,14 @@ import com.service.acmedeliveryfinal.service.StoreService;
 import com.service.acmedeliveryfinal.transfer.KeyValue;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
-@Order(10)
+@Order(4)
 public class StoreQueriesCreator extends BaseComponent implements CommandLineRunner {
     private final StoreService storeService;
 
@@ -75,15 +72,6 @@ public class StoreQueriesCreator extends BaseComponent implements CommandLineRun
             topProdsByStore.forEach(s->logger.info("Popular prod:{}",s));
             logger.info("done\n");
         }
-
-/*
-        //GET MOST POPULAR STORES (BASED ON ORDERS) with map approach
-        Map<Long,String> topStores = storeService.findPopularStoresMap();
-
-        logger.info("Most popular stores based on total store orders descending, store id ascending");
-        logger.info("TopStores:{}",topStores);
-
- */
 
     }
 }
