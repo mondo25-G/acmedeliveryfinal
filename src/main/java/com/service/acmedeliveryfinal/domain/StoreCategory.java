@@ -1,5 +1,6 @@
 package com.service.acmedeliveryfinal.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -15,6 +16,7 @@ import javax.validation.constraints.NotNull;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class StoreCategory extends BaseEntity{
 
     @NotNull
