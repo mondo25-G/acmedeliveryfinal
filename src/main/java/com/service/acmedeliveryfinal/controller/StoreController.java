@@ -24,9 +24,9 @@ public class StoreController {
     //CRUD
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<Store>>getStore(@PathVariable("id") final Long id ) {
+    public ResponseEntity<ApiResponse<StoreDetailsDto>>getStore(@PathVariable("id") final Long id ) {
 
-        return ResponseEntity.ok(ApiResponse.<Store>builder().data(storeService.getLazy(id)).build());
+        return ResponseEntity.ok(ApiResponse.<StoreDetailsDto>builder().data(storeService.getStoreDetailsDto(id)).build());
 
     }
 
