@@ -58,7 +58,5 @@ public interface StoreService extends BaseService<Store>{
     StoreDto getStoreDto(Long id);
 
 
-    List<StoreItemDto> getStoreMenuDto(Long id);
-
 
 }
