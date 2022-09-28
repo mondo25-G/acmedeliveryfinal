@@ -1,7 +1,6 @@
 package com.service.acmedeliveryfinal.domain;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -16,7 +15,7 @@ public abstract class BaseEntity  implements Serializable {
     private static final Long serialVersionUID = 1L;
     @Id
     @Column(updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idGenerator")
     private Long id;
 
 }
