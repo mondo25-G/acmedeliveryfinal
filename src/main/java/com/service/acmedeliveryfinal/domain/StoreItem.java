@@ -50,6 +50,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Entity
 @Table(name = "STOREITEMS")
+@SequenceGenerator(name = "idGenerator", sequenceName = "STOREITEMS_SEQ", initialValue = 1, allocationSize = 1)
 public class StoreItem extends BaseEntity {
 
     @NotNull
