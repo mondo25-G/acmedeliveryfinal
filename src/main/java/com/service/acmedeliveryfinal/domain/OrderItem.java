@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Entity
 @Table(name = "ORDERITEMS")
+@SequenceGenerator(name = "idGenerator", sequenceName = "ORDERITEMS_SEQ", initialValue = 1, allocationSize = 1)
 public class OrderItem extends BaseEntity{
 
     @NotNull
