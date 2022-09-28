@@ -15,8 +15,6 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
-@CacheConfig(cacheManager = "cacheManager", cacheNames = {"productCategories"}, keyGenerator = "CustomCacheKeyGenerator")
 public class ProductCategoryServiceImpl extends BaseServiceImpl<ProductCategory> implements ProductCategoryService {
 
     private final ProductCategoryRepository productCategoryRepository;
@@ -27,14 +25,8 @@ public class ProductCategoryServiceImpl extends BaseServiceImpl<ProductCategory>
     }
 
     @Override
-    @Cacheable
     public ProductCategory getByName(String name) {
         return productCategoryRepository.getByName(name);
     }
 
-    @CacheEvict(cacheNames = {"productCategories"}, allEntries = true)
-    @Scheduled(cron = "0 0/2 22 * * ?") //start at 22:00 until 22.58
-    public void evictCache() {
-        logger.info("Evicting productCategories cache contents.");
-    }
 }
