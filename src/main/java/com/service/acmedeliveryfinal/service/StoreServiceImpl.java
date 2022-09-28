@@ -53,14 +53,12 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
 
     //This can be retrieved through StoreCategoryService too, placed here for front end convenience / existing endpoint.
     @Override
-    @Cacheable(cacheNames = "stores")
     public List<StoreCategory> getAllStoreCategories() {
         return storeCategoryRepository.findAll();
     }
 
     //Service Get methods for store categories, stores by category, can be refactored to StoreService too.
     @Override
-    @Cacheable(cacheNames = "stores")
     public List<Store> getStoresByCategoryId(Long id) {
         return storeRepository.findStoresByCategoryId(id);
     }
