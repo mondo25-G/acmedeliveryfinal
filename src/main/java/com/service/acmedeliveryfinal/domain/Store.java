@@ -71,6 +71,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "STORES", indexes = {@Index(name = "STORE_IDX_01", columnList = "storename")})
+@SequenceGenerator(name = "idGenerator", sequenceName = "STORES_SEQ", initialValue = 1, allocationSize = 1)
 public class Store extends BaseEntity {
 
     @NotNull
