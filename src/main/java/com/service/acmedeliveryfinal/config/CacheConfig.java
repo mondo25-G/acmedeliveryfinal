@@ -24,12 +24,8 @@ public class CacheConfig extends CachingConfigurerSupport {
     @Bean("cacheManager")
     public CacheManager cacheManager() {
         SimpleCacheManager cacheManager = new SimpleCacheManager();
-        Cache cacheStores = new ConcurrentMapCache("stores");
-        Cache cacheProducts = new ConcurrentMapCache("products");
         Cache cachePopularReports = new ConcurrentMapCache("popular");
-        Cache cacheStoreCategories = new ConcurrentMapCache("storeCategories");
-        Cache cacheProductCategories = new ConcurrentMapCache("productCategories");
-        cacheManager.setCaches(Arrays.asList(cacheStores, cacheProducts, cachePopularReports,cacheStoreCategories,cacheProductCategories));
+        cacheManager.setCaches(Arrays.asList(cachePopularReports));
         return cacheManager;
     }
 }
