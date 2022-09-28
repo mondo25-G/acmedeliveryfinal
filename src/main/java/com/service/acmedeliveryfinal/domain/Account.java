@@ -34,7 +34,7 @@ public class Account extends BaseEntity{
     private String lastName;
 
     @NotNull
-    @Column
+    @Column(unique = true)
     private String phoneNumber;
 
     @NotNull
