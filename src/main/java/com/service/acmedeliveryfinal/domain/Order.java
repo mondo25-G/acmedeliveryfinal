@@ -19,6 +19,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name = "ORDERS")
+@SequenceGenerator(name = "idGenerator", sequenceName = "ORDERS_SEQ", initialValue = 1, allocationSize = 1)
 public class Order extends BaseEntity{
 
     @NotNull
