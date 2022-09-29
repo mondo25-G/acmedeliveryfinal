@@ -1,19 +1,16 @@
 package com.service.acmedeliveryfinal.service;
 
 import com.service.acmedeliveryfinal.domain.Account;
-import com.service.acmedeliveryfinal.domain.Order;
 import com.service.acmedeliveryfinal.repository.AccountRepository;
+import com.service.acmedeliveryfinal.transfer.AccountDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl extends BaseServiceImpl<Account> implements AccountService{
     private final AccountRepository accountRepository;
-
-    private final StoreService storeService;
 
     @Override
     public JpaRepository<Account, Long> getRepository() {
@@ -21,29 +18,40 @@ public class AccountServiceImpl extends BaseServiceImpl<Account> implements Acco
     }
 
     @Override
-    public Account findByEmail(String email) {
-        return accountRepository.findByEmail(email);
-    }
-
-    @Override
-    public Account register(String email, String password) {
-        Account newAccount=Account.builder().email(email).password(password).build();
-        return accountRepository.save(newAccount);
-    }
-
-    @Override
-    public Account login(String email, String password) {
-        return accountRepository.findByEmail(email);
-    }
-
-
-    @Override
-    public List<Order> findOrdersByAccount(Long id) {
-        Optional<List<Order>> orders = accountRepository.getLazyOrders(id);
-        if (orders.isPresent()) {
-            return orders.get();
+    public AccountDto register(String email,String phoneNumber, String password, String firstName,String lastName,String address) {
+        if (accountRepository.findByEmailOrPhoneNumber(email,phoneNumber).isPresent()){
+            throw new RuntimeException("There is already an existing account with same email or password.");
         }
-        throw new NoSuchElementException(String.format("There were no orders found matching Account id %d.", id));
+        Account newAccount=Account.builder().email(email).phoneNumber(phoneNumber).password(password).firstName(firstName).lastName(lastName).address(address).build();
+        return createAccountDto( accountRepository.save(newAccount));
     }
+
+    @Override
+    public AccountDto login(String email, String password) {
+
+        if (accountRepository.findByEmailAndPassword(email,password).isEmpty()){
+            throw new RuntimeException("The email or password is wrong.");
+        }
+        return createAccountDto(accountRepository.findByEmail(email));
+    }
+
+    private AccountDto createAccountDto(Account account){
+        return new AccountDto() {
+            @Override
+            public Long getId() {
+                return account.getId();
+            }
+            @Override
+            public String getUser() {
+                return account.getFirstName()+" "+account.getLastName();
+            }
+
+            @Override
+            public String getAddress() {
+                return account.getAddress();
+            }
+        };
+    }
+
 
 }
