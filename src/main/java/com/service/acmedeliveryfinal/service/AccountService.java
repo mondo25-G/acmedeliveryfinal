@@ -1,15 +1,13 @@
 package com.service.acmedeliveryfinal.service;
 
 import com.service.acmedeliveryfinal.domain.Account;
-import com.service.acmedeliveryfinal.domain.Order;
-import java.util.List;
+import com.service.acmedeliveryfinal.transfer.AccountDto;
+
 
 
 public interface AccountService extends BaseService<Account> {
 
-    Account findByEmail(String email);
-    Account register(String email,String password);
-    Account login(String email, String password);
-    List<Order> findOrdersByAccount(Long id);
+    AccountDto register(String email,String phoneNumber,String password, String firstName,String lastName,String address);
+    AccountDto login(String email, String password);
 
 }
