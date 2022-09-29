@@ -26,6 +26,10 @@ public class Account extends BaseEntity{
 
     @NotNull
     @Column
+    private String password;
+
+    @NotNull
+    @Column
     private String lastName;
 
     @NotNull
