@@ -22,11 +22,6 @@ public class Account extends BaseEntity{
 
     @NotNull
     @Column
-    @JsonIgnore
-    private String password;
-
-    @NotNull
-    @Column
     private String firstName;
 
     @NotNull

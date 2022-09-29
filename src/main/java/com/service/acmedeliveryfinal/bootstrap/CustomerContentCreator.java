@@ -22,7 +22,6 @@ public class CustomerContentCreator extends BaseComponent implements CommandLine
                 .firstName("Giorgos")
                 .lastName("Prassas")
                 .email("george@1g.gr")
-                .password("prassas")
                 .phoneNumber("6969696901")
                 .address("666, Paradise Street, Floor 1")
                 .build());
@@ -32,7 +31,6 @@ public class CustomerContentCreator extends BaseComponent implements CommandLine
                 .firstName("Giorgos")
                 .lastName("Chatzidakis")
                 .email("george@2g.gr")
-                .password("chatzidakis")
                 .phoneNumber("6969696902")
                 .address("666, Paradise Street, Floor 2 ")
                 .build());
@@ -41,7 +39,6 @@ public class CustomerContentCreator extends BaseComponent implements CommandLine
                 .firstName("Giorgos")
                 .lastName("Theofanous")
                 .email("george@3g.gr")
-                .password("theofanous")
                 .phoneNumber("6969696903")
                 .address("666, Paradise Street, Floor 3 ")
                 .build());
