@@ -252,24 +252,11 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
             public String getStoreName() {
                 return store.getStoreName();
             }
-            @Override
-            public String getEmailAddress() {
-                return store.getEmailAddress();
-            }
+
 
             @Override
-            public String getAddress() {
-                return store.getAddress();
-            }
-
-            @Override
-            public String getCity() {
-                return store.getCity();
-            }
-
-            @Override
-            public String getPhoneNumber() {
-                return store.getPhoneNumber();
+            public String getStoreCategory(){
+                return store.getCategory().getName();
             }
         };
     }
