@@ -29,14 +29,14 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
     }
 
 
-    //Methods for the Initiation, Update, and Creation of Order
 
+    //Methods for the Initiation, Update, and Creation of Order
     @Override
     public Order initiateOrder(Store store, Account account) {
 
         if (account == null){throw new IllegalStateException("Customer cannot be null");}
         logger.info("Initiating Order for {}  " , account);
-        return Order.builder().account(account).store(store).orderItems(new HashSet<>()).build();
+        return (Order.builder().account(account).store(store).orderItems(new HashSet<>()).cost(BigDecimal.ZERO).build());
 
     }
 
@@ -70,7 +70,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
         if (!increasedQuantity) {
             order.getOrderItems().add(newOrderItem(order, item, quantity));
         }
-
+            order.setCost(cost(order));
         logger.debug("StoreItem[{}] added to Order[{}]", item, order);
         return order;
     }
@@ -82,14 +82,15 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
     public Order updateItem(Order order, StoreItem item, int quantity) {
 
         if (checkNullability(order, item)) {return order;}
-        //if (checkStoreChange(order, item)) {return order;} //unnecessary?
+        if (checkStoreChange(order, item)) {return order;}
         if (quantity<1){removeItem(order, item); return order;}
-
+        logger.info("Update quantity{} of item {}", quantity,item);
         order.getOrderItems().removeIf(oi -> oi.getStoreItem().getId().equals(item.getId()));
         order.getOrderItems().add(newOrderItem(order, item, quantity));
 
         logger.debug("Product[{}] updated in Order[{}]", item, order);
-        return order;
+        order.setCost(cost(order));
+        return validateProducts(order);
     }
 
 
@@ -98,11 +99,12 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
     @Override
     public Order removeItem(Order order, StoreItem item) {
         if (checkNullability(order, item)) {return order;}
-        //if (checkStoreChange(order, item)) {return order;} //unnecessary?
-
+        if (checkStoreChange(order, item)) {return order;}
+        logger.info("Remove item {}",item);
         order.getOrderItems().removeIf(oi -> oi.getStoreItem().getId().equals(item.getId()));
         logger.debug("Product[{}] removed from Order[{}]", item, order);
-        return order;
+        order.setCost(cost(order));
+        return validateProducts(order);
     }
 
 
@@ -123,7 +125,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
         order.setCost(cost(order));
 
         // Create Order
-        return create(order);
+        return create(validateProducts(order));
     }
 
     //Add New Order Item in Order
@@ -133,8 +135,17 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
         return OrderItem.builder().storeItem(storeItem).order(order).quantity(quantity).price(storeItem.getPrice()).build();
     }
 
-     //Validation , Nullability and Store Validation Methods\\
+
+    //Validation , Nullability and Store Validation Methods\\
     //-------------------------------------------------------\\
+
+
+    private Order validateProducts(Order order){
+        logger.warn("Products with quantity less than one removed.");
+        logger.info("Removed {}",order.getOrderItems().removeIf(oi-> oi.getQuantity() < 1));
+        return order;
+        }
+
 
     //Validate the order Based on Orders Requirements
     private boolean validate(Order order) {
@@ -205,15 +216,79 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
     }
 
     @Override
-    public List<KeyValue<OrderDto, List<OrderItemDto>>> findOrdersByAccount(Long accountId) {
-        List<KeyValue<OrderDto, List<OrderItemDto>>> ordersByAccount = new ArrayList<>();
-        List<OrderDto> orderHeadersPerAccount=orderRepository.getOrdersByAccount(accountId);
-        for(var orderHeaderPerAccount:orderHeadersPerAccount){
-            List<OrderItemDto> orderDetails = orderRepository.getOrderItemsByOrder(orderHeaderPerAccount.getOrderId());
-            ordersByAccount.add(new KeyValue<>(orderHeaderPerAccount,orderDetails));
+    public List<OrderDto> findOrdersByAccount(Long accountId) {
+        List<Order> orders = orderRepository.findByCustomer(accountId);
+        List<OrderDto> orderDtos = new ArrayList<OrderDto>();
+        for (Order order : orders) {
+           orderDtos.add(createOrderDto(order));
         }
-        return ordersByAccount;
+        return orderDtos;
     }
 
+    private OrderDto createOrderDto(Order order) {
+
+        return new OrderDto() {
+            @Override
+            public Long getOrderId() {
+                return order.getId();
+            }
+
+            @Override
+            public String getStoreName() {
+                return order.getStore().getStoreName();
+            }
+
+            @Override
+            public String getDeliveryAddress() {
+                return order.getAccount().getAddress();
+            }
+
+            @Override
+            public Date getSubmittedDate() {
+                return order.getSubmittedDate();
+            }
+
+            @Override
+            public BigDecimal getCost() {
+                return order.getCost();
+            }
+
+            @Override
+            public String  getPaymentMethod() {
+                return String.valueOf(order.getPaymentMethod());}
+            @Override
+            public Set<OrderItemDto> getOrderItems() {
+                Set<OrderItemDto> oiDto = new HashSet<>();
+                for (OrderItem oi: order.getOrderItems()) {
+                    oiDto.add(createOrderItemDto(oi));
+                }
+                return oiDto;
+                }
+        };
+    }
+
+    private OrderItemDto createOrderItemDto(OrderItem orderItem) {
+        return new OrderItemDto() {
+            @Override
+            public Long getOrderId() {
+                return orderItem.getOrder().getId();
+            }
+
+            @Override
+            public String getItemName() {
+                return orderItem.getStoreItem().getItemName();
+            }
+
+            @Override
+            public BigDecimal getPrice() {
+                return orderItem.getStoreItem().getPrice();
+            }
+
+            @Override
+            public Integer getQuantity() {
+                return orderItem.getQuantity();
+            }
+        };
+    }
 }
 
