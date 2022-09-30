@@ -23,12 +23,12 @@ public class StoreController {
 
     //CRUD
 
-    @GetMapping("/{id}")
+  /*  @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<StoreDetailsDto>>getStore(@PathVariable("id") final Long id ) {
 
         return ResponseEntity.ok(ApiResponse.<StoreDetailsDto>builder().data(storeService.getStoreDetailsDto(id)).build());
 
-    }
+    } */
 
 
     @GetMapping

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("accounts")
+@CrossOrigin
 public class AccountController extends BaseController<Account>{
     private final AccountService accountService;
 

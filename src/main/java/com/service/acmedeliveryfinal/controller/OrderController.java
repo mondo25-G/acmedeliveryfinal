@@ -21,6 +21,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("orders")
+@CrossOrigin
 public class OrderController extends BaseController<Order> {
 
     private final OrderService orderService;
@@ -38,34 +39,38 @@ public class OrderController extends BaseController<Order> {
 
     @GetMapping("/initiate")
     public ResponseEntity<ApiResponse<Order>> initiate(@RequestParam Store store, Account account){
+        logger.info("Initiating Order {} {}",store,account);
         newOrder= orderService.initiateOrder(store,account);
         return ResponseEntity.ok(ApiResponse.<Order>builder().data(newOrder).build());
     }
 
     @PatchMapping("/addItem")
-    public ResponseEntity<ApiResponse<Order>> addItem(@RequestParam Long id , int quantity){
-        StoreItem item = storeService.getProduct(id);
+    public ResponseEntity<ApiResponse<Order>> addItem(@RequestParam String id , int quantity){
+        StoreItem item = storeService.getProduct(Long.valueOf(id));
         newOrder= orderService.addItem(newOrder, item, quantity);
         return ResponseEntity.ok(ApiResponse.<Order>builder().data(newOrder).build());
     }
 
     @PatchMapping("/updateItem")
-    public ResponseEntity<ApiResponse<Order>> updateItem(@RequestParam Long id , int quantity){
-        StoreItem item = storeService.getProduct(id);
+    public ResponseEntity<ApiResponse<Order>> updateItem(@RequestParam String id , int quantity){
+        StoreItem item = storeService.getProduct(Long.valueOf(id));
         newOrder= orderService.updateItem(newOrder, item, quantity);
         return ResponseEntity.ok(ApiResponse.<Order>builder().data(newOrder).build());
     }
 
     @DeleteMapping("/deleteItem")
-    public ResponseEntity<ApiResponse<Order>> deleteItem(@RequestParam Long id ){
-        StoreItem item = storeService.getProduct(id);
+    public ResponseEntity<ApiResponse<Order>> deleteItem(@RequestParam String id ){
+        StoreItem item = storeService.getProduct(Long.valueOf(id));
         newOrder= orderService.removeItem(newOrder, item);
         return ResponseEntity.ok(ApiResponse.<Order>builder().data(newOrder).build());
     }
 
     @PostMapping("/checkout")
-    public ResponseEntity<ApiResponse<Order>> checkout(PaymentMethod paymentMethod){
-        return ResponseEntity.ok(ApiResponse.<Order>builder().data(orderService.checkout(newOrder, paymentMethod)).build());
+    public ResponseEntity<ApiResponse<Order>> checkout(@RequestParam String paymentMethod){
+        logger.info("Checkout : {}", paymentMethod);
+        Order order = orderService.checkout(newOrder,PaymentMethod.valueOf(paymentMethod));
+        newOrder=null;
+        return ResponseEntity.ok(ApiResponse.<Order>builder().data(order).build());
     }
 
     @GetMapping("/{id}")
@@ -79,8 +84,8 @@ public class OrderController extends BaseController<Order> {
     }
 
     @GetMapping("/accountDto/{id}")
-    public ResponseEntity<ApiResponse<List<KeyValue<OrderDto, List<OrderItemDto>>>>> getOrdersByAccount(@PathVariable Long id){
-        return ResponseEntity.ok(ApiResponse.<List<KeyValue<OrderDto, List<OrderItemDto>>>>builder().data(orderService.findOrdersByAccount(id)).build());
+    public ResponseEntity<ApiResponse<List<OrderDto>>>getOrdersByAccount(@PathVariable Long id){
+        return ResponseEntity.ok(ApiResponse.<List<OrderDto>>builder().data(orderService.findOrdersByAccount(id)).build());
     }
 
 }
