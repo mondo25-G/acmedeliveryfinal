@@ -6,25 +6,24 @@ import com.service.acmedeliveryfinal.service.BaseService;
 import com.service.acmedeliveryfinal.transfer.AccountDto;
 import com.service.acmedeliveryfinal.transfer.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
+
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("accounts")
+@CrossOrigin
 public class AccountController extends BaseController<Account>{
     private final AccountService accountService;
-
     @Override
     protected BaseService<Account> getBaseService() {
         return accountService;
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse<AccountDto>> register(@RequestParam String email,String phoneNumber, String password, String firstName, String lastName, String address){
-        AccountDto accountDto= accountService.register(email,phoneNumber,password,firstName,lastName,address);
+    public ResponseEntity<ApiResponse<AccountDto>> register(@RequestBody Account account ){
+        AccountDto accountDto= accountService.register(account.getEmail(), account.getPhoneNumber(), account.getPassword(), account.getFirstName(), account.getLastName(), account.getAddress());
         return ResponseEntity.ok(ApiResponse.<AccountDto>builder().data(accountDto).build());
     }
 
