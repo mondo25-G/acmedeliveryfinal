@@ -30,5 +30,5 @@ public interface OrderService extends BaseService<Order> {
     Order getLazy(Long id);
 
     List<Order> getAllByAccount(Long id);
-    List<KeyValue<OrderDto, List<OrderItemDto>>> findOrdersByAccount(Long accountId);
+    List<OrderDto> findOrdersByAccount(Long accountId);
 }
