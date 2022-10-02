@@ -6,10 +6,7 @@ import com.service.acmedeliveryfinal.domain.StoreCategory;
 import com.service.acmedeliveryfinal.domain.StoreItem;
 import com.service.acmedeliveryfinal.repository.StoreCategoryRepository;
 import com.service.acmedeliveryfinal.repository.StoreRepository;
-import com.service.acmedeliveryfinal.transfer.KeyValue;
-import com.service.acmedeliveryfinal.transfer.StoreDetailsDto;
-import com.service.acmedeliveryfinal.transfer.StoreDto;
-import com.service.acmedeliveryfinal.transfer.StoreItemDto;
+import com.service.acmedeliveryfinal.transfer.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -166,7 +163,7 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     //Business methods for popular store items
     @Override
     @Cacheable(cacheNames = "popular")
-    public List<KeyValue<Long, String>> findPopularProducts() {
+    public List<PopularItemDto> findPopularProducts() {
         return storeRepository.findTop10StoreItems();
     }
 
