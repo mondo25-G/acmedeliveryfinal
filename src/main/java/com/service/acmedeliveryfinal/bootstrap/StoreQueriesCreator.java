@@ -4,6 +4,7 @@ import com.service.acmedeliveryfinal.base.BaseComponent;
 import com.service.acmedeliveryfinal.domain.Store;
 import com.service.acmedeliveryfinal.service.StoreService;
 import com.service.acmedeliveryfinal.transfer.KeyValue;
+import com.service.acmedeliveryfinal.transfer.PopularItemDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
@@ -59,19 +60,19 @@ public class StoreQueriesCreator extends BaseComponent implements CommandLineRun
 
         //GET MOST POPULAR PRODUCTS (BASED ON ORDERS)
         logger.info("Most popular products based on orders, store id ascending");
-        List<KeyValue<Long,String>> topProds = storeService.findPopularProducts();
+        List<PopularItemDto> topProds = storeService.findPopularProducts();
         topProds.forEach(s->logger.info("Popular prod:{}",s));
 
         //GET MOST POPULAR PRODUCTS (BASED ON ORDERS) OF A SPECIFIC STORE
-        logger.info("Most popular products based on orders, store id ascending of a specific store");
-        List<KeyValue<Long,String>> topProdsByStore;
+        //logger.info("Most popular products based on orders, store id ascending of a specific store");
+        //List<KeyValue<Long,String>> topProdsByStore;
 
-        Long count=1L;
-        for(int i=1;i<6;i++){
-            topProdsByStore= storeService.findPopularProductsByStore(count++);
-            topProdsByStore.forEach(s->logger.info("Popular prod:{}",s));
-            logger.info("done\n");
-        }
+        //Long count=1L;
+        //for(int i=1;i<6;i++){
+        //    topProdsByStore= storeService.findPopularProductsByStore(count++);
+        //    topProdsByStore.forEach(s->logger.info("Popular prod:{}",s));
+        //    logger.info("done\n");
+       // }
 
     }
 }
