@@ -42,10 +42,12 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         return store;
     }
 
+    /*
     @Override
     public List<Store> getLazyAll() {
         return storeRepository.getLazyAll();
     }
+     */
 
 
     //This can be retrieved through StoreCategoryService too, placed here for front end convenience / existing endpoint.
@@ -62,12 +64,16 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
 
 
     //StoreItem crud methods.
+
+    /*
     @Override
     public void addItems(Store store, Set<StoreItem> items) {
         store.setStoreItems(items);
         items.forEach(item -> item.setStore(store));
         storeRepository.save(store);
     }
+
+     */
 
     @Override
     public void addItem(Long id, StoreItem item) {
@@ -79,6 +85,7 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         storeRepository.save(store);
     }
 
+    /*
     @Override
     public void removeItem(Long id, Long sid) {
         Store store = storeRepository.findById(id).get();
@@ -100,11 +107,17 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         storeRepository.save(store);
     }
 
+     */
+
     //Aggregate (StoreItem) get methods, helpers for seeding.
+
+    /*
     @Override
     public List<StoreItem> getProductsByStore(Long id) {
         return storeRepository.findStoreItemsByStoreId(id);
     }
+
+     */
 
     @Override
     public StoreItem getProduct(Long storeId, Long id) {
@@ -183,12 +196,13 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         return storeDtoList;
     }
 
-
+/*
     @Override
     public StoreDetailsDto getStoreDetailsDto(Long id) {
         Store store = getLazy(id);
         return createStoreDetailsDto(store);
     }
+ */
 
     @Override
     public StoreDto getStoreDto(Long id) {

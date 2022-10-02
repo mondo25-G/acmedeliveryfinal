@@ -13,23 +13,27 @@ import java.util.Set;
 public interface StoreService extends BaseService<Store>{
     Store getLazy(Long id);
 
-    List<Store> getLazyAll();
+    //List<Store> getLazyAll();
 
-    void addItems(Store store, Set<StoreItem> items);
+    //void addItems(Store store, Set<StoreItem> items);
 
     void addItem(Long id, StoreItem item);
 
+    /*
     void removeItem(Long id, Long sid);
 
     void updateItem(Long id, StoreItem item);
 
+
+     */
     List<StoreCategory> getAllStoreCategories();
+
 
     List<KeyValue<Long,String>> getStoresDropdownList(String searchString);
 
     List<Store> getStoresByCategoryId(Long id);
 
-    List<StoreItem> getProductsByStore(Long id);
+    //List<StoreItem> getProductsByStore(Long id);
 
     StoreItem getProduct(Long storeId,Long id);
 
@@ -50,7 +54,7 @@ public interface StoreService extends BaseService<Store>{
 
     List<StoreDetailsDto> getStoreDetailsDtos();
 
-    StoreDetailsDto getStoreDetailsDto(Long id);
+    //StoreDetailsDto getStoreDetailsDto(Long id);
 
     StoreDto getStoreDto(Long id);
 
