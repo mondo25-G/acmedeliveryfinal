@@ -5,6 +5,7 @@ import com.service.acmedeliveryfinal.service.AccountService;
 import com.service.acmedeliveryfinal.service.BaseService;
 import com.service.acmedeliveryfinal.transfer.AccountDto;
 import com.service.acmedeliveryfinal.transfer.ApiResponse;
+import com.service.acmedeliveryfinal.transfer.LoginDto;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -23,13 +24,15 @@ public class AccountController extends BaseController<Account>{
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<AccountDto>> register(@RequestBody Account account ){
-        AccountDto accountDto= accountService.register(account.getEmail(), account.getPhoneNumber(), account.getPassword(), account.getFirstName(), account.getLastName(), account.getAddress());
+        AccountDto accountDto= accountService.register(account.getUserName(), account.getPhoneNumber(), account.getPassword(), account.getFirstName(), account.getLastName(), account.getAddress());
+        logger.info("{}",accountDto);
         return ResponseEntity.ok(ApiResponse.<AccountDto>builder().data(accountDto).build());
     }
 
-    @GetMapping("/login")
-    public ResponseEntity<ApiResponse<AccountDto>> login(@RequestParam String email, String password){
-        AccountDto accountDto= accountService.login(email,password);
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<AccountDto>> login(@RequestBody LoginDto loginDto){
+        AccountDto accountDto= accountService.login(loginDto.getEmail(), loginDto.getPassword());
+        logger.info("{}",accountDto);
         return ResponseEntity.ok(ApiResponse.<AccountDto>builder().data(accountDto).build());
     }
 

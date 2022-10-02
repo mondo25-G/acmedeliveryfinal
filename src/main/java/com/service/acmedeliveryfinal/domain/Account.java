@@ -19,7 +19,7 @@ public class Account extends BaseEntity{
 
     @NotNull
     @Column(unique = true)
-    private String email;
+    private String userName;
 
     @NotNull
     @Column

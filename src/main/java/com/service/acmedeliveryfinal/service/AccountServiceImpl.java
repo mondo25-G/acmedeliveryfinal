@@ -19,20 +19,20 @@ public class AccountServiceImpl extends BaseServiceImpl<Account> implements Acco
 
     @Override
     public AccountDto register(String email,String phoneNumber, String password, String firstName,String lastName,String address) {
-        if (accountRepository.findByEmailOrPhoneNumber(email,phoneNumber).isPresent()){
+        if (accountRepository.findByUserNameOrPhoneNumber(email,phoneNumber).isPresent()){
             throw new RuntimeException("There is already an existing account with same email or password.");
         }
-        Account newAccount=Account.builder().email(email).phoneNumber(phoneNumber).password(password).firstName(firstName).lastName(lastName).address(address).build();
+        Account newAccount=Account.builder().userName(email).phoneNumber(phoneNumber).password(password).firstName(firstName).lastName(lastName).address(address).build();
         return createAccountDto( accountRepository.save(newAccount));
     }
 
     @Override
     public AccountDto login(String email, String password) {
 
-        if (accountRepository.findByEmailAndPassword(email,password).isEmpty()){
+        if (accountRepository.findByUserNameAndPassword(email,password).isEmpty()){
             throw new RuntimeException("The email or password is wrong.");
         }
-        return createAccountDto(accountRepository.findByEmail(email));
+        return createAccountDto(accountRepository.findByUserName(email));
     }
 
     private AccountDto createAccountDto(Account account){
