@@ -84,8 +84,8 @@ public class StoreController {
 
     //possible endpoint to get top products
     @GetMapping("/popular/products")
-    public ResponseEntity<ApiResponse<List<KeyValue<Long,String>>>> findTopProducts(){
-        return ResponseEntity.ok(ApiResponse.<List<KeyValue<Long, String>>>builder().data(storeService.findPopularProducts()).build());
+    public ResponseEntity<ApiResponse<List<PopularItemDto>>> findTopProducts(){
+        return ResponseEntity.ok(ApiResponse.<List<PopularItemDto>>builder().data(storeService.findPopularProducts()).build());
     }
 
     @GetMapping("/popular/productsByStore")
