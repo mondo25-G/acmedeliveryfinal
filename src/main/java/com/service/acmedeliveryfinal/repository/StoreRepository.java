@@ -3,6 +3,7 @@ package com.service.acmedeliveryfinal.repository;
 import com.service.acmedeliveryfinal.domain.Store;
 import com.service.acmedeliveryfinal.domain.StoreItem;
 import com.service.acmedeliveryfinal.transfer.KeyValue;
+import com.service.acmedeliveryfinal.transfer.PopularItemDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
@@ -63,7 +64,7 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
 
     //find all popular store products
     @Query(name="StoreItem.findTop10Products",nativeQuery = true)
-    List<KeyValue<Long,String>> findTop10StoreItems();
+    List<PopularItemDto> findTop10StoreItems();
 
     //find all popular store products per store.
     @Query(name="StoreItem.findTop10ProductsByStoreId",nativeQuery = true)
