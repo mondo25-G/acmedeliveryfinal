@@ -42,15 +42,7 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         return store;
     }
 
-    /*
-    @Override
-    public List<Store> getLazyAll() {
-        return storeRepository.getLazyAll();
-    }
-     */
 
-
-    //This can be retrieved through StoreCategoryService too, placed here for front end convenience / existing endpoint.
     @Override
     public List<StoreCategory> getAllStoreCategories() {
         return storeCategoryRepository.findAll();
@@ -63,18 +55,6 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     }
 
 
-    //StoreItem crud methods.
-
-    /*
-    @Override
-    public void addItems(Store store, Set<StoreItem> items) {
-        store.setStoreItems(items);
-        items.forEach(item -> item.setStore(store));
-        storeRepository.save(store);
-    }
-
-     */
-
     @Override
     public void addItem(Long id, StoreItem item) {
         Store store = storeRepository.findById(id).get();
@@ -85,39 +65,7 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         storeRepository.save(store);
     }
 
-    /*
-    @Override
-    public void removeItem(Long id, Long sid) {
-        Store store = storeRepository.findById(id).get();
-        store.getStoreItems().removeIf(storeItem -> Objects.equals(storeItem.getId(), sid));
-        logger.info("Delete Item: {} ", store);
-        storeRepository.save(store);
-    }
-
-    @Override
-    public void updateItem(Long id, StoreItem item) {
-        Store store = storeRepository.findById(id).get();
-        logger.info("Update Store: {} ", store);
-        logger.info("Update Item: {} ", item);
-
-        store.getStoreItems().removeIf
-                (storeItem -> Objects.equals(storeItem.getId(), item.getId()));
-        store.getStoreItems().add(item);
-
-        storeRepository.save(store);
-    }
-
-     */
-
     //Aggregate (StoreItem) get methods, helpers for seeding.
-
-    /*
-    @Override
-    public List<StoreItem> getProductsByStore(Long id) {
-        return storeRepository.findStoreItemsByStoreId(id);
-    }
-
-     */
 
     @Override
     public StoreItem getProduct(Long storeId, Long id) {
@@ -144,46 +92,20 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
 
     //Business methods for popular stores
     @Override
-    @Cacheable(cacheNames = "popular")
     public List<KeyValue<Long, String>> findPopularStores() {
         return storeRepository.findTop10Stores();
     }
 
-    // Gets popular stores with a Map approach
     @Override
-    @Cacheable(cacheNames = "popular")
-    public Map<Long, String> findPopularStoresMap() {
-        List<KeyValue<Long, String>> top10Stores = storeRepository.findTop10Stores();
-        Map<Long, String> topToStoresMap = new LinkedHashMap<>();
-        for (KeyValue<Long, String> kvp : top10Stores) {
-            topToStoresMap.put(kvp.getKey(), kvp.getValue());
-        }
-        return topToStoresMap;
-    }
-
-    @Override
-    @Cacheable(cacheNames = "popular")
-    public List<KeyValue<Long, String>> findPopularStoresByCategory(String categoryName) {
-        return storeRepository.findTopStoresByCategory(categoryName);
-    }
-
-    @Override
-    @Cacheable(cacheNames = "popular")
     public List<KeyValue<Long, String>> findPopularStoresByCategory(Long categoryId) {
         return storeRepository.findTopStoresByCategory(categoryId);
     }
 
     //Business methods for popular store items
     @Override
-    @Cacheable(cacheNames = "popular")
+    //@Cacheable(cacheNames = "popular")
     public List<PopularItemDto> findPopularProducts() {
         return storeRepository.findTop10StoreItems();
-    }
-
-    @Override
-    @Cacheable(cacheNames = "popular")
-    public List<KeyValue<Long, String>> findPopularProductsByStore(Long id) {
-        return storeRepository.findTop10StoreItemsByStore(id);
     }
 
     @Override
@@ -195,14 +117,6 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         }
         return storeDtoList;
     }
-
-/*
-    @Override
-    public StoreDetailsDto getStoreDetailsDto(Long id) {
-        Store store = getLazy(id);
-        return createStoreDetailsDto(store);
-    }
- */
 
     @Override
     public StoreDto getStoreDto(Long id) {
@@ -292,6 +206,11 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
             @Override
             public BigDecimal getPrice() {
                 return storeItem.getPrice();
+            }
+
+            @Override
+            public String getProductCategory() {
+                return storeItem.getProductCategory().getName();
             }
         };
     }
