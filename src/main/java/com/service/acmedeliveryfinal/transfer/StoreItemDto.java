@@ -10,4 +10,5 @@ public interface StoreItemDto {
     Long getId();
     String getItemName();
     BigDecimal getPrice();
+    String getProductCategory();
 }
