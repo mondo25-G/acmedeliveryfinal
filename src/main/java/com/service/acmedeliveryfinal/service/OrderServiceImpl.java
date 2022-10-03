@@ -122,6 +122,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
         order.setPaymentMethod(paymentMethod);
         order.setSubmittedDate(new Date());
         order.setCost(cost(order));
+        order.setDeliveryAddress(order.getAccount().getAddress());
 
         // Create Order
         return create(validateProducts(order));
@@ -233,7 +234,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
 
             @Override
             public String getDeliveryAddress() {
-                return order.getAccount().getAddress();
+                return order.getDeliveryAddress();
             }
 
             @Override
