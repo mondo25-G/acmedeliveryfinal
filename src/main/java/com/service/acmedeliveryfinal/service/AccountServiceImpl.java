@@ -32,7 +32,12 @@ public class AccountServiceImpl extends BaseServiceImpl<Account> implements Acco
         if (accountRepository.findByUserNameAndPassword(email,password).isEmpty()){
             throw new RuntimeException("The email or password is wrong.");
         }
-        return createAccountDto(accountRepository.findByUserName(email));
+        return createAccountDto(accountRepository.findByUserName(email).get());
+    }
+
+    @Override
+    public boolean existsByUsername(String email) {
+        return accountRepository.existsByUserName(email);
     }
 
     private AccountDto createAccountDto(Account account){

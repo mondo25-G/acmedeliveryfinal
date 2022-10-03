@@ -10,4 +10,6 @@ public interface AccountService extends BaseService<Account> {
     AccountDto register(String email,String phoneNumber,String password, String firstName,String lastName,String address);
     AccountDto login(String email, String password);
 
+    boolean existsByUsername(String email);
+
 }
