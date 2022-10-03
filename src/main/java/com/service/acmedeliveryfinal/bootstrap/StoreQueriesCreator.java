@@ -53,26 +53,10 @@ public class StoreQueriesCreator extends BaseComponent implements CommandLineRun
 
         topStoresCatId.forEach(s->logger.info("Popular (categoryId=1-PIZZA): {}",s));
 
-        //GET MOST POPULAR STORES (BASED ON ORDERS) BY CATEGORY NAME
-        logger.info("Most popular stores based on total store orders descending, store id ascending for specific category name");
-        List<KeyValue<Long,String>> topStoresCatName = storeService.findPopularStoresByCategory("BURGERS");
-        topStoresCatName.forEach(s->logger.info("Popular (categoryName=BURGERS): {}",s));
-
         //GET MOST POPULAR PRODUCTS (BASED ON ORDERS)
         logger.info("Most popular products based on orders, store id ascending");
         List<PopularItemDto> topProds = storeService.findPopularProducts();
         topProds.forEach(s->logger.info("Popular prod:{}",s));
-
-        //GET MOST POPULAR PRODUCTS (BASED ON ORDERS) OF A SPECIFIC STORE
-        //logger.info("Most popular products based on orders, store id ascending of a specific store");
-        //List<KeyValue<Long,String>> topProdsByStore;
-
-        //Long count=1L;
-        //for(int i=1;i<6;i++){
-        //    topProdsByStore= storeService.findPopularProductsByStore(count++);
-        //    topProdsByStore.forEach(s->logger.info("Popular prod:{}",s));
-        //    logger.info("done\n");
-       // }
 
     }
 }
