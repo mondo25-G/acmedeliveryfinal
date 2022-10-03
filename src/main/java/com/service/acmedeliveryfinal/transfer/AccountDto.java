@@ -4,4 +4,5 @@ public interface AccountDto {
     Long getId();
     String getUser();
     String getAddress();
+    String getPhoneNumber();
 }
