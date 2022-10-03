@@ -1,5 +1,6 @@
 package com.service.acmedeliveryfinal.transfer;
 
+import java.util.List;
 import java.util.Set;
 
 public interface StoreDto {
@@ -10,5 +11,5 @@ public interface StoreDto {
     String getCity();
     String getPhoneNumber();
 
-    Set<StoreItemDto> getStoreItems();
+    List<StoreItemDto> getStoreItems();
 }
