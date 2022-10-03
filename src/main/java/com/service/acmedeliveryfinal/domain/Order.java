@@ -51,4 +51,7 @@ public class Order extends BaseEntity{
     @Column(precision = 10, scale = 2, nullable = false )
     private BigDecimal cost;
 
+    @Column
+    private String deliveryAddress;
+
 }
