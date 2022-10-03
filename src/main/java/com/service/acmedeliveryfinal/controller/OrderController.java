@@ -14,6 +14,7 @@ import com.service.acmedeliveryfinal.transfer.OrderDto;
 import com.service.acmedeliveryfinal.transfer.OrderItemDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +22,8 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("orders")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:8081", maxAge = 3600, allowCredentials="true")
+@PreAuthorize("hasRole('USER')")
 public class OrderController extends BaseController<Order> {
 
     private final OrderService orderService;

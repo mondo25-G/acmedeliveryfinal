@@ -7,16 +7,18 @@ import com.service.acmedeliveryfinal.service.StoreService;
 import com.service.acmedeliveryfinal.transfer.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:8081", maxAge = 3600, allowCredentials="true")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("stores")
+@PreAuthorize("hasRole('USER')")
 public class StoreController {
 
     private final StoreService storeService;
