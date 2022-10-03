@@ -267,6 +267,18 @@ public class StoreContentCreator extends BaseComponent implements CommandLineRun
         storeService.addItem(kobra.getId(),kobra7);
         storeService.addItem(kobra.getId(),kobra8);
 
+
+
+        Store domino = storeService.create(Store.builder().storeName("DOMINO").city("ΑΘΗΝΑ").address("ΠΕΛΟΠΙΔΑ 11,10679").phoneNumber("2100000008").emailAddress("domino@gmail.com").category(storeCategoryService.get(1L)).build());
+        StoreItem domino1=StoreItem.builder().itemName("DOMINO SPECIAL").price(BigDecimal.valueOf(5.00)).productCategory(productCategoryService.get(1L)).build();
+        StoreItem domino2=StoreItem.builder().itemName("BACON MOZZARRELA").price(BigDecimal.valueOf(5.70)).productCategory(productCategoryService.get(1L)).build();
+        StoreItem domino3=StoreItem.builder().itemName("SPECIAL ΟΙΚΟΓΕΝΕΙΑΚΗ").price(BigDecimal.valueOf(5.50)).productCategory(productCategoryService.get(11L)).build();
+        StoreItem domino4=StoreItem.builder().itemName("4X4").price(BigDecimal.valueOf(5.70)).productCategory(productCategoryService.get(1L)).build();
+        storeService.addItem(domino.getId(),domino1);
+        storeService.addItem(domino.getId(),domino2);
+        storeService.addItem(domino.getId(),domino3);
+        storeService.addItem(domino.getId(),domino4);
+
     }
 }
 

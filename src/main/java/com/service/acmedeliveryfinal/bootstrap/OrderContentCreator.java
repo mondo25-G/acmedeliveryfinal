@@ -124,6 +124,19 @@ public class OrderContentCreator extends BaseComponent implements CommandLineRun
         orderService.checkout(newOrder6, PaymentMethod.CARD);
         logger.info(orderComplete,newOrder6);
 
+
+        // ORDER 6 - INITIALIZE WITH STORE AND ACCOUNT
+        com.service.acmedeliveryfinal.domain.Order newOrder7 =
+                orderService.initiateOrder(storeService.get(7L),accountService.get(1L));
+
+        // ORDER 6 - ADD ITEMS AND QUANTITY , TEST NON EXISTING ITEM IN STORE
+        logger.info(addItem,orderService.addItem(newOrder7,storeService.getProduct(56L),1));
+        logger.info(addItem,orderService.addItem(newOrder7,storeService.getProduct(57L),2));
+
+        // ORDER 6 - CHECKOUT OF ORDER
+        orderService.checkout(newOrder7, PaymentMethod.CASH);
+        logger.info(orderComplete,newOrder7);
+
     }
 
 }

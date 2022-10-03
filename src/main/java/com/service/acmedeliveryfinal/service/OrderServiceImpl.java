@@ -3,7 +3,6 @@ package com.service.acmedeliveryfinal.service;
 import com.service.acmedeliveryfinal.domain.*;
 import com.service.acmedeliveryfinal.domain.enumeration.PaymentMethod;
 import com.service.acmedeliveryfinal.repository.OrderRepository;
-import com.service.acmedeliveryfinal.transfer.KeyValue;
 import com.service.acmedeliveryfinal.transfer.OrderDto;
 import com.service.acmedeliveryfinal.transfer.OrderItemDto;
 import lombok.RequiredArgsConstructor;
@@ -252,8 +251,8 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
             public String  getPaymentMethod() {
                 return String.valueOf(order.getPaymentMethod());}
             @Override
-            public Set<OrderItemDto> getOrderItems() {
-                Set<OrderItemDto> oiDto = new HashSet<>();
+            public List<OrderItemDto> getOrderItems() {
+                List<OrderItemDto> oiDto = new ArrayList<>();
                 for (OrderItem oi: order.getOrderItems()) {
                     oiDto.add(createOrderItemDto(oi));
                 }

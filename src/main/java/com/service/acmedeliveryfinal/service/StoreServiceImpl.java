@@ -10,7 +10,6 @@ import com.service.acmedeliveryfinal.transfer.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -157,8 +156,8 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
             }
 
             @Override
-            public Set<StoreItemDto> getStoreItems() {
-                Set<StoreItemDto> siDto = new HashSet<>();
+            public List<StoreItemDto> getStoreItems() {
+                List<StoreItemDto> siDto = new ArrayList<>();
                 for (StoreItem storeItem:store.getStoreItems()){
                     siDto.add(createStoreItemDto(storeItem));
                 }
