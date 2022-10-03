@@ -80,12 +80,8 @@ public class OrderController extends BaseController<Order> {
         return ResponseEntity.ok(ApiResponse.<Order>builder().data(orderService.getLazy(id)).build());
     }
 
-    @GetMapping("/account/{id}")
-    public ResponseEntity<ApiResponse<List<Order>>> getOrderList(@PathVariable Long id){
-        return ResponseEntity.ok(ApiResponse.<List<Order>>builder().data(orderService.getAllByAccount(id)).build());
-    }
 
-    @GetMapping("/accountDto/{id}")
+    @GetMapping("/account/{id}")
     public ResponseEntity<ApiResponse<List<OrderDto>>>getOrdersByAccount(@PathVariable Long id){
         return ResponseEntity.ok(ApiResponse.<List<OrderDto>>builder().data(orderService.findOrdersByAccount(id)).build());
     }
