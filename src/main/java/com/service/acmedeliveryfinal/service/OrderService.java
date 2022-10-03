@@ -28,7 +28,5 @@ public interface OrderService extends BaseService<Order> {
     Order checkout(Order order, PaymentMethod paymentMethod);
 
     Order getLazy(Long id);
-
-    List<Order> getAllByAccount(Long id);
     List<OrderDto> findOrdersByAccount(Long accountId);
 }
