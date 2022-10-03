@@ -210,12 +210,6 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
 
 
     @Override
-    public List<Order> getAllByAccount(Long id) {
-
-        return orderRepository.findByCustomer(id);
-    }
-
-    @Override
     public List<OrderDto> findOrdersByAccount(Long accountId) {
         List<Order> orders = orderRepository.findByCustomer(accountId);
         List<OrderDto> orderDtos = new ArrayList<OrderDto>();
