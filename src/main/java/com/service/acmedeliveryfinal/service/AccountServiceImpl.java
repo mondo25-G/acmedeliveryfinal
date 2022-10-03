@@ -18,21 +18,12 @@ public class AccountServiceImpl extends BaseServiceImpl<Account> implements Acco
     }
 
     @Override
-    public AccountDto register(String email,String phoneNumber, String password, String firstName,String lastName,String address) {
-        if (accountRepository.findByUserNameOrPhoneNumber(email,phoneNumber).isPresent()){
-            throw new RuntimeException("There is already an existing account with same email or password.");
-        }
-        Account newAccount=Account.builder().userName(email).phoneNumber(phoneNumber).password(password).firstName(firstName).lastName(lastName).address(address).build();
-        return createAccountDto( accountRepository.save(newAccount));
-    }
+    public AccountDto login(Long id) {
 
-    @Override
-    public AccountDto login(String email, String password) {
-
-        if (accountRepository.findByUserNameAndPassword(email,password).isEmpty()){
+        if (accountRepository.findById(id).isEmpty()){
             throw new RuntimeException("The email or password is wrong.");
         }
-        return createAccountDto(accountRepository.findByUserName(email).get());
+        return createAccountDto(accountRepository.findById(id).get());
     }
 
     @Override
@@ -54,6 +45,11 @@ public class AccountServiceImpl extends BaseServiceImpl<Account> implements Acco
             @Override
             public String getAddress() {
                 return account.getAddress();
+            }
+
+            @Override
+            public String getPhoneNumber() {
+                return account.getPhoneNumber();
             }
         };
     }
