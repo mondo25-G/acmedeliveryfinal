@@ -11,7 +11,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 
 @CrossOrigin(origins = "http://localhost:8081", maxAge = 3600, allowCredentials="true")
@@ -23,25 +22,19 @@ public class StoreController {
 
     private final StoreService storeService;
 
-    //CRUD
-
-  /*  @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<StoreDetailsDto>>getStore(@PathVariable("id") final Long id ) {
-
-        return ResponseEntity.ok(ApiResponse.<StoreDetailsDto>builder().data(storeService.getStoreDetailsDto(id)).build());
-
-    } */
-
-
     @GetMapping
     public ResponseEntity<ApiResponse<List<StoreDetailsDto>>>getStores() {
 
         return ResponseEntity.ok(ApiResponse.<List<StoreDetailsDto>>builder().data(storeService.getStoreDetailsDtos()).build());
-
     }
 
+    //Get the store and its catalogue
+    @GetMapping("/{id}/products")
+    public ResponseEntity<ApiResponse<StoreDto>> findProductsByStore(@PathVariable Long id){
+        return ResponseEntity.ok(ApiResponse.<StoreDto>builder().data(storeService.getStoreDto(id)).build());
+    }
 
-
+    //Get store categories
     @GetMapping("/storeCategories")
     public ResponseEntity<ApiResponse<List<StoreCategory>>> getStoreCategories(){
 
@@ -53,51 +46,29 @@ public class StoreController {
         return ResponseEntity.ok(ApiResponse.<List<KeyValue<Long, String>>>builder().data(storeService.getStoresDropdownList(searchString)).build());
     }
 
-    //getStoresByCategory
+    //get stores by category id
     @GetMapping("/categories/{id}")
     public ResponseEntity<ApiResponse<List<Store>>> byCategory(@PathVariable("id") final Long id){
         return ResponseEntity.ok(ApiResponse.<List<Store>>builder().data(storeService.getStoresByCategoryId(id)).build());
     }
 
+    //Endpoint to get top stores
     @GetMapping("/popular")
     public ResponseEntity<ApiResponse<List<KeyValue<Long,String>>>> findTop(){
         return ResponseEntity.ok(ApiResponse.<List<KeyValue<Long,String>>>builder().data(storeService.findPopularStores()).build());
     }
 
-    //Test endpoint that returns map of popularStores, to be used in conjuction with map
-    @GetMapping("/popularMap")
-    public ResponseEntity<ApiResponse<Map<Long,String>>> findTopMap(){
-        return ResponseEntity.ok(ApiResponse.<Map<Long,String>>builder().data(storeService.findPopularStoresMap()).build());
-    }
-
-
-    //endpoint to get top stores by Category id (Long)
-    @GetMapping("/popular/categories/{id}")
-    public ResponseEntity<ApiResponse<List<KeyValue<Long,String>>>> findTopByCategoryId(@PathVariable("id") final Long id){
-        return ResponseEntity.ok(ApiResponse.<List<KeyValue<Long,String>>>builder().data(storeService.findPopularStoresByCategory(id)).build());
-    }
-
-
-    //enpoint to get top stores by Category name (string)
-    @GetMapping("/popular/categories")
-    public ResponseEntity<ApiResponse<List<KeyValue<Long,String>>>> findTopByCategoryName(@RequestParam("name") String categoryName){
-        return ResponseEntity.ok(ApiResponse.<List<KeyValue<Long,String>>>builder().data(storeService.findPopularStoresByCategory(categoryName)).build());
-    }
-
-    //possible endpoint to get top products
+    //Endpoint to get top products
     @GetMapping("/popular/products")
     public ResponseEntity<ApiResponse<List<PopularItemDto>>> findTopProducts(){
         return ResponseEntity.ok(ApiResponse.<List<PopularItemDto>>builder().data(storeService.findPopularProducts()).build());
     }
 
-    @GetMapping("/popular/productsByStore")
-    public ResponseEntity<ApiResponse<List<KeyValue<Long,String>>>> findTopProductsByStore(@RequestParam("storeId") Long id){
-        return ResponseEntity.ok(ApiResponse.<List<KeyValue<Long, String>>>builder().data(storeService.findPopularProductsByStore(id)).build());
+    //Endpoint to get top stores by Category id (Long)
+    @GetMapping("/popular/categories/{id}")
+    public ResponseEntity<ApiResponse<List<KeyValue<Long,String>>>> findTopByCategoryId(@PathVariable("id") final Long id){
+        return ResponseEntity.ok(ApiResponse.<List<KeyValue<Long,String>>>builder().data(storeService.findPopularStoresByCategory(id)).build());
     }
 
-    @GetMapping("/{id}/products")
-    public ResponseEntity<ApiResponse<StoreDto>> findProductsByStore(@PathVariable Long id){
-        return ResponseEntity.ok(ApiResponse.<StoreDto>builder().data(storeService.getStoreDto(id)).build());
-    }
 
 }
