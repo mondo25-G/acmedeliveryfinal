@@ -22,17 +22,9 @@ public class AccountController extends BaseController<Account>{
         return accountService;
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<ApiResponse<AccountDto>> register(@RequestBody Account account ){
-        AccountDto accountDto= accountService.register(account.getUserName(), account.getPhoneNumber(), account.getPassword(), account.getFirstName(), account.getLastName(), account.getAddress());
-        logger.info("{}",accountDto);
-        return ResponseEntity.ok(ApiResponse.<AccountDto>builder().data(accountDto).build());
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<ApiResponse<AccountDto>> login(@RequestBody LoginRequest loginDto){
-        AccountDto accountDto= accountService.login(loginDto.getEmail(), loginDto.getPassword());
-        logger.info("{}",accountDto);
+    @GetMapping("/details")
+    public ResponseEntity<ApiResponse<AccountDto>> login(@RequestParam Long id){
+        AccountDto accountDto= accountService.login(id);
         return ResponseEntity.ok(ApiResponse.<AccountDto>builder().data(accountDto).build());
     }
 
