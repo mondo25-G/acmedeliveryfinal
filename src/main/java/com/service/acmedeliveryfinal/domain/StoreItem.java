@@ -12,8 +12,10 @@ import java.math.BigDecimal;
 @NamedNativeQuery(name = "StoreItem.findTop10Products",
         query ="""
 		with popularItems as (select oi.storeItem_id as storeItemId, count(oi.storeItem_id) as purchases
-		from orderItems oi group by oi.storeItem_id) select si.store_id as storeId,si.id as storeItemId,si.itemName as storeItemName,p.purchases as timesOrdered from storeitems si 
+		from orderItems oi group by oi.storeItem_id) select si.store_id as storeId,si.id as storeItemId,si.itemName as storeItemName,p.purchases as timesOrdered, 
+		pc.name as productCategory from storeitems si 
 		inner join popularItems p on p.storeItemId=si.id
+		inner join product_categories pc on si.productcategory_id=pc.id
 		order by p.purchases desc,p.storeItemId fetch first 10 rows only
 			""",
         resultSetMapping = "findTop10Products")
@@ -24,7 +26,8 @@ import java.math.BigDecimal;
                         @ColumnResult(name = "storeId", type = Long.class),
                         @ColumnResult(name = "storeItemId", type = Long.class),
                         @ColumnResult(name = "storeItemName", type = String.class),
-                        @ColumnResult(name = "timesOrdered", type = Integer.class)
+                        @ColumnResult(name = "timesOrdered", type = Integer.class),
+                        @ColumnResult(name = "productCategory", type = String.class)
                 }
         )
 )
