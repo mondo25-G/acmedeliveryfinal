@@ -8,4 +8,5 @@ public class PopularItemDto {
     Long storeItemId;
     String storeItemName;
     Integer timesOrdered;
+    String productCategory;
 }
