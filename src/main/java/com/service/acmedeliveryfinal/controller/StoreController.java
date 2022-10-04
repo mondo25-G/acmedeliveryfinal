@@ -43,6 +43,9 @@ public class StoreController {
 
     @GetMapping("search")
     public ResponseEntity<ApiResponse<List<KeyValue<Long, String>>>> search(@RequestParam String searchString){
+        if (searchString.isBlank()){
+            throw new RuntimeException("Blank searchString");
+        }
         return ResponseEntity.ok(ApiResponse.<List<KeyValue<Long, String>>>builder().data(storeService.getStoresDropdownList(searchString)).build());
     }
 
